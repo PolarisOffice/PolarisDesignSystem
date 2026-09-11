@@ -1,0 +1,31 @@
+/* 원본 radius.md 의 `.radius-preview` / `.token-name` / `.px-val` */
+
+.preview {
+  width: 36px;
+  height: 36px;
+  background: var(--color-accent-normal);
+  opacity: 0.25;
+  border: 2px solid var(--color-accent-normal);
+  display: inline-block;
+}
+
+/* 토큰명 뱃지 — SpecTable .token 과 동일 처리 (2026-08-28) */
+.tokenName {
+  display: inline-block;
+  padding: var(--spacing-4xs) var(--spacing-2xs);
+  border-radius: var(--radius-xs);
+  background: var(--color-fill-normal);
+  line-height: 1.5;
+  font-size: var(--font-size-xxxs);
+  font-weight: 500;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  color: var(--color-label-neutral);
+}
+
+.pxVal {
+  /* 표 본문(13px)보다 크던 16px/600 을 낮춤 — px 숫자만 위계가 커 보인다는 피드백(2026-08-28) */
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-label-normal);
+}

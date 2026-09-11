@@ -1,0 +1,181 @@
+/* 원본 ai/index.md 의 <style> — .ai-grid / .ai-card / .ai-how */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin: 24px 0 40px;
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  border: 1px solid var(--color-line-neutral);
+  border-radius: 12px;
+  padding: 24px;
+  text-decoration: none !important;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.card:hover {
+  border-color: var(--color-accent-normal);
+  box-shadow: 0 0 0 1px var(--color-accent-normal);
+}
+
+/* 원본 llms.txt 카드의 인라인 style(opacity:0.5;cursor:default) 이식 */
+.cardDisabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.cardLabel {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-accent-normal);
+}
+
+.cardLabel.soon {
+  color: var(--color-label-alternative);
+}
+
+.cardTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-label-normal);
+}
+
+.cardDesc {
+  font-size: 13px;
+  color: var(--color-label-neutral);
+  line-height: 1.65;
+}
+
+.cardLink {
+  font-size: 13px;
+  color: var(--color-accent-normal);
+  margin-top: 4px;
+}
+
+.how {
+  border: 1px solid var(--color-line-neutral);
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 24px 0 40px;
+}
+
+.howItem {
+  display: flex;
+  gap: 20px;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--color-line-neutral);
+  align-items: flex-start;
+}
+
+.howItem:last-child {
+  border-bottom: none;
+}
+
+.howNum {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-accent-normal);
+  font-family: monospace;
+  flex-shrink: 0;
+  padding-top: 2px;
+  width: 20px;
+}
+
+.howTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-label-normal);
+  margin-bottom: 4px;
+}
+
+.howDesc {
+  font-size: 13px;
+  color: var(--color-label-neutral);
+  line-height: 1.65;
+}
+
+/* ── 스킬 다운로드 본문 (구 /ai/skill 에서 병합, 2026-08-25) ── */
+/* 원본 ai/skill.md 의 <style> — .install-block / .install-label / .install-code */
+
+.installBlock {
+  background: var(--color-fill-neutral);
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin: 16px 0 32px;
+}
+
+.installLabel {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-label-alternative);
+  margin-bottom: 10px;
+}
+
+.installCode {
+  font-family: monospace;
+  font-size: 13px;
+  color: var(--color-label-normal);
+  background: var(--color-layer-surface);
+  border: 1px solid var(--color-line-neutral);
+  border-radius: 6px;
+  padding: 10px 14px;
+  word-break: break-all;
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+/* 다운로드 링크 — 원본 인라인 style(display:inline-block;text-decoration:none) 이식.
+   DocsShell `.main a`(accent 색·hover 밑줄)를 이기려면 셀렉터 특이도를 겹쳐야 한다 */
+.installBlock a.downloadLink {
+  display: inline-block;
+  color: var(--color-label-normal);
+  text-decoration: none;
+}
+
+.installBlock a.downloadLink:hover {
+  text-decoration: none;
+}
+
+/* 파일 구조 트리 — 원본 ``` 펜스 코드블록 (VitePress 기본 코드블록 근사) */
+.tree {
+  margin: 16px 0;
+  padding: 20px 24px;
+  background: var(--color-fill-neutral);
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+.tree code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--color-label-normal);
+}
+
+/* 원본 `> **참고** …` blockquote — VitePress 기본 테마 이식 (color-palette .principle 패턴) */
+.note {
+  margin: 16px 0;
+  padding-left: 16px;
+  border-left: 2px solid var(--color-line-neutral);
+  color: var(--color-label-neutral);
+}
+
+.note p {
+  margin: 0;
+}

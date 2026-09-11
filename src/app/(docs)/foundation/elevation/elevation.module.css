@@ -1,0 +1,71 @@
+/* 원본 elevation.md 의 `.el-level` / `.el-token` / `.el-signal` / `.shadow-preview-*` */
+
+.level {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-label-normal);
+}
+
+.token {
+  font-size: var(--font-size-xxs);
+  font-weight: 500;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  color: var(--color-label-normal);
+}
+
+.signal {
+  font-size: var(--font-size-xxs);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  color: var(--color-label-neutral);
+}
+
+/* Shadow Preview */
+.previewGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin: 20px 0 48px;
+  padding: 40px 0;
+}
+
+.previewItem {
+  text-align: center;
+}
+
+.previewBox {
+  width: 100%;
+  height: 80px;
+  border-radius: 12px;
+  background: var(--color-layer-surface);
+  margin-bottom: 12px;
+}
+
+/* 원본은 light 그림자 값을 인라인 하드코딩했지만, 실제 토큰으로 입혀 라이트/다크 모두 살린다 */
+.boxSm {
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-line-neutral);
+}
+
+.boxMd {
+  box-shadow: var(--shadow-md);
+}
+
+.boxLg {
+  box-shadow: var(--shadow-lg);
+}
+
+.boxXl {
+  box-shadow: var(--shadow-xl);
+}
+
+.previewLabel {
+  font-size: var(--font-size-xxxs);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  color: var(--color-label-alternative);
+}
+
+@media (max-width: 720px) {
+  .previewGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

@@ -1,0 +1,11 @@
+/* Select 페이지 전용 — Design 탭 표 안 실물 프리뷰 (2026-08-28 디자인팀장 검토 반영:
+   State·Size 표에 실물이 필요하다).
+   프리뷰는 그림이다 — AnatomyFigure 의 inert 결정(2026-08-19)을 따라 클릭·포커스를 막는다.
+   살아있는 데모는 Code 탭에 따로 있다. */
+
+/* 표 셀 안의 실물 — Select 루트(div, width 100%)가 셀 폭을 그대로 쓰게 한다.
+   상자·배경 없음(토글 .statePreview 의 fill-neutral 면은 흐린 OFF 트랙 대비용이었다 —
+   Select 는 자체 테두리·배경이 있어 불필요). 긴 텍스트는 트리거가 스스로 ellipsis 처리 */
+.cellPreview {
+  display: flex;
+}

@@ -1,0 +1,599 @@
+/* ============================================================
+   POLARIS DESIGN SYSTEM — Design Tokens
+   tokens.css
+
+   Figma 파일: 📚Polaris Design System (WYHAWNLrCGhbo4Ude41TYl)
+   정본: 이 파일 (사람이 관리). designs/pds.md 의 토큰과 tokens.generated.ts 는 여기서 생성된다.
+   재구성: 2026-08-13 — Figma Variables alias 구조로 전환 + 보충
+
+   토큰 아키텍처
+   ─────
+   Primitive(원시 팔레트) → Semantic(역할 토큰)이 var()로 참조.
+   Figma Variables의 alias 구조와 동일하다. 단, 아래는 예외적으로
+   hex를 직접 기입한다:
+   · Plan *-bg 6종 — 10% 알파 합성값이라 팔레트에 원시색이 없음
+   · link/visited, layer/overlay — 팔레트 미등재 원시값
+   · 다크 모드 전용 원시값 — Figma 다크 컬럼이 참조하는 원시색
+     (다크 그레이 램프 등)이 팔레트 문서에 미등재.
+     Figma 팔레트에 다크 원시색이 정리되면 참조로 전환할 것.
+
+   값 출처 (2026-08-13 Figma 실값 교차검증 완료)
+   ─────
+   · Semantic 색상 라이트/다크: Figma Variables 실값 추출
+     (Color-Semantic 페이지 라이트 1009:2916 / 다크 1009:3382)
+   · Primitive 팔레트: Figma Variables 내보내기 전량 134값 (2026-08-28,
+     피그마 정본 단계 05–90 으로 재편 — 별칭은 hex 동일성으로 재매핑, 최종값 불변)
+   · Spacing/Radius: docs/foundation/spacing.md · radius.md
+   · Typography: docs/foundation/typography.md (반응형 표 포함)
+   · Motion/Elevation: docs/foundation/motion.md · elevation.md
+
+   사용법
+   ─────
+   HTML: <html data-theme="light"> or <html data-theme="dark">
+   CSS:  color: var(--color-label-normal);   ← 컴포넌트는 Semantic만 사용
+                                                Primitive 직접 사용 금지
+   ============================================================ */
+
+
+/* ============================================================
+   1. PRIMITIVE — Color Palette
+      Figma: Color(파일 통합)-Library > palette
+      Semantic 토큰이 참조하는 원시값 — 컴포넌트에 직접 사용 금지
+   ============================================================ */
+
+:root {
+  /* Base */
+  --primitive-black: #000000;
+  --primitive-white: #ffffff;
+
+  /* Gray */
+  --primitive-gray-10: #f7f8f9;
+  --primitive-gray-20: #f2f4f6;
+  --primitive-gray-30: #e8ebed;
+  --primitive-gray-40: #c9cdd2;
+  --primitive-gray-50: #b3b8bd;
+  --primitive-gray-60: #9ea4aa;
+  --primitive-gray-70: #72787f;
+  --primitive-gray-80: #454c53;
+  --primitive-gray-90: #26282b;
+
+  /* PO Dark Blue */
+  --primitive-po-dark-blue-05: #e5ecf8;
+  --primitive-po-dark-blue-10: #d1dff7;
+  --primitive-po-dark-blue-20: #b2c7ea;
+  --primitive-po-dark-blue-30: #7fa2dc;
+  --primitive-po-dark-blue-40: #4c7dce;
+  --primitive-po-dark-blue-50: #0046b9;
+  --primitive-po-dark-blue-60: #003b9d;
+  --primitive-po-dark-blue-70: #003081;
+  --primitive-po-dark-blue-80: #002665;
+  --primitive-po-dark-blue-90: #001c4a;
+
+  /* PO Blue */
+  --primitive-po-blue-05: #e8f2fe;
+  --primitive-po-blue-10: #d9eaff;
+  --primitive-po-blue-20: #bbd8fd;
+  --primitive-po-blue-30: #8ebffc;
+  --primitive-po-blue-40: #60a5fa;
+  --primitive-po-blue-50: #1d7ff9;
+  --primitive-po-blue-60: #186cd3;
+  --primitive-po-blue-70: #1458ad;
+  --primitive-po-blue-80: #0f4588;
+  --primitive-po-blue-90: #0b3263;
+
+  /* PO Green */
+  --primitive-po-green-05: #edf7e8;
+  --primitive-po-green-10: #dcf1d1;
+  --primitive-po-green-20: #cae8ba;
+  --primitive-po-green-30: #a8d98d;
+  --primitive-po-green-40: #85ca5f;
+  --primitive-po-green-50: #51b41b;
+  --primitive-po-green-60: #449916;
+  --primitive-po-green-70: #387d12;
+  --primitive-po-green-80: #2c620e;
+  --primitive-po-green-90: #20480a;
+
+  /* PO Orange */
+  --primitive-po-orange-05: #fef3e5;
+  --primitive-po-orange-10: #fde5c8;
+  --primitive-po-orange-20: #fedbb2;
+  --primitive-po-orange-30: #fec47f;
+  --primitive-po-orange-40: #fdac4c;
+  --primitive-po-orange-50: #fd8900;
+  --primitive-po-orange-60: #d77400;
+  --primitive-po-orange-70: #b05f00;
+  --primitive-po-orange-80: #8a4b00;
+  --primitive-po-orange-90: #653600;
+
+  /* PO Red */
+  --primitive-po-red-05: #feeeee;
+  --primitive-po-red-10: #ffe3e3;
+  --primitive-po-red-20: #fdcece;
+  --primitive-po-red-30: #fcadad;
+  --primitive-po-red-40: #fa8c8c;
+  --primitive-po-red-50: #f95c5c;
+  --primitive-po-red-60: #d34e4e;
+  --primitive-po-red-70: #ad4040;
+  --primitive-po-red-80: #883232;
+  --primitive-po-red-90: #632424;
+
+  /* PO AI Purple */
+  --primitive-po-ai-purple-05: #f5f1fd;
+  --primitive-po-ai-purple-10: #ede5fe;
+  --primitive-po-ai-purple-20: #e0d1ff;
+  --primitive-po-ai-purple-30: #c6a9ff;
+  --primitive-po-ai-purple-40: #9d75ec;
+  --primitive-po-ai-purple-50: #6f3ad0;
+  --primitive-po-ai-purple-60: #602bc1;
+  --primitive-po-ai-purple-70: #511bb2;
+  --primitive-po-ai-purple-80: #3e0f8d;
+  --primitive-po-ai-purple-90: #20075c;
+
+  /* Sky Blue */
+  --primitive-sky-blue-05: #e9f7fd;
+  --primitive-sky-blue-10: #d6f0fe;
+  --primitive-sky-blue-20: #bfe7fb;
+  --primitive-sky-blue-30: #95d7f9;
+  --primitive-sky-blue-40: #6ac7f7;
+  --primitive-sky-blue-50: #2baff4;
+  --primitive-sky-blue-60: #2494cf;
+  --primitive-sky-blue-70: #1e7aaa;
+  --primitive-sky-blue-80: #176085;
+  --primitive-sky-blue-90: #114661;
+
+  /* Blue */
+  --primitive-blue-05: #edeefc;
+  --primitive-blue-10: #dee0ff;
+  --primitive-blue-20: #c9cdf7;
+  --primitive-blue-30: #a5adf2;
+  --primitive-blue-40: #818cec;
+  --primitive-blue-50: #4c5be5;
+  --primitive-blue-60: #404dc2;
+  --primitive-blue-70: #353f9f;
+  --primitive-blue-80: #29317d;
+  --primitive-blue-90: #1e245b;
+
+  /* Violet */
+  --primitive-violet-05: #eeecf9;
+  --primitive-violet-10: #e0daf8;
+  --primitive-violet-20: #cec7ed;
+  --primitive-violet-30: #ada3e2;
+  --primitive-violet-40: #8c7ed7;
+  --primitive-violet-50: #5c47c6;
+  --primitive-violet-60: #4e3ca8;
+  --primitive-violet-70: #40318a;
+  --primitive-violet-80: #32266c;
+  --primitive-violet-90: #241c4f;
+
+  /* Yellow */
+  --primitive-yellow-05: #fffaeb;
+  --primitive-yellow-10: #fcefca;
+  --primitive-yellow-20: #fae6af;
+  --primitive-yellow-30: #fcda7b;
+  --primitive-yellow-40: #f8c22e;
+  --primitive-yellow-50: #f2b50b;
+  --primitive-yellow-60: #d79e00;
+  --primitive-yellow-70: #b08100;
+  --primitive-yellow-80: #8a6500;
+  --primitive-yellow-90: #654a00;
+
+  /* Cyan */
+  --primitive-cyan-05: #e6f9fd;
+  --primitive-cyan-10: #d2f4fa;
+  --primitive-cyan-20: #abebf6;
+  --primitive-cyan-30: #66daf2;
+  --primitive-cyan-40: #33cded;
+  --primitive-cyan-50: #00badb;
+  --primitive-cyan-60: #0095b1;
+  --primitive-cyan-70: #00758e;
+  --primitive-cyan-80: #005c70;
+  --primitive-cyan-90: #003f4d;
+
+  /* Etc */
+  --primitive-etc-neutral-warm-gray: #f0f0f0;
+  --primitive-etc-red:               #fb4949;
+
+  /* Darkmode Gray */
+  --primitive-darkmode-gray-10: #d8d8d8;
+  --primitive-darkmode-gray-20: #9e9e9e;
+  --primitive-darkmode-gray-30: #797979;
+  --primitive-darkmode-gray-40: #6b6b6b;
+  --primitive-darkmode-gray-50: #595959;
+  --primitive-darkmode-gray-55: #4a4a4a;
+  --primitive-darkmode-gray-60: #3b3b3b;
+  --primitive-darkmode-gray-70: #2d2d2d;
+  --primitive-darkmode-gray-80: #282828;
+  --primitive-darkmode-gray-90: #232323;
+  --primitive-darkmode-gray-95: #1c1c1c;
+
+}
+
+
+/* ============================================================
+   2. SEMANTIC COLORS — Light Mode (default)
+      Figma: Semantic_color 컬렉션 라이트 컬럼 (1009:2916)
+      값은 전부 Primitive 참조 — 예외는 주석 표기
+   ============================================================ */
+
+:root,
+[data-theme="light"] {
+
+  /* ── Static — 라이트·다크 무관 고정 ── */
+  --color-static-white: var(--primitive-white);
+  --color-static-black: var(--primitive-black);
+
+  /* ── Accent / Brand ── */
+  --color-accent-neutral: var(--primitive-po-blue-40);
+  --color-accent-normal:  var(--primitive-po-blue-50);
+  --color-accent-strong:  var(--primitive-po-blue-70);
+
+  /* ── Action ── */
+  --color-action-normal: var(--primitive-black);
+  --color-action-strong: var(--primitive-gray-80);
+
+  /* ── Format — 포맷 앱 브랜드 색상 ──
+     *-adaptive는 다크모드에서만 회색톤으로 변환됨 */
+  --color-format-word:                  var(--primitive-po-blue-50);
+  --color-format-word-hover:            var(--primitive-po-blue-10);
+  --color-format-word-pressed:          var(--primitive-po-blue-20);
+  --color-format-word-hover-adaptive:   var(--primitive-po-blue-10);
+  --color-format-word-pressed-adaptive: var(--primitive-po-blue-20);
+
+  --color-format-sheet:                  var(--primitive-po-green-50);
+  --color-format-sheet-hover:            var(--primitive-po-green-10);
+  --color-format-sheet-pressed:          var(--primitive-po-green-20);
+  --color-format-sheet-hover-adaptive:   var(--primitive-po-green-10);
+  --color-format-sheet-pressed-adaptive: var(--primitive-po-green-20);
+
+  --color-format-slide:                  var(--primitive-po-orange-50);
+  --color-format-slide-hover:            var(--primitive-po-orange-10);
+  --color-format-slide-pressed:          var(--primitive-po-orange-20);
+  --color-format-slide-hover-adaptive:   var(--primitive-po-orange-10);
+  --color-format-slide-pressed-adaptive: var(--primitive-po-orange-20);
+
+  --color-format-pdf:                  var(--primitive-po-red-50);
+  --color-format-pdf-hover:            var(--primitive-po-red-10);
+  --color-format-pdf-pressed:          var(--primitive-po-red-20);
+  --color-format-pdf-hover-adaptive:   var(--primitive-po-red-10);
+  --color-format-pdf-pressed-adaptive: var(--primitive-po-red-20);
+
+  --color-format-image:                  var(--primitive-cyan-50);
+  --color-format-image-hover:            var(--primitive-cyan-10);
+  --color-format-image-pressed:          var(--primitive-cyan-20);
+  --color-format-image-hover-adaptive:   var(--primitive-cyan-10);
+  --color-format-image-pressed-adaptive: var(--primitive-cyan-20);
+
+  --color-format-note:                  var(--primitive-yellow-50);
+  --color-format-note-hover:            var(--primitive-yellow-10);
+  --color-format-note-pressed:          var(--primitive-yellow-20);
+  --color-format-note-hover-adaptive:   var(--primitive-yellow-10);
+  --color-format-note-pressed-adaptive: var(--primitive-yellow-20);
+
+  /* ── Plan — 구독 플랜 색상 ──
+     *-bg는 10% 알파 합성값 — 팔레트에 원시색 없음, hex 직접 기입 */
+  --color-plan-basic:       var(--primitive-po-green-60);
+  --color-plan-basic-bg:    #009b001a;
+  --color-plan-smart:       var(--primitive-po-blue-50);
+  --color-plan-smart-bg:    #0081ff1a;
+  --color-plan-pro:         var(--primitive-po-dark-blue-50);
+  --color-plan-pro-bg:      #0047c01a;
+  --color-plan-business:    var(--primitive-sky-blue-50);
+  --color-plan-business-bg: #00b2fa1a;
+  --color-plan-ai:          var(--primitive-po-ai-purple-50);
+  --color-plan-ai-bg:       #7736d81a;
+  --color-plan-orange:      var(--primitive-po-orange-60);
+  --color-plan-orange-bg:   #e66d001a;
+
+  /* ── AI — AI 기능 전용 (Purple은 AI 외 장식 사용 금지) ── */
+  --color-ai-normal:  var(--primitive-po-ai-purple-50);
+  --color-ai-strong:  var(--primitive-po-ai-purple-70);
+  --color-ai-hover:   var(--primitive-po-ai-purple-05);
+  --color-ai-pressed: var(--primitive-po-ai-purple-20);
+
+  /* ── Link ── */
+  --color-link-normal:  var(--primitive-po-blue-50);
+  --color-link-strong:  var(--primitive-po-blue-70);
+  --color-link-visited: #404dc2;  /* 팔레트 미등재 원시값 */
+
+  /* ── State ── */
+  --color-state-new:   var(--primitive-etc-red);
+  --color-state-error: var(--primitive-po-red-50);
+
+  /* ── Label — 텍스트 색상 ── */
+  --color-label-normal:      var(--primitive-gray-90);
+  --color-label-neutral:     var(--primitive-gray-80);
+  --color-label-alternative: var(--primitive-gray-70);
+  --color-label-assistive:   var(--primitive-gray-60);
+  --color-label-inverse:     var(--primitive-white);
+
+  /* ── Interaction — 상호작용 오버레이 색상 ── */
+  --color-interaction-hover:   var(--primitive-gray-20);
+  --color-interaction-pressed: var(--primitive-gray-30);
+
+  /* ── Line — 구분선/테두리 색상 ── */
+  --color-line-neutral: var(--primitive-gray-30);
+  --color-line-normal:  var(--primitive-gray-40);
+  --color-line-strong:  var(--primitive-gray-50);
+
+  /* ── Fill — 배경 채움 색상 ── */
+  --color-fill-neutral: var(--primitive-gray-10);
+  --color-fill-normal:  var(--primitive-gray-20);
+  --color-fill-strong:  var(--primitive-gray-30);
+
+  /* ── Background ── */
+  --color-background-base: var(--primitive-white);
+
+  /* ── Layer ── */
+  --color-layer-surface: var(--primitive-white);
+  --color-layer-overlay: #00000080;  /* black 50% — 알파 합성값 */
+
+  /* ── Elevation (Shadow) — 라이트 ── */
+  --shadow-sm: 0 1px 8px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 2px 12px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --shadow-xl: 0 6px 24px rgba(0, 0, 0, 0.12);
+}
+
+
+/* ============================================================
+   2-1. SEMANTIC COLORS — Dark Mode
+        Figma: Semantic_color 컬렉션 다크 컬럼 (1009:3382)
+        ⚠️ hex 직접 기입된 값 = Figma 다크 컬럼이 참조하는 원시색이
+        팔레트 문서(color-palette.md)에 미등재. 다크 원시 팔레트가
+        Figma에 정리되면 Primitive 참조로 전환할 것.
+   ============================================================ */
+
+[data-theme="dark"] {
+
+  /* ── Static ── */
+  --color-static-white: var(--primitive-white);
+  --color-static-black: var(--primitive-black);
+
+  /* ── Accent / Brand — 라이트의 Neutral↔Strong 반전 ── */
+  --color-accent-neutral: var(--primitive-po-blue-70);
+  --color-accent-normal:  var(--primitive-po-blue-50);
+  --color-accent-strong:  var(--primitive-po-blue-40);
+
+  /* ── Action ── */
+  --color-action-normal: var(--primitive-white);
+  --color-action-strong: var(--primitive-gray-20);
+
+  /* ── Format ── */
+  --color-format-word:                  var(--primitive-po-blue-50);
+  --color-format-word-hover:            #0b3263;
+  --color-format-word-pressed:          #0f4588;
+  --color-format-word-hover-adaptive:   #3b3b3b;
+  --color-format-word-pressed-adaptive: #595959;
+
+  --color-format-sheet:                  var(--primitive-po-green-50);
+  --color-format-sheet-hover:            #20480a;
+  --color-format-sheet-pressed:          #2c620e;
+  --color-format-sheet-hover-adaptive:   #3b3b3b;
+  --color-format-sheet-pressed-adaptive: #595959;
+
+  --color-format-slide:                  var(--primitive-po-orange-50);
+  --color-format-slide-hover:            #653600;
+  --color-format-slide-pressed:          #8a4b00;
+  --color-format-slide-hover-adaptive:   #4a4a4a;
+  --color-format-slide-pressed-adaptive: #595959;
+
+  --color-format-pdf:                  var(--primitive-po-red-50);
+  --color-format-pdf-hover:            #632424;
+  --color-format-pdf-pressed:          #883232;
+  --color-format-pdf-hover-adaptive:   #3b3b3b;
+  --color-format-pdf-pressed-adaptive: #595959;
+
+  --color-format-image:                  var(--primitive-cyan-50);
+  --color-format-image-hover:            #003f4d;
+  --color-format-image-pressed:          #005c70;
+  --color-format-image-hover-adaptive:   #3b3b3b;
+  --color-format-image-pressed-adaptive: #595959;
+
+  --color-format-note:                  var(--primitive-yellow-50);
+  --color-format-note-hover:            #654a00;
+  --color-format-note-pressed:          #8a6500;
+  --color-format-note-hover-adaptive:   #3b3b3b;
+  --color-format-note-pressed-adaptive: #595959;
+
+  /* ── Plan — 라이트와 동일 (Figma 다크 컬럼 확인값) ── */
+  --color-plan-basic:       var(--primitive-po-green-60);
+  --color-plan-basic-bg:    #009b001a;
+  --color-plan-smart:       var(--primitive-po-blue-50);
+  --color-plan-smart-bg:    #0081ff1a;
+  --color-plan-pro:         var(--primitive-po-dark-blue-50);
+  --color-plan-pro-bg:      #0047c01a;
+  --color-plan-business:    var(--primitive-sky-blue-50);
+  --color-plan-business-bg: #00b2fa1a;
+  --color-plan-ai:          var(--primitive-po-ai-purple-50);
+  --color-plan-ai-bg:       #7736d81a;
+  --color-plan-orange:      var(--primitive-po-orange-60);
+  --color-plan-orange-bg:   #e66d001a;
+
+  /* ── AI ── */
+  --color-ai-normal:  var(--primitive-po-ai-purple-50);
+  --color-ai-strong:  #9d75ec;
+  --color-ai-hover:   #3e0f8d;
+  --color-ai-pressed: var(--primitive-po-ai-purple-70);
+
+  /* ── Link ── */
+  --color-link-normal:  var(--primitive-po-blue-50);
+  --color-link-strong:  var(--primitive-po-blue-40);
+  --color-link-visited: #353f9f;
+
+  /* ── State ── */
+  --color-state-new:   var(--primitive-etc-red);
+  --color-state-error: var(--primitive-po-red-50);
+
+  /* ── Label — 다크 그레이 램프 (팔레트 미등재) ── */
+  --color-label-normal:      #d8d8d8;
+  --color-label-neutral:     #9e9e9e;
+  --color-label-alternative: #797979;
+  --color-label-assistive:   #6b6b6b;
+  --color-label-inverse:     #232323;
+
+  /* ── Interaction ── */
+  --color-interaction-hover:   #3b3b3b;
+  --color-interaction-pressed: #595959;
+
+  /* ── Line ── */
+  --color-line-neutral: #3b3b3b;
+  --color-line-normal:  #595959;
+  --color-line-strong:  #6b6b6b;
+
+  /* ── Fill ── */
+  --color-fill-neutral: #2d2d2d;
+  --color-fill-normal:  #3b3b3b;
+  --color-fill-strong:  #595959;
+
+  /* ── Background ── */
+  --color-background-base: #232323;
+
+  /* ── Layer ── */
+  --color-layer-surface: #282828;
+  --color-layer-overlay: #00000080;
+
+  /* ── Elevation (Shadow) — 다크 ── */
+  --shadow-sm: 0 1px 8px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 2px 12px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.16);
+  --shadow-xl: 0 6px 24px rgba(0, 0, 0, 0.24);
+}
+
+
+/* ============================================================
+   3. SPACING — 4px 기본 단위 (미세 조정용 2px = 4xs 예외)
+      Figma: Semactic_num · docs/foundation/spacing.md
+   ============================================================ */
+
+:root {
+  --spacing-none: 0px;
+  --spacing-4xs:  2px;
+  --spacing-3xs:  4px;
+  --spacing-2xs:  8px;
+  --spacing-xs:   12px;
+  --spacing-sm:   16px;
+  --spacing-md:   20px;
+  --spacing-lg:   24px;
+  --spacing-xl:   32px;
+  --spacing-2xl:  40px;
+  --spacing-3xl:  48px;
+  --spacing-4xl:  64px;
+}
+
+
+/* ============================================================
+   4. RADIUS
+      Figma: Semactic_num · docs/foundation/radius.md
+   ============================================================ */
+
+:root {
+  --radius-none: 0px;
+  --radius-xxs:  4px;    /* 작은 컴포넌트 (Badge, 24px 버튼 등) — 2026-08-28 Figma 스케일 재편: 구 xs */
+  --radius-xs:   6px;    /* Checkbox, Tooltip — 2026-08-28 신설 */
+  --radius-sm:   8px;    /* 인풋 박스 */
+  --radius-md:   12px;   /* 표준 버튼, 모달, 카드 */
+  --radius-lg:   16px;   /* 큰 버튼(54px+), 섹션 카드 */
+  --radius-xl:   24px;   /* 강조 버튼·팝업 */
+  --radius-2xl:  38px;   /* Bottom Sheet */
+  --radius-3xl:  64px;
+  --radius-full: 999px;  /* Pill 버튼 */
+}
+
+
+/* ============================================================
+   5. TYPOGRAPHY — 스타일별 토큰 (Pretendard)
+      docs/foundation/typography.md — Display~Caption2 11단계
+      line-height: Heading류 1.4 / Body류 1.5 / Caption류 1.3
+   ============================================================ */
+
+/* ── Desktop (기본값) ── */
+:root {
+  --typography-display-font-family: Pretendard;
+  --typography-display-font-size: 40px;
+  --typography-display-line-height: 1.4;
+
+  --typography-title-font-family: Pretendard;
+  --typography-title-font-size: 32px;
+  --typography-title-line-height: 1.4;
+
+  --typography-heading1-font-family: Pretendard;
+  --typography-heading1-font-size: 28px;
+  --typography-heading1-line-height: 1.4;
+
+  --typography-heading2-font-family: Pretendard;
+  --typography-heading2-font-size: 24px;
+  --typography-heading2-line-height: 1.4;
+
+  --typography-heading3-font-family: Pretendard;
+  --typography-heading3-font-size: 20px;
+  --typography-heading3-line-height: 1.4;
+
+  --typography-heading4-font-family: Pretendard;
+  --typography-heading4-font-size: 18px;
+  --typography-heading4-line-height: 1.4;
+
+  --typography-body1-font-family: Pretendard;
+  --typography-body1-font-size: 16px;
+  --typography-body1-line-height: 1.5;
+
+  --typography-body2-font-family: Pretendard;
+  --typography-body2-font-size: 14px;
+  --typography-body2-line-height: 1.5;
+
+  --typography-body3-font-family: Pretendard;
+  --typography-body3-font-size: 13px;
+  --typography-body3-line-height: 1.5;
+
+  --typography-caption1-font-family: Pretendard;
+  --typography-caption1-font-size: 12px;
+  --typography-caption1-line-height: 1.3;
+
+  --typography-caption2-font-family: Pretendard;
+  --typography-caption2-font-size: 11px;
+  --typography-caption2-line-height: 1.3;
+
+  --typography-label-button-font-family: Pretendard;
+  --typography-label-button-font-size: 16px;
+  --typography-label-button-font-weight: 700;
+  --typography-label-button-line-height: 1.4;
+
+  --typography-label-button-sm-font-family: Pretendard;
+  --typography-label-button-sm-font-size: 14px;
+  --typography-label-button-sm-font-weight: 500;
+  --typography-label-button-sm-line-height: 1.4;
+}
+
+/* ── Mobile (≤768px) — docs/foundation/typography.md Responsive Style 표
+   font-family / line-height / label-button은 데스크탑과 동일 ── */
+@media (max-width: 768px) {
+  :root {
+    --typography-display-font-size: 32px;
+    --typography-title-font-size: 28px;
+    --typography-heading1-font-size: 24px;
+    --typography-heading2-font-size: 20px;
+    --typography-heading3-font-size: 18px;
+    --typography-heading4-font-size: 16px;
+    --typography-body1-font-size: 14px;
+    --typography-body2-font-size: 13px;
+    --typography-body3-font-size: 12px;
+    --typography-caption1-font-size: 11px;
+    --typography-caption2-font-size: 10px;
+  }
+}
+
+
+/* ============================================================
+   6. MOTION
+      docs/foundation/motion.md — 기능적 사용만, 장식 금지
+   ============================================================ */
+
+:root {
+  --duration-instant: 100ms;
+  --duration-fast:    150ms;  /* 인터랙티브 요소 기본 */
+  --duration-normal:  250ms;
+  --duration-slow:    350ms;  /* 모달·토스트 등 오버레이 */
+
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out:    cubic-bezier(0, 0, 0.2, 1);
+  --ease-in:     cubic-bezier(0.4, 0, 1, 1);
+}

@@ -1,0 +1,21 @@
+/* 원본 custom.css `.component-desc` 와 페이지별 `.component-tag`.
+ * 리드는 원본 17px 였으나 2026-08-21 피드백으로 14px(--font-size-sm) 로 낮춤 — 제목 바로 아래
+ * 안내문이 본문보다 커서 위계가 거꾸로 읽혔다. */
+
+.tag {
+  margin: 0 0 var(--spacing-xs);
+  font-size: var(--font-size-xxs);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-accent-normal);
+}
+
+.desc {
+  /* 음수 마진(-8px)으로 제목에 붙어 있던 것을 검토(2026-08-28 "간격 좁음")로 해제 —
+     제목-리드 간격은 h1 margin-bottom(DocsShell)과 이 0 이 합산돼 16px 이 된다. */
+  margin: 0 0 var(--spacing-xl);
+  font-size: var(--font-size-sm);
+  line-height: 1.7;
+  color: var(--color-label-neutral);
+}

@@ -1,0 +1,41 @@
+/* 토큰 있는 셀 = 2줄 스택(토큰 뱃지 / 칩+hex) — 행 높이 균일 (2026-08-28 피드백) */
+.swatch {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-3xs);
+  min-width: 0;
+}
+
+/* 토큰 뱃지는 한 줄 고정 — 열이 좁으면 꺾이지 않고 말줄임(전체 이름은 title 로) */
+.tokenClamp {
+  max-width: 100%;
+}
+
+.tokenClamp code {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.valueRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.chip {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  border-radius: var(--radius-xs);
+}
+
+/* 값 표기 컬러 칩 — 라인 없음이 기본, #ffffff 만 라인
+   (2026-08-28 요청 — color-roles 의 .chipBordered 와 동일 정책) */
+.chipWhite {
+  box-shadow: inset 0 0 0 1px var(--color-line-normal);
+}

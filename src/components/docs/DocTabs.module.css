@@ -1,0 +1,106 @@
+/* 컴포넌트 페이지 Design / Code 탭.
+ *
+ * ⚠️ 이 바를 sticky 로 만들지 말 것. Heading.module.css 가 `scroll-margin-top: 48px` 를
+ *    --docs-anchor-offset 토큰으로 쓰고 있으므로, sticky 로 바꾸려면 그 토큰을 바 높이만큼
+ *    키워야 한다. 안 하면 248개 앵커가 전부 바 뒤로 착지한다(조용한 전역 회귀). */
+
+/* 래퍼 — 탭 바 자체(테두리·간격·밑줄)는 이제 PDS Tabs 가 그린다(2026-08-25 어댑터 전환).
+   여기서는 위쪽 여백과 키보드 핸들러 부착 지점만 담당한다. */
+.tablist {
+  position: relative;
+  margin: var(--spacing-lg) 0 0;
+}
+
+/* 밑줄을 콘텐츠 폭 전체로 잇는다.
+   PDS Tabs 의 hug 레이아웃은 컨테이너가 fit-content 라 divider 가 **탭 셀 합만큼만** 그어진다
+   (하이라이트 3개를 합치면 회색 바가 되는 패키지 규약 — 건드리지 않는다). 문서에서는 이 바가
+   섹션 구분선 역할이라 폭이 끝까지 가야 해서, 같은 색·같은 y 에 전폭 선을 한 겹 덧그어 잇는다.
+   bottom:0 이 탭 컨테이너 아래 모서리 = 패키지 border 자리라 굵기가 겹쳐 보이지 않는다.
+
+   ⚠️ ::after 가 아니라 **::before** 여야 한다. 둘 다 위치 지정 요소라 트리 순서대로 칠해지는데,
+   ::after 는 탭 컨테이너 **뒤에** 와서 활성 인디케이터(2px, bottom:-1)의 아래 1px 을 회색으로
+   덮어 버린다 — 스트로크가 1px 로 깎여 보이던 원인. ::before 는 먼저 칠해져 인디케이터가
+   회색선 위에 온전히 겹친다. */
+.tablist::before {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  background: var(--color-line-neutral);
+}
+
+/* PDS Tabs 는 hug 레이아웃에서 버튼 사이 간격을 주지 않는다 — 문서 톤(널찍한 2탭)에 맞춰 벌린다.
+   :global 은 패키지가 인라인 스타일로 그린 버튼을 겨냥하기 위한 것(클래스 훅이 없다). */
+.tablist :global([role='tab'] + [role='tab']) {
+  margin-left: var(--spacing-md);
+}
+
+/* ⚠️ 활성 탭 굵기는 문서에서 못 올린다 — PDS Tabs 가 font-weight 를 **인라인 스타일**로 주기 때문에
+   외부 클래스가 진다(!important 를 쓰면 이기지만, 패키지 시각 규약을 문서가 몰래 덮는 셈이라 안 한다).
+   현재 위치 단서는 PDS 가 정한 색 대비 + 인디케이터 밑줄이 담당한다. 굵기까지 필요하면 패키지의
+   secondary variant 를 고치는 게 맞다(2026-08-25 판단). */
+
+@media (prefers-reduced-motion: reduce) {
+  /* 인라인 transition 을 이기려면 !important 가 유일한 수단 — 접근성 요구라 예외를 둔다 */
+  .tablist :global([role='tab']),
+  .tablist :global([role='tablist'] > span) {
+    transition: none !important;
+  }
+}
+
+.badge {
+  margin-left: 6px;
+  padding: 1px 6px;
+  border-radius: var(--radius-full);
+  background: var(--kit-brand-soft);
+  color: var(--color-accent-normal);
+  font-size: var(--font-size-xxxs);
+  font-weight: 600;
+  vertical-align: middle;
+}
+
+/* ⚠️ [hidden] 은 UA 스타일시트 명세성이라 아래 .panel 규칙에 진다 — 명시적으로 다시 눌러야 한다 */
+.panel {
+  display: block;
+}
+
+.panel[hidden] {
+  display: none;
+}
+
+/* 패널 첫 H2 (또는 리드 문단 바로 다음 H2) 는 탭 바 아래라 구분선이 중복이다 — seed 처럼 뗀다 */
+.panel > :is(h2:first-child, p:first-child + h2) {
+  margin-top: var(--spacing-xl);
+  padding-top: 0;
+  border-top: 0;
+}
+
+/* 인쇄할 땐 두 탭 다 나오게 */
+@media print {
+  .panel[hidden] {
+    display: block;
+  }
+  .tablist {
+    display: none;
+  }
+}
+
+/* Design 탭 본문에서 Code 탭으로 보내는 인라인 링크 */
+.switchLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: var(--font-size-sm);
+  color: var(--color-accent-normal);
+  cursor: pointer;
+}
+
+.switchLink:hover {
+  text-decoration: underline;
+}

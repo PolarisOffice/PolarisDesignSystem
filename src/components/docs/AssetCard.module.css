@@ -1,0 +1,192 @@
+/* 에셋 다운로드 카드 — 원본 custom.css 의 `.asset-card` 계열(대형 5회) 과
+ * `.asset-card-sm` 계열(소형 17회). 프리뷰 면 + 메타 바 2단 구조가 동일해 하나로 합쳤다. */
+
+.card {
+  border: 1px solid var(--color-line-neutral);
+  border-radius: var(--radius-md);
+  /* overflow: hidden 금지 — '화면용 ▾' 드롭다운(Po26Actions)이 카드 밖으로 떠야 한다.
+     모서리 클리핑은 첫/마지막 자식(.preview/.meta)의 radius 로 대신한다 (2026-08-24) */
+  margin: var(--spacing-sm) 0;
+}
+
+.card .preview {
+  border-radius: calc(var(--radius-md) - 1px) calc(var(--radius-md) - 1px) 0 0;
+}
+
+.card .meta {
+  border-radius: 0 0 calc(var(--radius-md) - 1px) calc(var(--radius-md) - 1px);
+}
+
+.cardSm {
+  border-radius: 10px;
+  margin: 0;
+}
+
+.cardSm .preview {
+  border-radius: 9px 9px 0 0;
+}
+
+.cardSm .meta {
+  border-radius: 0 0 9px 9px;
+}
+
+.preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* 2026-08-25 피드백("전체적으로 답답해 보인다") — 로고 페이지가 유일한 소비자라 여기서
+     바로 키운다(다른 페이지 영향 없음, grep 확인 완료) */
+  padding: var(--spacing-2xl) var(--spacing-xl);
+  min-height: 132px;
+}
+
+.cardSm .preview {
+  padding: var(--spacing-lg) var(--spacing-md);
+  min-height: 88px;
+  background: var(--color-fill-neutral);
+}
+
+.preview img {
+  max-width: 100%;
+  height: auto;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--color-layer-surface);
+  border-top: 1px solid var(--color-line-neutral);
+}
+
+.cardSm .meta {
+  padding: 12px 16px;
+}
+
+.name {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-label-normal);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.cardSm .name {
+  font-size: var(--font-size-xxs);
+  font-family: inherit;
+}
+
+/* 다운로드 버튼 — 대형은 채움, 소형은 외곽선.
+   `.meta a.download` 로 명세성을 올려 둔다 — 전역 산문 링크 규칙(.main p a 등)이 좁혀졌어도,
+   외부 규칙과의 우선순위가 소스 순서에 좌우되지 않게 결정적으로 이긴다. */
+.meta a.download {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  padding: 6px 14px;
+  background: var(--color-accent-normal);
+  color: var(--color-static-white);
+  border-radius: 6px;
+  font-size: var(--font-size-xxs);
+  font-weight: 600;
+  text-decoration: none;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+.meta a.download:hover {
+  background: var(--color-accent-strong);
+  text-decoration: none;
+}
+
+.cardSm .meta a.download {
+  padding: 4px 10px;
+  background: var(--color-fill-neutral);
+  color: var(--color-accent-normal);
+  border: 1px solid var(--color-accent-normal);
+  border-radius: 5px;
+  font-size: var(--font-size-xxxs);
+}
+
+.cardSm .meta a.download:hover {
+  background: var(--docs-accent-surface);
+}
+
+/* 컬러/화이트 짝 — 2열. 카드 자체 마진은 그리드 gap 에 양보한다 */
+.pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spacing-lg);
+  margin: var(--spacing-lg) 0;
+}
+
+.pair .card {
+  margin: 0;
+}
+
+/* 짝 카드의 프리뷰는 높이를 맞춘다 — 가로형/세로형이 섞여도 바닥선이 어긋나지 않게 */
+.pair .preview {
+  min-height: 148px;
+  padding: var(--spacing-xl) var(--spacing-lg);
+}
+
+@media (max-width: 640px) {
+  .pair {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 소형 카드용 그리드 */
+.smallGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--spacing-sm);
+  margin: var(--spacing-lg) 0 var(--spacing-2xl);
+}
+
+/* ── 포맷 버튼 묶음 (SVG / PNG / AI) — 2026-08-21 ── */
+.formats {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+/* 보조 포맷 — 주 버튼(.download)보다 한 단계 약하게 */
+.meta .formatBtn {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border: 1px solid var(--color-line-normal);
+  border-radius: 6px;
+  background: var(--color-background-base);
+  color: var(--color-label-neutral);
+  font: inherit;
+  font-size: var(--font-size-xxs);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out);
+}
+
+.meta .formatBtn:hover:not(:disabled) {
+  border-color: var(--color-accent-normal);
+  color: var(--color-accent-normal);
+  text-decoration: none;
+}
+
+.meta .formatBtn:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.cardSm .meta .formatBtn {
+  padding: 4px 8px;
+  font-size: var(--font-size-xxxs);
+}
+
+@media (max-width: 480px) {
+  .meta {
+    flex-wrap: wrap;
+  }
+}

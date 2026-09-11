@@ -1,0 +1,602 @@
+/* PDS 전역 스타일 — Polaris Design System 토큰 기반
+   (2026-08-12: PDS 문서 사이트의 디자인 언어를 킷 셸로 이식)
+
+   토큰 원본: packages/pds-react/tokens.css (정본). pds-tokens.css 는 빌드가 생성한다
+   (scripts/sync-pds-tokens-css.mjs — 정본 + src/styles/pds-tokens.bridge.css). 손대지 않는다.
+
+   ⚠️ 다크 전환은 PDS 규약대로 `html[data-theme]` 로만 이뤄진다 (prefers-color-scheme
+   분기 없음). 시스템 설정 반영·무플래시는 layout.tsx 의 인라인 스크립트가 담당하므로
+   여기에 prefers-color-scheme 블록을 되살리면 두 경로가 어긋난다. */
+
+@import './pds-tokens.css';
+
+/* ── 킷 레거시 변수 → PDS semantic 브리지 ──
+   아래 3개는 `.dgv-*`·`.design-guide-scroll` 등 기존 규칙이 참조하고 있어 **이름은 유지**하고
+   값만 PDS 로 갈아끼운다. DesignGuideView 는 CSS 변수를 쓰지 않고 업로드된 토큰을 인라인으로
+   칠하므로(가이드 상세 렌더) 이 브리지가 상세 화면 색을 건드리지 않는다. */
+:root {
+  --bg-primary: var(--color-background-base);
+  --text-primary: var(--color-label-normal);
+  --border-soft: var(--color-line-neutral);
+
+  /* 브랜드 연한 배경 — PDS semantic 에 대응 토큰이 없다(그들 VitePress custom.css 도 같은 공백을
+     만나 --vp-c-brand-soft 를 rgba 12% 로 직접 썼다). "primitive 직접 사용 금지" 규칙을 지키려고
+     accent-normal 에서 합성한다 — 라이트/다크 양쪽에서 자동으로 맞는다. */
+  --kit-brand-soft: color-mix(in srgb, var(--color-accent-normal) 12%, transparent);
+
+  /* 성공 상태색 — PDS semantic 에 success 가 없다. (PDS landing.html 이 `--color-state-success`
+     를 참조하는데 tokens.css 에 그 이름의 선언이 없어 현재 무효로 떨어진다 — 우리 쪽 문제가
+     아니라 PDS 토큰 공백이다.) 값이 정해지면 이 한 줄만 semantic 참조로 바꾸면 된다. */
+  --kit-state-success: var(--primitive-green-70);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+/* body 는 고정 높이가 아니라 min-height — height:100% 로 뷰포트에 고정하면 콘텐츠가
+   body 를 넘쳐 흐르고, body 박스에 갇힌 sticky GNB 가 스크롤 끝에서 밀려 올라간다
+   (2026-08-31 피드백 실측: body 1321px vs 콘텐츠 2688px, 헤더 -141px 이탈) */
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100%;
+  background: var(--color-background-base);
+  color: var(--color-label-normal);
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', sans-serif;
+  font-size: var(--font-size-md);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+}
+
+::selection {
+  background: var(--kit-brand-soft);
+}
+
+/* 시각적으로만 숨김 — 스크린리더에는 읽힌다.
+   SpecTable 의 <caption> 이 이 클래스를 쓰는데 정의가 없어 표 위에 그대로 보이던 버그를 고친다. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── 상단 GNB — PDS 문서 사이트 조성 ──
+   높이 48px 은 `.design-guide-scroll` 과 `.dgv-sidebar` 의 calc(… - 48px) 과 쌍이고,
+   그 두 규칙은 VibeAgent 웹 globals.css 와 SYNC 대상이다. 높이를 바꾸려면 킷 3곳 +
+   웹까지 같이 고쳐야 하므로 이번 이식에서는 48px 을 그대로 둔다. */
+.kit-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 48px;
+  padding: 0 var(--spacing-md);
+  border-bottom: 1px solid var(--color-line-neutral);
+  background: var(--color-background-base);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.kit-header .kit-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2xs);
+  /* 워드마크는 텍스트가 아니라 SVG 마스크(아래 .kit-logo-text)라 서체 지정이 없다. font-size 는
+     워드마크 박스의 em 치수 기준으로만 쓴다 — 24px 심볼 대비 작아 보인다는 피드백(2026-08-31)으로
+     md→lg 한 단 확대한 값 */
+  font-size: var(--font-size-lg);
+  text-decoration: none;
+  color: var(--color-label-normal);
+}
+
+/* 워드마크 "PDS" — 브랜드 서체 글리프를 SVG 패스로 뽑은 /brand-assets/pds-wordmark.svg 를 마스크로 그린다
+   (브랜드 자산 라이선스 폴더 — public/brand-assets/LICENSE.md). 서체 파일(TTF)은 저장소에 싣지 않는다
+   (브랜드 서체 재배포 회피). 색은 background 의 currentColor 가
+   담당해 다크 모드를 그대로 따른다. viewBox 가 잉크 경계(1616.52×762, 1024upm 기준)라 박스 중심 =
+   글리프 잉크 중심이고, 과거 텍스트 렌더 시절의 translateY(0.03em) 광학 보정은 필요 없어졌다.
+   치수는 em — 서체로 그리던 때와 같은 크기(font-size-lg 18px 기준 28.4×13.4px), 모바일 16px 에도 비례.
+   재생성: 브랜드 서체 원본에서 fontTools 로 "PDS" 글리프 패스 추출(자간 -0.01em 반영) */
+.kit-header .kit-logo-text {
+  display: inline-block;
+  width: 1.5786em;
+  height: 0.7441em;
+  background-color: currentColor;
+  -webkit-mask: url('/brand-assets/pds-wordmark.svg') no-repeat center / contain;
+  mask: url('/brand-assets/pds-wordmark.svg') no-repeat center / contain;
+}
+
+/* 심볼도 글자 잉크 중심보다 0.74px 아래에 앉아 있었다(2026-09-02 실측) — 정렬이 안 맞아
+   보인다는 의견을 받아 그만큼 올린다. 워드마크와 달리 px 로 두는 이유는 심볼이 24px 고정
+   크기라 폰트 크기에 연동되지 않기 때문이다 */
+.kit-header .kit-logo img {
+  transform: translateY(-1.5px);
+}
+
+.kit-header nav {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  font-size: var(--font-size-sm);
+}
+
+.kit-header nav a {
+  text-decoration: none;
+  font-weight: 500;
+  color: var(--color-label-neutral);
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.kit-header nav a:hover {
+  color: var(--color-label-normal);
+}
+
+/* 활성 메뉴 — PDS docs 는 브랜드색으로 현재 섹션을 표시한다 */
+.kit-header nav a[aria-current='page'] {
+  color: var(--color-accent-normal);
+}
+
+/* 내 디자인 시스템 진입점 — 문서 탭과 성격이 달라(도구) 필 버튼으로 구분한다.
+   활성 표시는 탭(글자색)과 달리 테두리·글자를 함께 브랜드색으로 */
+.kit-header-kit-link {
+  display: inline-flex;
+  align-items: center;
+  height: 28px;
+  padding: 0 var(--spacing-2xs);
+  white-space: nowrap;
+  flex-shrink: 0;
+  border: 1px solid var(--color-line-neutral);
+  border-radius: var(--radius-sm);
+  /* 레이블 위계는 문서 탭(sm/500)보다 한 단 아래 — 도구 진입점이 탭보다 크게 말하지 않게 */
+  font-size: var(--font-size-xs);
+  font-weight: 400;
+  color: var(--color-label-neutral);
+  text-decoration: none;
+  transition:
+    color var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out),
+    background-color var(--duration-fast) var(--ease-out);
+}
+
+.kit-header-kit-link:hover {
+  color: var(--color-label-normal);
+  background: var(--color-interaction-hover);
+}
+
+.kit-header-kit-link[aria-current='page'] {
+  color: var(--color-accent-normal);
+  border-color: var(--color-accent-normal);
+}
+
+/* 인라인 링크 묶음 — nav 직계에서 span 으로 감싸면서 링크 간 간격을 이어받는다 */
+.kit-nav-links {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+/* 초협폭 GNB 오버플로(⋯) — 링크를 욱여넣는 대신 팝오버 리스트로 노출(375px 실측:
+   인라인 유지 시 우측 아이콘이 잘린다). 데스크톱에선 버튼 자체가 없다 */
+.kit-nav-overflow {
+  position: relative;
+  display: none;
+  align-items: center;
+}
+
+.kit-nav-more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--color-label-neutral);
+  cursor: pointer;
+}
+
+.kit-nav-more:hover,
+.kit-nav-more[aria-expanded='true'] {
+  background: var(--color-interaction-hover);
+  color: var(--color-label-normal);
+}
+
+.kit-nav-popover {
+  position: absolute;
+  top: calc(100% + var(--spacing-2xs));
+  right: 0;
+  z-index: 30; /* 헤더(20) 위 */
+  display: flex;
+  flex-direction: column;
+  min-width: 168px;
+  padding: var(--spacing-3xs);
+  background: var(--color-layer-surface);
+  border: 1px solid var(--color-line-neutral);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
+}
+
+.kit-nav-popover a {
+  padding: var(--spacing-2xs) var(--spacing-xs);
+  border-radius: var(--radius-xs);
+  font-size: var(--font-size-sm);
+  white-space: nowrap;
+}
+
+.kit-nav-popover a:hover {
+  background: var(--color-interaction-hover);
+}
+
+.kit-nav-popover-divider {
+  height: 1px;
+  margin: var(--spacing-3xs) var(--spacing-2xs);
+  background: var(--color-line-neutral);
+}
+
+@media (max-width: 700px) {
+  .kit-header {
+    padding: 0 var(--spacing-xs);
+  }
+  .kit-nav-links {
+    display: none;
+  }
+  .kit-nav-overflow {
+    display: inline-flex;
+  }
+}
+
+/* 테마 토글 — PDS docs GNB 우측 스위치 */
+/* 햄버거 + 로고 그룹 — 둘이 붙어 다닌다(모바일 피드백 2026-08-19) */
+.kit-header-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2xs);
+}
+
+/* 모바일 사이드바 토글(햄버거) — 960px 이하에서만. 상태는 KitHeader 가 html[data-nav-open] 로 발행 */
+.kit-nav-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--color-line-neutral);
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--color-label-neutral);
+  cursor: pointer;
+}
+.kit-nav-toggle:hover,
+.kit-nav-toggle[aria-expanded='true'] {
+  background: var(--color-interaction-hover);
+  color: var(--color-label-normal);
+}
+@media (max-width: 960px) {
+  .kit-nav-toggle {
+    display: inline-flex;
+  }
+  /* 시트가 열려 있는 동안 뒤 본문이 스크롤되지 않게 */
+  html[data-nav-open='true'] {
+    overflow: hidden;
+  }
+}
+
+/* 아이콘 버튼 쌍(검색·테마) — nav gap(20px)은 텍스트 링크용이라 별도 그룹으로 8px 로 좁힌다 */
+.kit-header-icons {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2xs);
+}
+
+.kit-theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--color-line-neutral);
+  border-radius: var(--radius-full);
+  background: var(--color-fill-neutral);
+  color: var(--color-label-neutral);
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+
+.kit-theme-toggle:hover {
+  background: var(--color-interaction-hover);
+  color: var(--color-label-normal);
+}
+
+/* 가이드 페이지 스크롤 컨테이너 — VibeAgent 웹과 동일 클래스 (GuideView 사본 호환) */
+.design-guide-scroll {
+  height: calc(100vh - 48px); /* 48px = .kit-header 고정 높이와 쌍 */
+  height: calc(100dvh - 48px); /* iOS Safari 주소창 transition 대응 — 두 줄 패턴 유지 */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+
+/* GuideView 사본이 의존하는 마크다운 블록 스타일 — 출처: VibeAgent 웹 globals.css 의
+   `.design-guide-md` 블록 (SYNC: 웹 쪽 규칙 변경 시 함께 갱신) */
+.design-guide-md p { margin: 6px 0; }
+.design-guide-md ul, .design-guide-md ol { margin: 6px 0; padding-left: 20px; }
+.design-guide-md code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.92em; background: rgba(148,163,184,0.16); padding: 1px 5px; border-radius: 5px; }
+.design-guide-md pre { background: rgba(15,23,42,0.85); color: #e2e8f0; padding: 14px; border-radius: 10px; overflow-x: auto; }
+.design-guide-md pre code { background: none; padding: 0; }
+.design-guide-md table { border-collapse: collapse; margin: 8px 0; }
+.design-guide-md th, .design-guide-md td { border: 1px solid rgba(148,163,184,0.3); padding: 4px 10px; font-size: 12.5px; }
+
+/* ── 문서 본문 컨테이너 ── */
+.kit-main {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: var(--spacing-2xl) var(--spacing-md) 80px;
+}
+
+/* 페이지 타이틀 — PDS docs 는 H1 아래 17px/1.7 설명문(.component-desc)을 둔다 */
+.kit-page-title {
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 var(--spacing-2xs);
+  color: var(--color-label-normal);
+}
+
+.kit-page-desc {
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--color-label-neutral);
+  margin: 0 0 var(--spacing-xl);
+}
+
+/* 섹션 제목 — PDS docs 의 .vp-doc h2 (margin-top 48 · padding-top 24 · 상단 구분선) */
+.kit-section-title {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: var(--spacing-3xl) 0 var(--spacing-xs);
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid var(--color-line-neutral);
+  color: var(--color-label-normal);
+}
+
+.kit-section-title:first-of-type {
+  margin-top: var(--spacing-xl);
+}
+
+/* 카테고리 배지 — PDS docs .component-badge */
+.kit-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  background: var(--kit-brand-soft);
+  color: var(--color-accent-normal);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xxs);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* ── 카드 ──
+   PDS docs .asset-card 패턴: 본문 영역과 메타 영역을 구분선으로 나눈다. */
+.kit-card {
+  border: 1px solid var(--color-line-neutral);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  margin-bottom: var(--spacing-xs);
+  background: var(--color-layer-surface);
+  transition: border-color var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.kit-card a {
+  text-decoration: none;
+}
+
+/* 링크 카드 — 통째로 눌리는 카드는 hover 로 눌림 가능함을 알린다 */
+.kit-card-link {
+  display: block;
+  border: 1px solid var(--color-line-neutral);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--color-layer-surface);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.kit-card-link:hover {
+  border-color: var(--color-accent-normal);
+  box-shadow: var(--shadow-md);
+}
+
+.kit-card-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.kit-card-title {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--color-label-normal);
+  margin: var(--spacing-2xs) 0 var(--spacing-3xs);
+}
+
+/* 카드 안 설명문은 제목 바로 아래 붙는다 */
+.kit-card-link .kit-muted {
+  margin: 0;
+}
+
+/* 카드 하단 메타 줄 — .asset-meta 처럼 구분선 위 보조 정보 */
+.kit-card-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-2xs);
+  margin-top: var(--spacing-xs);
+  padding-top: var(--spacing-xs);
+  border-top: 1px solid var(--color-line-neutral);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: var(--font-size-xxs);
+  color: var(--color-label-assistive);
+}
+
+.kit-muted {
+  font-size: var(--font-size-xs);
+  color: var(--color-label-alternative);
+}
+
+/* 빈 상태 — 카드가 하나도 없을 때 */
+.kit-empty {
+  border: 1px dashed var(--color-line-normal);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-xl) var(--spacing-md);
+  text-align: center;
+  font-size: var(--font-size-sm);
+  color: var(--color-label-alternative);
+  background: var(--color-fill-neutral);
+}
+
+.kit-code {
+  display: block;
+  background: var(--color-fill-neutral);
+  border: 1px solid var(--color-line-neutral);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: var(--font-size-xxs);
+  line-height: 1.7;
+  color: var(--color-label-normal);
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.kit-upload textarea,
+.kit-upload input[type='password'] {
+  width: 100%;
+  border: 1px solid var(--color-line-normal);
+  border-radius: var(--radius-sm);
+  background: var(--color-background-base);
+  color: var(--color-label-normal);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font-size: var(--font-size-xs);
+}
+
+.kit-upload textarea:focus-visible,
+.kit-upload input[type='password']:focus-visible {
+  outline: 2px solid var(--color-accent-normal);
+  outline-offset: 1px;
+  border-color: transparent;
+}
+
+.kit-upload button {
+  border: 1px solid transparent;
+  background: var(--color-accent-normal);
+  color: var(--color-static-white);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-2xs) var(--spacing-sm);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+.kit-upload button:hover:not(:disabled) {
+  background: var(--color-accent-strong);
+}
+
+.kit-upload button:disabled {
+  background: var(--color-fill-strong);
+  color: var(--color-label-assistive);
+  cursor: default;
+}
+
+.kit-issues {
+  border: 1px solid color-mix(in srgb, var(--color-state-error) 50%, transparent);
+  background: color-mix(in srgb, var(--color-state-error) 8%, transparent);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font-size: var(--font-size-xs);
+  line-height: 1.7;
+  margin-top: var(--spacing-xs);
+}
+
+.kit-success {
+  border: 1px solid color-mix(in srgb, var(--kit-state-success) 50%, transparent);
+  background: color-mix(in srgb, var(--kit-state-success) 8%, transparent);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font-size: var(--font-size-xs);
+  line-height: 1.7;
+  margin-top: var(--spacing-xs);
+}
+
+/* 디자인 가이드 PDS 레이아웃 — GuideView 사본 의존 (SYNC: VibeAgent 웹 globals.css 와 함께 갱신) */
+.dgv-layout { display: flex; align-items: flex-start; }
+.dgv-sidebar {
+  position: sticky;
+  top: var(--dgv-topbar-h, 58px); /* 가이드 상단 바 실측 높이 — DesignGuideView 가 var 주입 */
+  width: 224px;
+  flex-shrink: 0;
+  max-height: calc(100vh - 48px - var(--dgv-topbar-h, 58px)); /* 48px kit-header + 가이드 상단 바 */
+  max-height: calc(100dvh - 48px - var(--dgv-topbar-h, 58px)); /* 두 줄 패턴 유지 */
+  overflow-y: auto;
+  padding: 26px 14px 40px 0; /* 상단 26px = .dgv-main 본문 시작 높이와 정렬 (고정값) */
+  border-right: 1px solid;
+  border-right-color: inherit;
+}
+.dgv-main { flex: 1; min-width: 0; max-width: 880px; padding: 26px 0 80px 32px; }
+/* LNB hover — 비활성 항목은 인라인 background 미지정이라 CSS 가 이김. 색은 브랜드 var (DesignGuideView 주입) */
+/* 보강 진행 점 — AI 가 문서를 채우는 중임을 알리는 표시 */
+.dgv-pulse { animation: dgv-pulse 1.4s ease-in-out infinite; }
+@keyframes dgv-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+@media (prefers-reduced-motion: reduce) { .dgv-pulse { animation: none; } }
+.dgv-nav-item { background: transparent; transition: background-color 0.12s; }
+.dgv-nav-item:hover { background: var(--dgv-hover-bg, rgba(148, 163, 184, 0.14)); }
+.dgv-foot-link:hover { text-decoration: underline; }
+/* LNB 활성 인디케이터 — 단일 pill 이 실측 좌표로 슬라이드 (색·좌표는 인라인, 전환만 CSS) */
+.dgv-nav-indicator { transition: top 0.24s cubic-bezier(0.3, 0, 0.2, 1), left 0.24s cubic-bezier(0.3, 0, 0.2, 1), width 0.24s ease, height 0.24s ease; }
+@media (prefers-reduced-motion: reduce) {
+  .dgv-nav-indicator { transition: none; }
+}
+@media (max-width: 860px) {
+  .dgv-layout { flex-direction: column; }
+  .dgv-sidebar {
+    position: relative; /* static 이면 인디케이터(absolute) 기준이 aside 밖으로 탈출 — top 은 0 으로 무효화 */
+    top: 0;
+    width: 100%;
+    /* 컴포넌트 다수일 때 사이드바가 본문을 화면 밖으로 밀지 않게 높이 캡 */
+    max-height: 40vh;
+    max-height: 40dvh; /* 두 줄 패턴 유지 */
+    overflow-y: auto;
+    display: flex;
+    gap: 18px;
+    overflow-x: auto;
+    padding: 4px 0 10px;
+    border-right: none;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.3);
+  }
+  .dgv-nav-group { flex-shrink: 0; min-width: 150px; }
+  .dgv-main { padding-left: 0; }
+}

@@ -1,0 +1,109 @@
+/* 스펙 표 — 원본 PDS 문서의 `.spec-table-outer` + `.spec-table` 을 하나로 합친 것.
+ *
+ * 원본은 같은 표를 9가지 이름으로 부르고 있었다: spec-table-outer · el-table-outer ·
+ * mo-table-outer · sp-table-outer · bp-table-outer · radius-table-outer · sv-table-outer ·
+ * type-scale-outer · token-table-outer. 감싸는 규칙(1px 테두리 + radius 16 + overflow hidden +
+ * clip-path)과 모서리 반경 규칙 4개가 전부 동일하고, 유일한 차이인 셀 패딩은 **VitePress 가
+ * 페이지 <style> 을 전역으로 뿌리는 탓에 마지막 로드가 이겨서 실제로는 한 번도 다르게 렌더된 적이
+ * 없다.** 죽은 설정이므로 다수결인 14px 24px 하나로 고정하고 density prop 을 만들지 않는다.
+ *
+ * `!important` 는 필요 없다 — 원본의 그것들은 VitePress 기본 테마의 표 스타일을 이기기 위한
+ * 것이었고, 여기서는 경쟁 상대가 없다. */
+
+.outer {
+  width: 100%;
+  margin: var(--spacing-xs) 0 var(--spacing-2xl);
+  border: 1px solid var(--color-line-neutral);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  /* radius-lg(16) 안쪽으로 1px — 테두리 두께만큼 빼야 모서리에서 배경이 새지 않는다 */
+  clip-path: inset(0 round 15px);
+}
+
+.table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 0;
+}
+
+.table thead th {
+  text-align: left;
+  padding: 14px 24px;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-label-neutral);
+  background: var(--color-fill-neutral);
+  border-bottom: 1px solid var(--color-line-neutral);
+}
+
+.table thead th:first-child {
+  border-top-left-radius: 15px;
+}
+
+.table thead th:last-child {
+  border-top-right-radius: 15px;
+}
+
+.table tbody td {
+  padding: 14px 24px;
+  vertical-align: middle;
+  font-size: var(--font-size-xs);
+  line-height: 1.6;
+  color: var(--color-label-normal);
+  /* layer-surface — 테두리를 가진 컨테이너 안쪽 면. 다크에서 background-base(#232323)와
+     한 단계 밝기 차이를 만들어 깊이 단서가 된다 */
+  background: var(--color-layer-surface);
+  border-bottom: 1px solid var(--color-line-neutral);
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.table tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 15px;
+}
+
+.table tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 15px;
+}
+
+.alignCenter {
+  text-align: center;
+}
+
+.alignRight {
+  text-align: right;
+}
+
+/* 토큰명 — 모노스페이스 기본색 */
+/* 토큰명은 항상 그레이 박스 뱃지 (2026-08-28 피드백) — SpecToken 한 곳이 전 문서를 통일한다 */
+.token {
+  display: inline-block;
+  padding: var(--spacing-4xs) var(--spacing-2xs);
+  border-radius: var(--radius-xs);
+  background: var(--color-fill-normal);
+  line-height: 1.5;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: var(--font-size-xxxs);
+  color: var(--color-label-neutral);
+}
+
+/* 값(hex·px) — 모노스페이스 브랜드색. 원본에서 가장 많이 쓰인 인라인 요소 */
+.val {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: var(--font-size-xxs);
+  color: var(--color-accent-normal);
+}
+
+@media (max-width: 720px) {
+  .outer {
+    overflow-x: auto;
+  }
+  .table thead th,
+  .table tbody td {
+    padding: 12px 16px;
+  }
+}

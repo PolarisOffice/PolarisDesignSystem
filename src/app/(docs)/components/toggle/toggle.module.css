@@ -1,0 +1,23 @@
+/* Toggle 페이지 전용 — Design 탭 실물 프리뷰 (2026-08-28 디자인팀장 검토 반영:
+   Base 표와 Case 에 실물이 필요하다).
+   프리뷰는 그림이다 — AnatomyFigure 의 inert 결정(2026-08-19)을 따라 클릭·포커스를 막는다.
+   살아있는 데모는 Code 탭에 따로 있다. */
+
+/* Base 표 안의 상태 프리뷰 — 셀 면(layer-surface) 위에 조용한 면(fill-neutral)을 깔아
+   OFF 트랙(흐린 회색)도 형태가 읽히게 한다. 테두리·그림자 없음(데모 박스 카드화 금지 —
+   Demo.module.css 머리말과 같은 취지) */
+.statePreview {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-2xs) var(--spacing-xs);
+  background: var(--color-fill-neutral);
+  border-radius: var(--radius-sm);
+}
+
+/* Case 프리뷰 — CaseList 섹션이 이미 fill-neutral 의 조용한 면이므로 상자를 또 두르지 않고
+   실물만 본문 흐름(왼쪽 정렬)에 얹는다 */
+.casePreview {
+  display: flex;
+  justify-content: center;
+}

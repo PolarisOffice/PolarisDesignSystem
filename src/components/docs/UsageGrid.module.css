@@ -1,0 +1,55 @@
+/* DO / DON'T 2열 비교 — 원본 `.usage-grid` 외 5종. 9개 페이지에 동일 CSS 가 반복돼 있었다.
+ *
+ * 초록·빨강은 PDS 팔레트에 없는 **삽화용 색**이라 브랜드 토큰이 아니라 docs-tokens.css 의
+ * --docs-illus-* 를 쓴다. PDS 토큰으로 치환하면 DO 의 초록이 브랜드 파랑이 되어 의미가 죽는다. */
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-sm);
+  margin: var(--spacing-sm) 0 var(--spacing-2xl);
+}
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  border-top: 3px solid transparent;
+  padding: var(--spacing-md) var(--spacing-md) var(--spacing-sm);
+  background: var(--color-fill-neutral);
+  border-radius: 0 0 10px 10px;
+}
+
+.cardDo {
+  border-top-color: var(--docs-illus-positive);
+}
+
+.cardDont {
+  border-top-color: var(--docs-illus-negative);
+}
+
+.label {
+  font-size: var(--font-size-xxxs);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  margin-bottom: 10px;
+}
+
+.cardDo .label {
+  color: var(--docs-illus-positive);
+}
+
+.cardDont .label {
+  color: var(--docs-illus-negative);
+}
+
+.list {
+  font-size: var(--font-size-xs);
+  color: var(--color-label-neutral);
+  padding-left: 1.2em;
+  line-height: 2;
+  margin: 0;
+}

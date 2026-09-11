@@ -1,0 +1,40 @@
+/* Toast 페이지 전용 — 2026-08-28 디자인 검토 반영분.
+   ① Case 예문의 실물 Toast 프리뷰 ② Variant/Status Icon 표의 실물 아이콘 자리. */
+
+/* 케이스 예문 프리뷰 프레임 — 미니 화면. CaseBlock 배경(fill-neutral) 위에
+   background-base 면을 깔아 "화면 위에 뜬 Toast" 라는 맥락을 준다. */
+.casePreview {
+  display: flex;
+  justify-content: center;
+  padding: var(--spacing-lg) var(--spacing-md);
+  background: var(--color-background-base);
+  border: 1px solid var(--color-line-neutral);
+  border-radius: var(--radius-md);
+}
+
+/* 실물 Toast 를 문서 흐름에 앉힌다. 컴포넌트는 인라인 스타일 position:fixed 로
+   뷰포트에 뜨는데, className prop 이 바로 그 최외곽 div 에 붙으므로 포지셔닝만
+   !important 로 중화한다(인라인 스타일을 이기는 유일한 수단). 막대의 치수·색·
+   블러·그림자·아이콘·타이포는 전부 실물 그대로다 — 재현 목업이 아니다. */
+.caseToast {
+  position: static !important;
+  transform: none !important;
+}
+
+/* 표 안의 실물 상태 아이콘 — 소스(StatusIcon)의 20px 박스 그대로 */
+.statusIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+/* Specification > Status Icon 셀 — 실물 아이콘과 이름을 나란히 */
+.iconCell {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2xs);
+}

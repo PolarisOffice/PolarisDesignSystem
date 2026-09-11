@@ -1,0 +1,172 @@
+/* Code 탭 — 예제 카드(미리보기 면 + 코드 패널)와 패키지 미발행 안내 */
+
+.shellNotice {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: var(--spacing-lg) 0 var(--spacing-xl);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--color-line-neutral);
+  /* 좌측 accent 강조 바는 삭제 (2026-08-28 검토: "의미 없는 강조 표시 삭제") */
+  border-radius: var(--radius-sm);
+  background: var(--color-fill-neutral);
+}
+
+/* 설치 안내 — 라벨 + 일반 코드블럭(복사 버튼은 CodePanel 공용) */
+.install {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3xs);
+  margin: var(--spacing-lg) 0 var(--spacing-xl);
+}
+
+.installLabel {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-label-neutral);
+}
+
+.shellNoticeTitle {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-label-normal);
+}
+
+.shellNoticeBody {
+  font-size: var(--font-size-xs);
+  line-height: 1.7;
+  color: var(--color-label-neutral);
+}
+
+.shellLinks {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-top: 2px;
+  font-size: var(--font-size-xs);
+}
+
+/* ── 예제 ── */
+.example {
+  margin: 0 0 var(--spacing-2xl);
+}
+
+.exampleTitle {
+  /* 고정 헤더에 가리지 않게 — Heading.module.css 와 같은 변수를 쓴다 */
+  scroll-margin-top: var(--docs-anchor-offset, 64px);
+  margin: 0 0 4px;
+  /* h3 정본 급(20/700)으로 통일 — 구 18px 는 Design 탭 h3 와 급이 어긋났다(2026-08-28 위계 감사) */
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: var(--color-label-normal);
+}
+
+.exampleDesc {
+  margin: 0 0 var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  line-height: 1.7;
+  color: var(--color-label-neutral);
+}
+
+.card {
+  border: 1px solid var(--color-line-neutral);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+/* 미리보기 면 — DemoSurface 와 같은 배경·패딩. 자리표시와 실제 미리보기가 같은 치수여야
+   패키지 도착 후 레이아웃이 안 흔들린다. */
+.preview {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  min-height: 132px;
+  padding: 48px 24px;
+  background: var(--color-fill-neutral);
+}
+
+/* 패키지 미발행 자리표시 — 조용하게. 예제마다 사과문을 반복하지 않는다 */
+.pending {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 36px;
+  border: 1px dashed var(--color-line-normal);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-sm);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: var(--font-size-xxs);
+  color: var(--color-label-assistive);
+}
+
+/* ── 코드 패널 ── */
+.codeWrap {
+  position: relative;
+  /* 이 선은 미리보기↔코드 divider — 카드 첫 자식(미리보기 없는 설치 카드)에선
+     카드 테두리와 1px 겹쳐 두꺼워 보이므로 아래에서 끈다(2026-08-28 피드백) */
+  border-top: 1px solid var(--color-line-neutral);
+  background: var(--color-layer-surface);
+}
+
+.card > .codeWrap:first-child {
+  border-top: none;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--spacing-2xs);
+  padding: var(--spacing-2xs) var(--spacing-xs);
+  border-bottom: 1px solid var(--color-line-neutral);
+}
+
+.toolButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border: 1px solid var(--color-line-neutral);
+  border-radius: var(--radius-full);
+  background: var(--color-background-base);
+  color: var(--color-label-neutral);
+  font: inherit;
+  font-size: var(--font-size-xxs);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out);
+}
+
+.toolButton:hover {
+  background: var(--color-interaction-hover);
+  color: var(--color-label-normal);
+}
+
+.pre {
+  margin: 0;
+  padding: var(--spacing-sm) var(--spacing-md);
+  overflow-x: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: var(--font-size-xxs);
+  line-height: 1.75;
+  color: var(--color-label-normal);
+  tab-size: 2;
+}
+
+/* 접힘 상태 — 서버에서 줄 수로 판정하므로 측정도 깜빡임도 없다 */
+.preClamped {
+  max-height: 260px;
+  overflow-y: hidden;
+}
+
+.fade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 56px;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent, var(--color-layer-surface));
+}

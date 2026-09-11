@@ -1,0 +1,288 @@
+{
+  "_": "Figma 실측 기대값. 값은 Figma MCP(get_design_context·get_variable_defs·에셋 path)에서 읽은 것만 적는다 — md 산문에서 가져오지 않는다. scripts/verify-figma.mjs 가 브라우저 렌더와 대조한다.",
+  "_source": "📚Polaris Design System / fileKey WYHAWNLrCGhbo4Ude41TYl",
+  "button": {
+    "_node": "656:57673 (Button 컴포넌트셋)",
+    "sizes": {
+      "64": {
+        "height": 64,
+        "padding": "0px 32px",
+        "fontSize": "18px",
+        "fontWeight": "700",
+        "borderRadius": "12px"
+      },
+      "54": {
+        "height": 54,
+        "padding": "0px 20px",
+        "fontSize": "16px",
+        "fontWeight": "700",
+        "borderRadius": "12px"
+      },
+      "48": {
+        "height": 48,
+        "padding": "0px 16px",
+        "fontSize": "16px",
+        "fontWeight": "700",
+        "borderRadius": "12px"
+      },
+      "40": {
+        "height": 40,
+        "padding": "0px 12px",
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "borderRadius": "8px"
+      },
+      "32": {
+        "height": 32,
+        "padding": "0px 10px",
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "borderRadius": "8px"
+      },
+      "24": {
+        "height": 24,
+        "padding": "0px 8px",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "borderRadius": "4px"
+      }
+    },
+    "variants": {
+      "primary": {
+        "backgroundColor": "rgb(29, 127, 249)",
+        "color": "rgb(255, 255, 255)"
+      },
+      "default": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "color": "rgb(38, 40, 43)",
+        "borderColor": "rgb(232, 235, 237)"
+      },
+      "ai": {
+        "backgroundColor": "rgb(111, 58, 208)",
+        "color": "rgb(255, 255, 255)"
+      },
+      "sub": {
+        "backgroundColor": "rgb(217, 234, 255)",
+        "color": "rgb(29, 127, 249)"
+      },
+      "gray": {
+        "backgroundColor": "rgb(242, 244, 246)",
+        "color": "rgb(38, 40, 43)"
+      },
+      "black": {
+        "backgroundColor": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)"
+      },
+      "delete": {
+        "backgroundColor": "rgb(249, 92, 92)",
+        "color": "rgb(255, 255, 255)"
+      }
+    },
+    "hover": {
+      "primary": "rgb(20, 88, 173)",
+      "ai": "rgb(81, 27, 178)",
+      "sub": "rgb(187, 216, 253)",
+      "black": "rgb(69, 76, 83)",
+      "gray": "rgb(232, 235, 237)",
+      "default": "rgb(242, 244, 246)"
+    }
+  },
+  "input": {
+    "_node": "649:13814 (Input Filed)",
+    "height": 52,
+    "borderRadius": "8px",
+    "fontSize": "14px",
+    "border": {
+      "default": "rgb(232, 235, 237)",
+      "focus": "rgb(29, 127, 249)",
+      "error": "rgb(249, 92, 92)"
+    },
+    "titleFontSize": "12px"
+  },
+  "toggle": {
+    "_node": "1097:36718 / 1097:36728",
+    "width": 35,
+    "height": 20,
+    "knob": 15,
+    "off": "rgb(242, 244, 246)",
+    "on": "rgb(29, 127, 249)",
+    "labelledWidth": 61,
+    "labelledHeight": 25,
+    "_noteOff": "fill/normal 토큰 (2026-08-26 디자이너가 Figma 에서 연결 — 1097:36717). 다크 값이 따라온다."
+  },
+  "checkbox": {
+    "_node": "1097:36806",
+    "hit": 32,
+    "box": 21,
+    "borderRadius": "6.8px",
+    "borderWidth": "2px",
+    "checked": "rgb(29, 127, 249)",
+    "tone_ai": "rgb(111, 58, 208)"
+  },
+  "radio": {
+    "_node": "1097:36798 + circle-check.svg path",
+    "hit": 32,
+    "box": 21,
+    "borderWidth": "2px",
+    "dot": 7.9,
+    "checked": "rgb(29, 127, 249)",
+    "tone_ai": "rgb(111, 58, 208)"
+  },
+  "tab": {
+    "_node": "652:54836",
+    "height": 60,
+    "fontSize": "16px",
+    "indicator": "2px",
+    "primaryActive": {
+      "color": "rgb(29, 127, 249)",
+      "fontWeight": "700"
+    },
+    "secondaryActive": {
+      "color": "rgb(38, 40, 43)",
+      "fontWeight": "500"
+    },
+    "idle": {
+      "color": "rgb(114, 120, 127)"
+    }
+  },
+  "segment": {
+    "_node": "1043:9161",
+    "boxHeight": 48,
+    "pillRadius": "999px",
+    "activeRadius": "12px",
+    "idleRadius": "20px",
+    "filledActive": {
+      "backgroundColor": "rgb(29, 127, 249)",
+      "color": "rgb(255, 255, 255)"
+    },
+    "outlinedActive": {
+      "backgroundColor": "rgb(255, 255, 255)",
+      "color": "rgb(38, 40, 43)"
+    },
+    "_rule": "선택 여부와 무관하게 항목 폭이 같아야 한다(디자인은 140 고정)",
+    "_noteShadow": "outlined 선택 면 = Elevation sm (2026-08-26 디자이너 확정). 이전 원시값 0 0 2px 0.08 을 대체.",
+    "outlinedShadow": "rgba(0, 0, 0, 0.04) 0px 1px 8px 0px"
+  },
+  "select": {
+    "_node": "852:7542",
+    "sizes": {
+      "lg": {
+        "height": 52,
+        "borderRadius": "8px",
+        "fontSize": "14px"
+      },
+      "md": {
+        "height": 38,
+        "borderRadius": "8px",
+        "fontSize": "13px"
+      },
+      "sm": {
+        "height": 26,
+        "borderRadius": "6px",
+        "fontSize": "13px"
+      }
+    },
+    "openBorder": "rgb(29, 127, 249)",
+    "idleBorder": "rgb(232, 235, 237)",
+    "menuOffset": 4
+  },
+  "menuItem": {
+    "_node": "1054:25095 / 1854:901",
+    "height": 28,
+    "borderRadius": "6px",
+    "fontSize": "13px",
+    "selectedBg": "rgb(232, 235, 237)",
+    "hoverBg": "rgb(242, 244, 246)",
+    "idleBg": "rgb(255, 255, 255)",
+    "menuRadius": "8px",
+    "menuPadding": "4px",
+    "menuShadow": "rgba(0, 0, 0, 0.12) 0px 6px 24px 0px",
+    "_noteMaxH": "4변형(case1 2674:535 / case2 2674:608 / case3 1054:25302 / scroll 1854:902) 전부 152x228 — 7아이템이 스크롤 없이 들어가는 박스 높이",
+    "menuMaxHeight": "228px",
+    "_noteShadow": "의도적 이탈(2026-08-25) — Figma 노드는 shadow-md 지만, \"스트로크 두른 메뉴가 싫다\"는 피드백으로 보더를 걷어내면서 분리를 그림자만으로 감당하게 됐다. Toast 와 같은 최상위 티어(xl) 사용."
+  },
+  "table": {
+    "_node": "1154:4527",
+    "containerRadius": "16px",
+    "cellPadding": "16px 24px",
+    "fontSize": "16px",
+    "headerBg": "rgb(247, 248, 249)",
+    "headerColor": "rgb(69, 76, 83)",
+    "cellBg": "rgb(255, 255, 255)",
+    "cellColor": "rgb(38, 40, 43)"
+  },
+  "badge": {
+    "_node": "1096:32446",
+    "borderRadius": "99px",
+    "padding": "4px 12px",
+    "fontSize": "14px",
+    "fontWeight": "700",
+    "idle": {
+      "backgroundColor": "rgb(242, 244, 246)",
+      "color": "rgb(114, 120, 127)"
+    },
+    "selected": {
+      "backgroundColor": "rgb(217, 234, 255)",
+      "color": "rgb(29, 127, 249)"
+    }
+  },
+  "credit": {
+    "_node": "1096:32451",
+    "borderRadius": "999px",
+    "fontSize": "16px",
+    "available": {
+      "backgroundColor": "rgb(245, 241, 253)",
+      "color": "rgb(111, 58, 208)",
+      "fontWeight": "700"
+    },
+    "unavailable": {
+      "backgroundColor": "rgb(247, 248, 249)",
+      "color": "rgb(158, 164, 170)",
+      "fontWeight": "500"
+    }
+  },
+  "toast": {
+    "_node": "654:56764",
+    "height": 48,
+    "borderRadius": "12px",
+    "backgroundColor": "rgba(0, 0, 0, 0.5)",
+    "backdropFilter": "blur(6px)",
+    "boxShadow": "rgba(0, 0, 0, 0.12) 0px 6px 24px 0px",
+    "edgeOffset": 50,
+    "fontSize": "14px"
+  },
+  "tooltip": {
+    "_node": "656:66163",
+    "borderRadius": "4px",
+    "padding": "4px 8px",
+    "fontSize": "12px",
+    "backgroundColor": "rgba(0, 0, 0, 0.5)",
+    "backdropFilter": "blur(9px)",
+    "maxWidth": "200px",
+    "offset": 8,
+    "delay": {
+      "first": 600,
+      "cascade": 100,
+      "reset": 1500
+    }
+  },
+  "popup": {
+    "_node": "2674:812 / 2674:824 (Property=web)",
+    "_note": "모바일 변형(1065:27348, 버튼 48/45·제목 18px)은 추후 반영",
+    "width": 343,
+    "borderRadius": "16px",
+    "boxShadow": "rgba(0, 0, 0, 0.08) 0px 4px 16px 0px",
+    "dim": "rgba(0, 0, 0, 0.5)",
+    "titleFontSize": "16px",
+    "titleFontWeight": "700",
+    "buttonHeight": 32,
+    "_noteShadow": "Elevation lg (2026-08-26 디자이너 확정). 이전 원시값 0 2px 8px 0.10 을 대체.",
+    "_noteDim": "layer/overlay(검정 50%) 토큰 (2026-08-26 디자이너 확정). 이전 원시값 rgba(0,0,0,0.4) 을 대체."
+  },
+  "dim": {
+    "_node": "1050:11359",
+    "backgroundColor": "rgba(0, 0, 0, 0.5)",
+    "spinner": 48,
+    "labelFontSize": "16px"
+  }
+}

@@ -1,0 +1,38 @@
+/* 문서 레이어 전용 토큰 — PDS semantic 에서 파생하거나, PDS 팔레트에 없는 "삽화용" 색.
+ *
+ * 왜 필요한가: 원본 문서의 hex 604개 중 173개는 PDS 팔레트에 없는 색이다 (DO/DON'T 카드의
+ * 초록·빨강 테두리, 홈 썸네일 잉크, 아이코노그래피 키라인 등 — Tailwind 계열 값들).
+ * 이걸 PDS 토큰으로 일괄 치환하면 DON'T 의 빨강은 그럴듯해지지만 **DO 의 초록이 브랜드 파랑이
+ * 되어 의미가 파괴된다.** 그래서 별도 이름을 주고 다크 값을 처음으로 정의한다.
+ *
+ * ⚠️ 다크 전환은 `html[data-theme="dark"]` 로만 한다. 원본은 VitePress 의 `.dark` 클래스를
+ * 썼고 tokens.css 는 `[data-theme]` 를 써서 서로 맞지 않았다 — 그래서 원본에서는 토큰 파일의
+ * 다크 블록이 한 번도 발동한 적이 없다. 킷은 layout.tsx 의 무플래시 스크립트로 data-theme 만 쓴다.
+ *
+ * primitive(--primitive-*) 를 직접 참조하지 않는다 — PDS 규칙(tokens.css 상단) 준수.
+ */
+
+:root {
+  /* 앵커 착지 여백 — sticky 헤더(48px)에 헤딩이 가리지 않게.
+     Heading.module.css 의 scroll-margin-top 3곳이 이 값을 쓴다. 상단에 고정 요소를 더하면
+     (예: sticky 탭 바) **반드시 여기를 함께 키워야** 248개 앵커가 바 뒤로 착지하지 않는다. */
+  --docs-anchor-offset: 64px;
+
+  /* 브랜드 연한 면 — 원본 --vp-c-brand-3 (#d9eaff) 자리 */
+  --docs-accent-surface: color-mix(in srgb, var(--color-accent-normal) 14%, var(--color-background-base));
+
+  /* 삽화 색 — 의미 전달용이라 브랜드 팔레트에 종속되지 않는다 */
+  --docs-illus-positive: #22c55e; /* DO 카드 */
+  --docs-illus-negative: #ef4444; /* DON'T 카드 */
+  --docs-illus-caution: #d97706;
+  --docs-illus-info: #2563eb;
+  --docs-illus-mute: #9ca3af;
+}
+
+html[data-theme='dark'] {
+  --docs-illus-positive: #4ade80;
+  --docs-illus-negative: #f87171;
+  --docs-illus-caution: #fbbf24;
+  --docs-illus-info: #93c5fd;
+  --docs-illus-mute: #9ca3af;
+}

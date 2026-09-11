@@ -1,0 +1,149 @@
+/* ⌘K 검색 다이얼로그 — PDS 토큰만 사용, 다크는 토큰이 알아서 */
+
+.dialog {
+  width: min(560px, calc(100vw - 40px));
+  margin: 12vh auto auto;
+  padding: 0;
+  border: 1px solid var(--color-line-neutral);
+  border-radius: var(--radius-lg);
+  /* 불투명 패널 + 평범한 딤 — 글래스모피즘은 시도 후 철회(2026-08-13 피드백 "별루").
+     참고: 다시 시도하게 되면 블러는 패널이 아니라 ::backdrop 에 걸어야 한다 —
+     <dialog> 는 top layer 라 Chromium 이 패널 자신의 backdrop-filter 를 무시한다. */
+  background: var(--color-layer-surface);
+  color: var(--color-label-normal);
+  box-shadow: var(--shadow-xl);
+}
+
+.dialog::backdrop {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+/* 진입 인터랙션 — 패널은 살짝 아래에서 떠오르고, 딤은 페이드 인.
+   duration 은 PDS 모션 토큰 규약(오버레이 = slow 계열이지만 검색은 즉답성이 중요해 fast+)을 따른다 */
+.dialog[open] {
+  animation: dialogIn 180ms var(--ease-out);
+}
+
+.dialog[open]::backdrop {
+  animation: backdropIn 180ms var(--ease-out);
+}
+
+@keyframes dialogIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+}
+
+@keyframes backdropIn {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dialog[open],
+  .dialog[open]::backdrop {
+    animation: none;
+  }
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  max-height: 60vh;
+}
+
+.input {
+  flex-shrink: 0;
+  margin: var(--spacing-xs);
+  padding: 10px 14px;
+  border: 1px solid var(--color-line-normal);
+  border-radius: var(--radius-sm);
+  background: var(--color-background-base);
+  color: var(--color-label-normal);
+  font: inherit;
+  font-size: var(--font-size-sm);
+}
+
+.input:focus-visible {
+  outline: 2px solid var(--color-accent-normal);
+  outline-offset: 1px;
+  border-color: transparent;
+}
+
+.results {
+  list-style: none;
+  margin: 0;
+  padding: 0 var(--spacing-xs) var(--spacing-xs);
+  overflow-y: auto;
+}
+
+.result {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  width: 100%;
+  padding: 9px 12px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--color-label-neutral);
+  font: inherit;
+  font-size: var(--font-size-xs);
+  text-align: left;
+  cursor: pointer;
+}
+
+.resultActive {
+  background: var(--color-fill-normal);
+  color: var(--color-label-normal);
+}
+
+.resultText {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.resultPage {
+  color: var(--color-label-assistive);
+}
+
+.resultSep {
+  margin: 0 6px;
+  color: var(--color-label-assistive);
+}
+
+.resultMeta {
+  flex-shrink: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: var(--font-size-xxxs);
+  color: var(--color-label-assistive);
+}
+
+.empty {
+  padding: var(--spacing-md);
+  text-align: center;
+  font-size: var(--font-size-xs);
+  color: var(--color-label-assistive);
+}
+
+.hint {
+  flex-shrink: 0;
+  margin: 0;
+  padding: var(--spacing-2xs) var(--spacing-sm);
+  border-top: 1px solid var(--color-line-neutral);
+  font-size: var(--font-size-xxxs);
+  color: var(--color-label-assistive);
+}
+
+.hint kbd {
+  padding: 1px 5px;
+  border: 1px solid var(--color-line-neutral);
+  border-radius: 4px;
+  background: var(--color-fill-neutral);
+  font-family: inherit;
+}

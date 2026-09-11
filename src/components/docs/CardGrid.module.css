@@ -1,0 +1,40 @@
+/* 카드 그리드 — 원본 `.comp-grid` / `.comp-card` / `.comp-card-name` / `.comp-card-desc` +
+ * index.md 의 `.sec-card` / `.who-card` 계열. 원본의 `.comp-section-label`(카테고리 라벨)은
+ * 미사용 — 컴포넌트 수가 적어 분류를 걷어낸 결정(2026-08-13, 상세 페이지 .component-tag 도 동일). */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--spacing-xs);
+  margin: 0 0 var(--spacing-2xl);
+}
+
+.card {
+  display: block;
+  padding: var(--spacing-md);
+  border: 1px solid var(--color-line-neutral);
+  border-radius: var(--radius-md);
+  background: var(--color-layer-surface);
+  text-decoration: none;
+  transition: border-color var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out);
+  cursor: pointer;
+}
+
+.card:hover {
+  border-color: var(--color-accent-normal);
+  /* 원본과 동일 — 테두리를 2px 로 키우지 않고 링을 겹쳐 레이아웃 흔들림을 막는다 */
+  box-shadow: 0 0 0 1px var(--color-accent-normal);
+}
+
+.name {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-label-normal);
+  margin-bottom: 6px;
+}
+
+.desc {
+  font-size: var(--font-size-xxs);
+  color: var(--color-label-alternative);
+  line-height: 1.5;
+}

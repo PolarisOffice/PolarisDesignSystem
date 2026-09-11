@@ -1,0 +1,91 @@
+/* 원본 iconography.md 의 .ico-section-desc / .ico-diagram-wrap / .keyline-* / .sv-val·.sv-mono·.th-sub
+ * (표 골격 자체는 SpecTable 이 흡수 — 여기엔 값 칩과 헤더 부제만 남는다) */
+
+.sectionDesc {
+  font-size: 14px;
+  color: var(--color-label-neutral);
+  line-height: 1.7;
+  margin: 8px 0 24px;
+}
+
+/* Diagram containers */
+.diagramWrap {
+  border: 1px solid var(--color-line-neutral);
+  border-radius: 12px;
+  background: var(--color-fill-neutral);
+  margin: 20px 0 48px;
+  padding: 48px 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Figma 정본 일러스트 (2026-08-28 — 손그림 SVG·keyline 타일 폐기, public/iconography/*.png).
+   이미지에 라이트 지면이 구워져 있어 다크에서는 살짝 감광해 밝은 판이 화면을 때리지 않게 한다
+   (home.module.css 히어로와 같은 처리). */
+.figmaIllus {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-sm);
+}
+
+:global(html[data-theme='dark']) .figmaIllus {
+  filter: brightness(0.85) saturate(0.95);
+}
+
+/* Style 아이콘 프리뷰 — 그레이 박스 안에 파란 이미지가 아니라 **박스 자체가 파란 면**
+   (2026-08-31 피드백). 아이콘 이미지는 투명 배경 + 흰 획(3배 해상도)이라 면 색이
+   그대로 비친다. accent-neutral 은 다크에서 딥블루로 자연 전환되므로 감광 필터는 끈다 */
+.diagramWrapBlue {
+  background: var(--color-accent-neutral);
+  border-color: transparent;
+  /* 아이콘 판은 이미지에 내부 여백이 구워져 있어 패널 상하 패딩을 줄인다(2026-08-31 피드백) */
+  padding: var(--spacing-md) var(--spacing-lg);
+}
+
+:global(html[data-theme='dark']) .diagramWrapBlue .figmaIllus {
+  filter: none;
+}
+
+/* Size Variation 표 — 값 칩 */
+.svVal {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-label-normal);
+}
+
+.svMono {
+  font-size: 12px;
+  font-family: monospace;
+  color: var(--color-label-neutral);
+}
+
+.thSub {
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--color-label-alternative);
+  display: block;
+}
+
+/* 인라인 Grid SVG — 이미지와 같은 반응 규칙 */
+.gridIllus {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* 배경 투명 일러스트의 테마 스왑 — 라이트/다크 전용 이미지를 data-theme 로 교대
+   (구워진 배경이 없어 감광 필터도 불필요) */
+.illusDark {
+  display: none;
+}
+
+:global(html[data-theme='dark']) .illusLight {
+  display: none;
+}
+
+:global(html[data-theme='dark']) .illusDark {
+  display: block;
+  filter: none;
+}

@@ -1,0 +1,45 @@
+/* Tabs 페이지 전용 — Design 탭 Properties 유형 프리뷰 (2026-08-28, toggle 패턴 확장).
+   프리뷰는 그림이다 — AnatomyFigure 의 inert 결정(2026-08-19)을 따라 클릭·포커스를 막는다.
+   살아있는 데모·전체 조합은 Code 탭에 있다.
+   기본 fill 이 폭 없는 컨테이너에서 등분 폭으로 어긋나는 이슈(tabs.code.tsx 2026-08-28 주석)
+   때문에 프리뷰는 layout="hug" 명시 또는 고정 폭 무대(.layoutStage)를 쓴다. */
+
+/* 유형 프리뷰 면 — H3 산문 아래 조용한 면(fill-neutral). 테두리·그림자 없음(데모 박스
+   카드화 금지 — Demo.module.css 머리말과 같은 취지) */
+.typePreview {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--spacing-xl);
+  padding: var(--spacing-lg);
+  background: var(--color-fill-neutral);
+  border-radius: var(--radius-md);
+  margin: var(--spacing-sm) 0 var(--spacing-lg);
+}
+
+/* 변형 한 벌(라벨 + 실물) — figure 기본 마진 제거 */
+.previewCol {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+  min-width: 0;
+}
+
+/* Demo.module.css 의 .colLabel 과 같은 시각 언어 — 페이지 간 프리뷰 라벨 통일 */
+.previewLabel {
+  font-size: var(--font-size-xxxs);
+  font-weight: 700;
+  color: var(--color-label-alternative);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Layout 프리뷰의 고정 폭 무대 — fill(등분)과 hug(레이블 폭)의 차이는 같은 폭 위에서만
+   드러난다. 400px 은 위 Anatomy 래퍼와 같은 값(색·간격 토큰의 대상이 아닌 데모 무대 치수 —
+   폭 토큰은 없다). max-width 가 좁은 화면을 보호한다. */
+.layoutStage {
+  width: 400px;
+  max-width: 100%;
+}

@@ -1,0 +1,37 @@
+Polaris Design System
+Copyright 2026 Polaris Office Corp. All rights reserved.
+
+Except as expressly identified below, the source code and documentation
+in this repository are licensed under the Apache License, Version 2.0.
+A copy of that license is available in the LICENSE file.
+
+Brand Assets Notice
+
+The following are excluded from the Apache License, Version 2.0:
+
+- the files located in the public/brand-assets/ directory;
+- Polaris Office Corp.'s and its affiliates' logos, logomarks, wordmarks,
+  trademarks, service marks, trade names, product names, brand graphics,
+  icons, visual identity elements, and related brand assets (collectively,
+  the "Brand Assets"); and
+- any other materials expressly identified as subject to a separate license
+  or usage policy.
+
+All right, title, and interest in and to the Brand Assets, including all
+copyright, trademark, and other intellectual-property rights, are owned by
+Polaris Office Corp. or its licensors. No permission or license to use the
+Brand Assets is granted under the Apache License, Version 2.0.
+
+Any permitted use of the Brand Assets is governed solely by the separate
+Brand Assets License and, where applicable, the Polaris Office Trademark
+and Brand Guidelines, or by a separate written agreement with Polaris Office Corp.
+
+Except as expressly authorized in writing by Polaris Office Corp., no person
+may copy, reproduce, modify, adapt, create derivative works from, distribute,
+publish, display, sublicense, or otherwise use the Brand Assets. Unauthorized
+use may violate applicable copyright, trademark, unfair competition, and
+other laws.
+
+Third-Party Notices
+
+None.

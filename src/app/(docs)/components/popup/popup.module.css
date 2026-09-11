@@ -1,0 +1,16 @@
+/* Popup 페이지 전용 — 2026-08-28 디자인 검토 반영분: Case 예문의 실물 Popup 프리뷰. */
+
+/* 실물 Popup(딤+패널)을 문서 흐름에 앉힌다. 컴포넌트의 className 은 화면 전체를 덮는
+   딤(인라인 스타일 position:fixed; inset:0)에 붙으므로, toast 패턴대로 포지셔닝만
+   !important 로 중화한다(인라인 스타일을 이기는 유일한 수단). static 이 되면 inset 은
+   무시되고, 딤이 CaseBlock 폭의 미니 화면이 되어 "화면을 차단하는 컴포넌트" 라는 맥락까지
+   실물 그대로 보인다 — 패널의 치수·색·그림자·버튼 강제 스타일은 전부 컴포넌트 것이다. */
+.casePopup {
+  position: static !important;
+}
+
+/* 딤 면의 프레임 — 모서리만 문서 카드에 맞춰 다듬는다(딤·패널 스타일은 건드리지 않는다) */
+.casePreview {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}

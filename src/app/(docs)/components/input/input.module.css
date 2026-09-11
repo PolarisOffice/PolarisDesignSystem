@@ -1,0 +1,26 @@
+/* Input Field 페이지 전용 — Design 탭 Type·Case 실물 프리뷰 (2026-08-28 디자인팀장 검토
+   반영: Case 에도 실물이 필요하다).
+   프리뷰는 그림이다 — AnatomyFigure 의 inert 결정(2026-08-19)을 따라 클릭·포커스를 막는다.
+   살아있는 데모는 Code 탭에 따로 있다. */
+
+/* CaseList 섹션이 이미 조용한 면(fill-neutral)이라 상자를 또 두르지 않는다.
+   InputField 는 값 영역이 flex:1 0 0 이라 내용 폭이 0에 수렴한다(실측 42px) — 내용 맞춤
+   대신 케이스 폭의 절반을 줘 실사용 비례(Anatomy 견본 320px과 유사)로 보이게 한다.
+   블록 흐름 그대로 두면 케이스 폭 전체를 채워 과장된다 */
+.casePreview {
+  display: flex;
+  justify-content: center;
+}
+
+.casePreview > * {
+  flex: 0 1 auto;
+  width: 50%;
+  min-width: 0;
+}
+
+/* Active 케이스 표시용 테두리 고정 — InputField 의 테두리 박스(루트의 첫 자식)가 인라인
+   스타일로 border-color 를 갖고 있어 !important 가 필요하다. 색은 컴포넌트의 focused 값과
+   같은 --color-accent-normal (packages input index.tsx borderColor 참고) */
+.activeCase > div > div:first-child {
+  border-color: var(--color-accent-normal) !important;
+}

@@ -1,0 +1,428 @@
+/* 문서 셸 레이아웃 — 사이드바 / 본문 / 우측 목차 3단.
+   원본 VitePress 기본 테마의 치수를 따른다(사이드바 272, 목차 224, 1280px 에서 목차 제거). */
+
+.layout {
+  display: grid;
+  grid-template-columns: 232px minmax(0, 1fr) 224px; /* 사이드바 축소 (2026-08-13 피드백) */
+  gap: 0 var(--spacing-2xl);
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+  align-items: start;
+}
+
+/* ── 사이드바 — Seed Design 문법 (2026-08-13 재편) ──
+   접기 없음. 흐린 섹션 라벨 + 평탄 항목 목록, 활성 항목은 채운 알약(pill).
+   이전의 collapsed 트리 + 계층별 들여쓰기는 27행짜리 목록에 과했고 위계만 흐렸다. */
+.sidebar {
+  position: sticky;
+  /* 48px = .kit-header 고정 높이. globals.css 의 SYNC 계약과 같은 값 — 함께 바꿔야 한다 */
+  top: 48px;
+  height: calc(100vh - 48px);
+  height: calc(100dvh - 48px); /* iOS 주소창 대응 — 두 줄 패턴 유지 */
+  overflow-y: auto;
+  /* ⚠️ padding-bottom 을 두지 않는다 — 스크롤러에 bottom padding 이 있으면 Chrome 이 sticky
+     bottom:0 기준선을 그 패딩만큼 안쪽으로 당겨 페이드가 목록 중간에 떠 버린다(2026-08-24 실측).
+     하단 여백은 ::after 페이드가 겸한다. */
+  padding: var(--spacing-md) var(--spacing-sm) 0 0;
+  border-right: 1px solid var(--color-line-neutral);
+  /* 스크롤바 완전 숨김 (2026-08-24 피드백 — hover 썸도 없앰). 스크롤 기능은 유지하고,
+     "아래 더 있음"은 하단 sticky 페이드(::after)가 알린다. */
+  scrollbar-width: none;
+}
+
+.sidebar::-webkit-scrollbar {
+  display: none;
+}
+
+/* 하단 페이드 = 하단 여백 — 넘친 항목이 이 아래를 지날 때만 보인다(배경색 위 그라데이션이라
+   빈 공간에선 투명 동치). sticky bottom 이라 끝까지 내리면 자연 위치(마지막 항목 뒤)로 내려가
+   순수한 여백이 된다.
+   ⚠️ z-index 필수 — `.item` 이 활성 pill 위로 뜨려고 `position:relative; z-index:1` 을 쓴다
+   (아래 .activePill 주석 참고). 이 ::after 도 sticky(포지션드)라 z-index:auto 로 두면
+   auto 는 명시적 z-index:1 보다 아래로 깔려 — 텍스트가 페이드를 그냥 뚫고 나와 하나도
+   흐려지지 않는 채로 렌더됐다(2026-08-25 실측: 스크린샷 확대 후에야 발견). 항목보다 위로. */
+.sidebar::after {
+  content: '';
+  display: block;
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  height: 64px;
+  background: linear-gradient(to bottom, transparent, var(--color-background-base));
+  pointer-events: none;
+}
+
+.section {
+  margin-top: var(--spacing-lg);
+}
+
+/* 사이드바 콘텐츠의 첫 노드가 단독 링크(예: 메인 사이드바 '소개')가 아니라 그룹(section)이면
+ * 이 24px 이 그대로 위에 얹혀 nav 상단 여백이 사이드바마다 달라 보였다(AI 미니 사이드바 실측:
+ * 44px vs 메인 22px — 2026-08-25 "좌측 패널 위치가 다르다" 피드백의 실제 원인). activePill
+ * (장식용, 항상 첫 DOM 자식) 바로 다음 형제가 section 인 경우만 0 으로 상쇄 — 두 번째 이후
+ * section 간 24px 간격은 그대로 유지된다. */
+.activePill + .section {
+  margin-top: 0;
+}
+
+/* 섹션 라벨 — 접이식 헤더가 아니라 시각적 구획. 항목보다 작고 흐리게 */
+.sectionLabel {
+  display: block;
+  padding: 0 10px;
+  margin-bottom: 4px;
+  font-size: var(--font-size-xxs);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--color-label-assistive);
+  text-decoration: none;
+}
+
+/* 라벨이면서 링크(컴포넌트) — 흐린 라벨 그대로, hover 에만 반응 */
+.sectionLabelLink:hover {
+  color: var(--color-label-normal);
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* 항목 — pill 형태. 행 높이 ~38px — 클릭 영역이 좁다는 피드백(2026-08-13)으로 상하 패딩을 키웠다.
+   섹션 하위 항목(.list 안)만 왼쪽 들여쓰기로 라벨과 위계 차등(같은 날 피드백) — 단독
+   링크(소개·리소스)는 라벨과 같은 x 유지. pill 은 rect 실측이라 들여쓰기에 자동 적응. */
+.item {
+  display: block;
+  padding: 9px 10px;
+  margin: 2px 0;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-label-neutral);
+  text-decoration: none;
+  transition: background var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out);
+}
+
+.list .item {
+  padding-left: 22px;
+}
+
+.item:hover {
+  background: var(--color-fill-neutral);
+  color: var(--color-label-normal);
+}
+
+/* 활성 항목의 배경은 항목 자신이 아니라 아래 .activePill 이 그린다 — 슬라이드를 위해 */
+.itemActive,
+.itemActive:hover {
+  background: none;
+  color: var(--color-label-normal);
+  font-weight: 600;
+}
+
+.item {
+  position: relative;
+  z-index: 1;
+}
+
+/* nav 안에 하나뿐인 선택 pill — 경로가 바뀌면 활성 항목 자리로 옮겨간다.
+   위치·자가치유·전환 규칙은 전부 Sidebar 가 담당한다(그 파일 주석 참고).
+   여기엔 전환을 쓰지 않는다 — 첫 배치가 위에서 미끄러져 내려오지 않아야 하고,
+   이후 전환은 이동 거리에 따라 달라져 Sidebar 가 인라인으로 준다. */
+.activePill {
+  position: absolute;
+  left: 0;
+  /* nav 의 padding-right(--spacing-sm)만큼 항목 폭과 맞춘다 */
+  right: var(--spacing-sm);
+  top: 0;
+  height: 0;
+  border-radius: var(--radius-sm);
+  background: var(--color-fill-normal);
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* 전환은 Sidebar.tsx 가 인라인으로 준다 — 가까우면 미끄러지고 멀면 갈아끼우는 규칙이라
+   phase 마다 전환 대상이 다르다(멀 때는 transform 을 빼서 자리를 즉시 옮긴다) */
+@media (prefers-reduced-motion: reduce) {
+  .activePill {
+    transition: none !important;
+  }
+}
+
+/* ── 본문 ── */
+.main {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  /* 푸터를 본문 길이와 무관하게 화면 하단에 고정(sticky footer, 2026-08-19 피드백) —
+     48px = .kit-header 고정 높이(SYNC), 두 줄 vh/dvh 패턴 유지 */
+  min-height: calc(100vh - 48px);
+  min-height: calc(100dvh - 48px);
+  padding: var(--spacing-xl) 0 var(--spacing-lg);
+}
+
+/* 문서 본문 기본 타이포 — 원본 VitePress `.vp-doc` 이 주던 것을 대체한다.
+   헤딩(h2/h3/h4)은 Heading.module.css 가 담당하므로 여기서 건드리지 않는다. */
+.main h1 {
+  margin: 0 0 var(--spacing-sm);
+  font-size: var(--font-size-4xl);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  color: var(--color-label-normal);
+}
+
+/* 산문 기본값은 :where() 로 구체도를 (0,0,1) 까지 낮춘다 — 안 그러면 `.main p`(0,1,1)가
+ * PageLead .tag/.desc, CardGrid .sectionLabel 같은 모듈 클래스(0,1,0)의 font-size·margin 을
+ * 조용히 덮어써 라벨이 본문 크기로 부풀어 보인다(실측: 11px 의도가 16px 렌더).
+ * 앵커 규칙(.main p a …)은 .meta a.download 등 기존 우선순위 조정과 맞물려 있어 제외. */
+:where(.main) p {
+  margin: var(--spacing-xs) 0;
+  font-size: var(--font-size-md);
+  line-height: 1.75;
+  color: var(--color-label-neutral);
+}
+
+:where(.main) ul,
+:where(.main) ol {
+  margin: var(--spacing-xs) 0;
+  padding-left: 22px;
+  font-size: var(--font-size-md);
+  line-height: 1.75;
+  color: var(--color-label-neutral);
+}
+
+:where(.main) li {
+  margin: 4px 0;
+}
+
+:where(.main) strong {
+  color: var(--color-label-normal);
+  font-weight: 600;
+}
+
+/* 산문 안의 링크만 브랜드색 — **컴포넌트(카드·버튼) 안의 앵커는 건드리지 않는다.**
+   과거 `.main a` 전체 대상이던 시절, AssetCard 다운로드 버튼의 흰 글자를 파랑으로 덮어
+   파랑 위 파랑(안 보임)이 된 실사고가 있다. 앵커를 스타일하는 컴포넌트는 자기 모듈이 책임진다. */
+.main p a,
+.main li a,
+.main td a,
+.main blockquote a {
+  color: var(--color-accent-normal);
+  text-decoration: none;
+}
+
+.main p a:hover,
+.main li a:hover,
+.main td a:hover,
+.main blockquote a:hover {
+  text-decoration: underline;
+}
+
+/* ── 우측 목차 ── */
+.toc {
+  position: sticky;
+  top: 48px;
+  max-height: calc(100vh - 48px);
+  max-height: calc(100dvh - 48px);
+  overflow-y: auto;
+  /* 사이드바와 동일 — 스크롤바 숨김 + 하단 sticky 페이드가 bottom padding 겸직 (2026-08-24) */
+  padding: var(--spacing-xl) 0 0;
+  scrollbar-width: none;
+}
+
+.toc::-webkit-scrollbar {
+  display: none;
+}
+
+.toc::after {
+  content: '';
+  display: block;
+  position: sticky;
+  bottom: 0;
+  z-index: 2; /* 사이드바와 동일 안전장치 — 지금은 .tocLink 에 z-index 경쟁자가 없지만 대비 */
+  height: 64px;
+  background: linear-gradient(to bottom, transparent, var(--color-background-base));
+  pointer-events: none;
+}
+
+.tocTitle {
+  margin: 0 0 var(--spacing-2xs);
+  font-size: var(--font-size-xxs);
+  font-weight: 700;
+  color: var(--color-label-normal);
+}
+
+.tocList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-left: 1px solid var(--color-line-neutral);
+}
+
+.tocLink {
+  display: block;
+  padding: 4px 0 4px calc(12px + var(--level, 0) * 12px);
+  font-size: var(--font-size-xxs);
+  line-height: 1.5;
+  color: var(--color-label-alternative);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.tocLink:hover {
+  color: var(--color-label-normal);
+}
+
+.tocActive {
+  color: var(--color-accent-normal);
+  font-weight: 600;
+}
+
+/* ── 이전/다음 ── */
+.prevNext {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-4xl);
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid var(--color-line-neutral);
+}
+
+.pnLink {
+  display: block;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--color-line-neutral);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.pnLink:hover {
+  border-color: var(--color-accent-normal);
+}
+
+.pnNext {
+  grid-column: 2;
+  text-align: right;
+}
+
+.pnLabel {
+  display: block;
+  font-size: var(--font-size-xxs);
+  color: var(--color-label-assistive);
+}
+
+.pnTitle {
+  display: block;
+  margin-top: 2px;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-accent-normal);
+}
+
+.footer {
+  /* auto 마진이 남은 공간을 먹어 푸터를 .main 바닥으로 밀어낸다 — 본문이 길면 이전/다음 바로 아래 */
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--spacing-3xs) var(--spacing-md);
+  padding-top: var(--spacing-xl);
+  font-size: var(--font-size-xxs);
+  color: var(--color-label-assistive);
+}
+
+/* 버전 + 업데이트 일자 2줄 (2026-08-28 검토 벤치마크 형식) — 우측 정렬 스택 */
+.footerMeta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--spacing-4xs);
+  font-variant-numeric: tabular-nums;
+}
+
+.footerVersion {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-label-neutral);
+}
+
+.footerUpdated {
+  color: var(--color-label-assistive);
+}
+
+/* 푸터 이용약관 링크 — 푸터 톤 유지, 밑줄로만 링크임을 알린다 */
+.footerLink {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.footerLink:hover {
+  color: var(--color-label-normal);
+}
+
+/* ── 모바일 ──
+   1280 이하: 목차 제거 (VitePress 와 동일 브레이크포인트)
+   960 이하: 사이드바를 드로어로 */
+@media (max-width: 1280px) {
+  .layout {
+    grid-template-columns: 232px minmax(0, 1fr);
+  }
+  .toc {
+    display: none;
+  }
+}
+
+@media (max-width: 960px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 0 var(--spacing-md);
+  }
+  .sidebar {
+    /* static 이 아니라 relative — static 이면 .activePill(absolute)의 기준이 body 로 튀어
+       pill 이 헤더 높이만큼 위 행에 앉는다(2026-08-19 모바일 실사고). 흐름 배치는 동일 */
+    position: relative;
+    height: auto;
+    max-height: none;
+    padding: var(--spacing-sm) 0;
+    border-right: none;
+    border-bottom: 1px solid var(--color-line-neutral);
+    /* 모바일은 기본 접힘 — 헤더 햄버거(KitHeader)가 html[data-nav-open] 로 연다.
+       경로가 바뀌면 헤더가 닫는다 */
+    display: none;
+  }
+  /* 펼침 = 본문 안에 끼어드는 게 아니라 **페이지 위에** 뜨는 전면 시트(헤더 아래, 2026-08-19
+     피드백). 헤더 z-index 20 바로 아래, 자체 스크롤. 본문 스크롤 잠금은 globals.css */
+  :global(html[data-nav-open='true']) .sidebar {
+    display: block;
+    position: fixed;
+    top: 48px; /* = .kit-header 높이 (SYNC 계약) */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 19;
+    overflow-y: auto;
+    /* bottom padding 은 ::after 페이드가 겸한다 (sticky 기준선 밀림 방지 — 데스크톱과 동일) */
+    padding: var(--spacing-sm) var(--spacing-md) 0;
+    background: var(--color-background-base);
+    border-bottom: none;
+  }
+  /* 시트 안에서는 pill 도 좌우 패딩만큼 안쪽으로 — 항목 박스와 같은 x 범위 */
+  :global(html[data-nav-open='true']) .activePill {
+    left: var(--spacing-md);
+    right: var(--spacing-md);
+  }
+  .main {
+    padding-top: var(--spacing-lg);
+  }
+  .prevNext {
+    grid-template-columns: 1fr;
+  }
+  .pnNext {
+    grid-column: 1;
+  }
+}

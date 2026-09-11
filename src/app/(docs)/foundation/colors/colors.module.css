@@ -1,0 +1,139 @@
+/* 컬러 페이지 — seed-design.io/foundations/color 문법(2026-08-19): Overview / Roles / Palette
+   탭 → 표·스케일 그리드(히어로 일러스트는 피드백으로 제외). 장식 배지·번호 카드 없음. 칩은 hex 가 아니라
+   토큰 var 로 칠해 다크 모드에서 실제 값이 보이게 한다. */
+
+/* ── 칩 원자 ── */
+.chip,
+.chipLg {
+  display: inline-block;
+  flex: none;
+  vertical-align: middle;
+  /* 라인 없음 (2026-08-28 요청: "컬러 박스 라인은 다 빼줘, #ffffff 만 라인") — 이 칩들은
+     var(--토큰) 으로 칠하고 흰색 토큰을 안 다뤄 라인이 아예 필요 없다. 흰 칩이 생기면
+     color-roles.module.css 의 .chipBordered 패턴을 따를 것. */
+}
+
+.chip {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+}
+
+.chipLg {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+}
+
+/* 표 셀 안의 칩 + 값 */
+.val {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.cellSub {
+  display: block;
+  margin-top: var(--spacing-4xs);
+}
+
+/* 셀 아래 토큰명이 좁은 셀에서 여러 줄로 꺾이던 것을 뱃지 한 줄 표기로
+   (2026-08-28 피드백 — "사이즈를 줄여서 한줄표기, 뱃지 형태도 괜찮").
+   최악의 폭에서는 줄바꿈 대신 말줄임표가 되고, title 로 전체 이름을 보인다. */
+.cellSub code {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--font-size-xxxs);
+  line-height: 1.5;
+  padding: var(--spacing-4xs) var(--spacing-2xs);
+  border-radius: var(--radius-xs);
+  background: var(--color-fill-normal);
+}
+
+.tabLead {
+  margin: var(--spacing-lg) 0 0;
+  font-size: var(--font-size-sm);
+  line-height: 1.8;
+  color: var(--color-label-neutral);
+}
+
+/* ── 세 가지 책임 — 일러스트 카드 + 본문 (seed 의 장점 블록) ── */
+.dutyList {
+  display: grid;
+  gap: var(--spacing-xl);
+  margin: var(--spacing-md) 0 0;
+}
+
+.duty {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  gap: var(--spacing-lg);
+  align-items: center;
+}
+
+.dutyFig {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-md);
+  height: 150px;
+  border-radius: var(--radius-lg);
+  background: var(--color-fill-neutral);
+}
+
+.dutyChip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.dutyChipLabel {
+  font-size: var(--font-size-xxs);
+  color: var(--color-label-alternative);
+}
+
+.dutyNum {
+  display: block;
+  margin-bottom: 4px;
+  font-size: var(--font-size-xs);
+  color: var(--color-label-alternative);
+}
+
+.dutyTitle {
+  margin: 0 0 6px;
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--color-label-normal);
+}
+
+.dutyDesc {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  line-height: 1.7;
+  color: var(--color-label-neutral);
+}
+
+.note {
+  margin-top: var(--spacing-2xs);
+  font-size: var(--font-size-xxs);
+  color: var(--color-label-assistive);
+}
+
+@media (max-width: 720px) {
+  .duty {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-sm);
+  }
+  .dutyFig {
+    height: 120px;
+  }
+  .scaleStep {
+    width: 72px;
+  }
+}

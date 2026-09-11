@@ -1,0 +1,34 @@
+/* Context & Menu Item 페이지 전용 — 2026-08-28 디자인 검토 반영분:
+   Case > Multi-column + Scroll 의 실물 프리뷰 자리.
+
+   값 출처(임의값 아님 — 원본이 바뀌면 여기도 같이 고칠 것):
+   - 4px = 패키지 Menu 의 MENU_GAP(packages/pds-react/src/components/menu/index.tsx —
+     컨테이너의 아이템 간 gap). 멀티 컬럼은 컨테이너 자식이 열 묶음 하나가 되어 Menu 의
+     flex gap 이 아이템에 닿지 않으므로, 열 안/열 사이에 같은 값을 재현한다.
+   - 152px = Figma ContextMenu 견본 폭(context-menu.demo.tsx Case1Demo 주석과 동일 출처).
+   - 200px = ScrollDemo 견본 폭(context-menu.demo.tsx WIDTH). */
+
+.columns {
+  display: flex;
+  margin-inline: auto;
+  width: max-content;
+  gap: 4px; /* = MENU_GAP — 열 사이도 아이템 간격과 같은 축 */
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 4px; /* = MENU_GAP (Menu 컨테이너의 아이템 gap 을 열 안에서 재현) */
+  width: 152px; /* Figma 견본 폭 (Case1Demo 와 동일) */
+}
+
+.scrollBox {
+  margin-inline: auto;
+  width: 200px; /* ScrollDemo 견본 폭 */
+}
+
+/* 아이템 구성 케이스 견본 — 고정 168px(기존 인라인 견본과 동일 폭), 무대 중앙 */
+.caseMenu {
+  width: 168px;
+  margin-inline: auto;
+}

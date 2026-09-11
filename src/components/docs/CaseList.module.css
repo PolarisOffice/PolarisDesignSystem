@@ -1,0 +1,68 @@
+/* 번호가 붙은 사례 목록 — 원본 `.case-section` / `.case-block` / `.case-header` /
+ * `.case-badge` / `.case-title` / `.case-sub` 와 그 `-caution` 변형.
+ *
+ * caution 변형은 toast.md 와 popup.md 에 **똑같은 CSS 가 두 번** 쓰여 있었다 — tone prop 으로 접었다. */
+
+.section {
+  width: 100%;
+  background: var(--color-fill-neutral);
+  border-radius: var(--radius-md);
+  margin: var(--spacing-sm) 0 var(--spacing-2xl);
+  overflow: hidden;
+}
+
+.block {
+  padding: 28px 32px 32px;
+  border-bottom: 1px solid var(--color-line-neutral);
+}
+
+.block:last-child {
+  border-bottom: none;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: var(--spacing-md);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: var(--radius-full);
+  background: var(--color-label-normal);
+  color: var(--color-background-base);
+  font-size: 10px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.title {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-label-normal);
+}
+
+.sub {
+  font-size: var(--font-size-xxs);
+  color: var(--color-label-neutral);
+  margin-top: 2px;
+}
+
+/* 주의 톤 — 배지·제목이 경고색을 쓴다 */
+.blockCaution {
+  background: color-mix(in srgb, var(--docs-illus-negative) 6%, transparent);
+}
+
+.blockCaution .badge {
+  background: var(--docs-illus-negative);
+  color: var(--color-static-white);
+}
+
+.blockCaution .title {
+  color: var(--docs-illus-negative);
+}

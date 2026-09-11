@@ -1,0 +1,11 @@
+429e87d3eaa509b2  src/lib/design/designConstants.ts
+b11288c741a5bef0  src/lib/design/designSecurityPatterns.ts
+cd4b97bb9e5a4f70  src/lib/design/designParser.ts
+825e63b056fe0571  src/lib/design/designCompat.ts
+bdf81961bfdc3001  src/lib/design/designValidation.ts
+d4761aecdb25a00e  src/lib/design/designLint.ts
+0d0e3b0a638bf305  src/lib/design/designGenerators.ts
+04cb4dc557adc21f  src/lib/design/designComponentGen.ts
+3a2ce9b41319ac89  src/components/design/DesignGuideView.tsx
+d35c952bde03f407  docs/design-md-spec.md
+40f68a6367afd5cc  total

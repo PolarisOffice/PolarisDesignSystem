@@ -1,0 +1,87 @@
+/* 구성 요소 콜아웃 — 원본 `.anat-wrap` / `.anat-item` / `.anat-num` / `.anat-line` / `.anat-dot`
+ * + 그 아래 번호별 설명 행(원본은 인라인 스타일 div 로 손수 조립돼 있었다). */
+
+.wrap {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-3xl);
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.num {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  background: var(--color-label-normal);
+  color: var(--color-background-base);
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.line {
+  width: 1px;
+  height: 16px;
+  background: var(--color-label-alternative);
+}
+
+.dot {
+  width: 4px;
+  height: 4px;
+  border-radius: var(--radius-full);
+  background: var(--color-label-alternative);
+}
+
+/* ── 설명 목록(legend) ── */
+.legend {
+  list-style: none;
+  margin: var(--spacing-sm) 0 var(--spacing-2xl);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.legendItem {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-xs);
+}
+
+.legendNum {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: var(--radius-full);
+  background: var(--color-fill-normal);
+  color: var(--color-label-neutral);
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+}
+
+.legendTitle {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-label-normal);
+}
+
+.legendDesc {
+  margin-top: 2px;
+  font-size: var(--font-size-xs);
+  line-height: 1.6;
+  color: var(--color-label-neutral);
+}

@@ -1,0 +1,244 @@
+/* 원본 brand/logo.md 의 인라인 스타일 + 외부(폴라리스그룹) 에셋 카드.
+ * 로컬 에셋 카드 셸은 공용 AssetCard 프리미티브가 담당하고, 여기에는
+ * (1) 프리뷰 이미지 치수 제약 (2) target=_blank 외부 링크·노트가 필요해
+ * 프리미티브로 못 덮는 폴라리스그룹 카드 3장만 둔다. */
+
+/* ── 프리뷰 이미지 치수 (원본 img 인라인 스타일 그대로) ── */
+
+/* 폴라리스오피스 로고 — 2열 짝 카드 안에서 면을 꽉 채우지 않게 축소 (2026-08-21 피드백).
+   원본 인라인값(60/320 · 100/200)은 카드가 본문 전폭이던 시절 기준이었다 */
+.logoH {
+  max-height: 40px;
+  max-width: 200px;
+  object-fit: contain;
+}
+
+.logoV {
+  max-height: 76px;
+  max-width: 140px;
+  object-fit: contain;
+}
+
+.groupLogoH {
+  max-height: 80px;
+  max-width: 280px;
+  object-fit: contain;
+}
+
+.groupLogoV {
+  max-height: 120px;
+  max-width: 160px;
+  object-fit: contain;
+}
+
+
+/* ── 폴라리스그룹 카드 (AssetCard 대형과 동일 조형) ── */
+
+
+
+
+
+
+
+
+
+/* ── 문의 인용구 (원본 `> 로고 사용 관련 문의…`) ── */
+
+/* ── 폴라리스오피스 로고 2026 패키지 (2026-08-24) ── */
+
+.logoIcon {
+  max-height: 44px;
+  max-width: 44px;
+  object-fit: contain;
+}
+
+/* ── 타이틀 + 액션 한 줄 배치 (2026-08-25 피드백) ──
+ * H2 자체의 구획 스타일(margin-top·padding-top·border-top — Heading.module.css)을 행
+ * 전체로 옮기고, 중첩 헤딩은 무테로 만든다. 선택자 `.titleRow :global(h2)` 는 명세성
+ * (0,1,1) 로 Heading.module.css `.h2`(0,1,0) 를 소스 순서와 무관하게 이긴다 — 이 킷의
+ * home.module.css `.page .title` 오버라이드와 같은 패턴. 페이지에 H2 두 곳(폴라리스오피스
+ * 로고 · 사용 가이드라인)에서 재사용 — 구 H3 전용 `.subTitleRow`(가이드 문서 다운로드
+ * 섹션)는 그 섹션 자체가 2026-08-25 폐지되며 함께 정리. */
+.titleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  margin: var(--spacing-3xl) 0 var(--spacing-sm);
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid var(--color-line-neutral);
+}
+
+.titleRow :global(h2) {
+  margin: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
+
+/* 아이콘·흑백·회색조 소형 카드 — 고정 3열 (AssetGrid auto-fill 은 빈 트랙 탓에 카드가 좁아짐).
+   간격은 위 대형 카드 쌍(.pair, AssetCard.module.css)과 맞춘다 (2026-08-25 여백 확대) */
+.smallRow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--spacing-sm);
+  margin: var(--spacing-lg) 0 var(--spacing-2xl);
+}
+
+@media (max-width: 640px) {
+  .smallRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── 금지 사항 — Do/Don't 비주얼 페어 (2026-08-25, 3안 중 사용자 선택) ──
+ * 줄글 목록 대신 실제 화면용 SVG(PO26_DONT_LOGO)를 CSS 로 변형해 위반 사례를 그대로
+ * 보여준다. 가짜 일러스트가 아니라 진짜 브랜드 에셋이라 "이렇게 하면 안 된다"가
+ * 즉시 읽힌다. 프리뷰 배경엔 옅은 에러톤 워시 + 우상단 ✕ 배지로 '틀렸다'는 신호를 더한다. */
+.dontGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--spacing-sm);
+  margin: var(--spacing-sm) 0 var(--spacing-2xl);
+}
+
+.dontCard {
+  border: 1px solid var(--color-line-neutral);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-layer-surface);
+}
+
+.dontPreview {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 92px;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--color-state-error) 7%, var(--color-fill-neutral));
+}
+
+.dontLogo {
+  max-width: 68%;
+  max-height: 56%;
+  object-fit: contain;
+}
+
+/* ✕ 배지 — 실제 접근성 텍스트는 카드 하단 라벨이 담당하므로 장식용 */
+.dontBadge {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-full);
+  background: var(--color-state-error);
+  color: var(--color-static-white);
+  font-size: 11px;
+  line-height: 1;
+}
+
+.dontLabel {
+  margin: 0;
+  padding: 10px 12px;
+  font-size: var(--font-size-xxs);
+  line-height: 1.5;
+  color: var(--color-label-neutral);
+  border-top: 1px solid var(--color-line-neutral);
+}
+
+/* ── 위반 사례 6종 — 실제 로고 SVG를 변형 ── */
+
+/* 비율 변경 및 회전 */
+.dontRotate {
+  transform: rotate(18deg) scale(1.3, 0.72);
+}
+
+/* 색상 변경 및 임의 효과(그림자) 추가 */
+.dontColor {
+  filter: hue-rotate(150deg) saturate(2.6) drop-shadow(3px 5px 0 rgba(0, 0, 0, 0.45));
+}
+
+/* 주변 요소 및 가장자리 밀착 배치 — 로고를 구석으로 밀고 장식 칩이 바로 붙는다 */
+.dontCrowdWrap {
+  justify-content: flex-start;
+  padding-left: 6px;
+}
+
+.dontCrowdLogo {
+  max-width: 58%;
+}
+
+.crowdChip {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border-radius: var(--radius-sm);
+  opacity: 0.85;
+}
+
+/* 복잡한 배경 또는 저대비 — 로고는 그대로, 배경만 시끄럽게 */
+.dontBusyBgWrap {
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(29, 127, 249, 0.4) 0 6px,
+    rgba(135, 204, 37, 0.4) 6px 12px,
+    rgba(244, 96, 96, 0.35) 12px 18px
+  );
+}
+
+/* 저해상도·저품질 — 블러+채도 저하로 열화된 느낌 */
+.dontLowRes {
+  filter: blur(1.6px) contrast(0.82) saturate(0.65);
+}
+
+/* 잘린 형태 — 프리뷰보다 로고를 크게 키워 좌우가 잘려나가게 */
+.dontCrop {
+  max-width: none;
+  width: 165%;
+  max-height: none;
+  height: auto;
+}
+
+/* ── 위반 사례 3종 — img 변형으로 재현 안 되는 케이스 ── */
+
+/* 용도에 맞지 않는 사용 — 심볼을 장식 텍스처처럼 반복 남용 */
+.dontPatternWrap {
+  background-image: url('/brand-assets/logos/po-2026/화면용/아이콘/화면용_아이콘.svg');
+  background-repeat: repeat;
+  background-size: 26px 22px;
+}
+
+/* 서체 변경 — 실제 워드마크 대신 임의 서체로 조판 */
+.dontFontText {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: 700;
+  font-size: 19px;
+  letter-spacing: 0.01em;
+  color: #0046b9;
+}
+
+/* 생성형 AI 변형·왜곡 — SVG 터뷸런스 필터(page.tsx 의 숨은 <filter> 정의 참고)로 뒤틀기 */
+.dontAi {
+  filter: url(#dontAiWarp) hue-rotate(30deg);
+}
+
+@media (max-width: 640px) {
+  .dontGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 라이트 로고 카드의 프리뷰 면 — 컬러 로고는 밝은 판이 정본이라 다크 모드에서도
+   흰 면 위에 올린다 (2026-08-31 피드백: 가로형/세로형/심볼 배경 흰색) */
+:global(:root) {
+  --logo-preview-light: var(--color-fill-neutral);
+}
+
+:global(html[data-theme='dark']) {
+  --logo-preview-light: #ffffff;
+}

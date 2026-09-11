@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "design-md": {
+      "url": "http://localhost:3000/api/mcp"
+    }
+  }
+}

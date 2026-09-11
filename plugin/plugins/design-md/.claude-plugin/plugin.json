@@ -1,0 +1,10 @@
+{
+  "name": "design-md",
+  "version": "0.1.0",
+  "description": "DESIGN.md 디자인 시스템 적용 스킬 + MCP 커넥터 (PDS 서버의 컴포넌트·토큰을 그대로 가져와 사용)",
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "author": {
+    "name": "Polaris Office"
+  }
+}

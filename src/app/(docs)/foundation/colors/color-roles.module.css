@@ -1,0 +1,140 @@
+/* Roles · Palette 섹션 (구 color-roles.md / color-palette.md 병합본) — seed 문법: 그룹 제목 + 표 */
+
+.roleIntro {
+  margin: 0 0 var(--spacing-md);
+  font-size: var(--font-size-sm);
+  line-height: 1.7;
+  color: var(--color-label-neutral);
+}
+
+/* Property 범례 — 배지 없이 텍스트만 */
+.propLegend {
+  list-style: none;
+  margin: var(--spacing-2xs) 0 var(--spacing-sm);
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2xs) var(--spacing-lg);
+  font-size: var(--font-size-xs);
+  color: var(--color-label-neutral);
+}
+
+/* 토큰 그룹 — 제목 한 줄 + 표 */
+.roleGroup {
+  margin: 0 0 var(--spacing-lg);
+}
+
+.roleGroupHead {
+  display: flex;
+  align-items: baseline;
+  gap: var(--spacing-xs);
+  margin: var(--spacing-md) 0 var(--spacing-2xs);
+}
+
+.roleGroupName {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-label-normal);
+}
+
+.roleGroupDesc {
+  font-size: var(--font-size-xs);
+  color: var(--color-label-alternative);
+}
+
+.roleCss {
+  display: block;
+  margin-top: 2px;
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-size: var(--font-size-xxs);
+  color: var(--color-label-assistive);
+}
+
+.val {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+/* 값 표기 컬러 칩 — 라인 없음이 기본, #ffffff 만 .chipBordered 로 라인을 얻는다
+   (2026-08-28 요청: "라인은 다 빼줘. 단 #ffffff 컬러는 라인 도출") */
+.chip {
+  display: inline-block;
+  flex: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  vertical-align: middle;
+}
+
+.chipBordered {
+  box-shadow: inset 0 0 0 1px var(--color-line-normal);
+}
+
+/* ── Palette — 패밀리별 단계 스케일 ── */
+.palList {
+  display: grid;
+  gap: var(--spacing-md);
+  margin: var(--spacing-md) 0 0;
+}
+
+.palFamily {
+  display: grid;
+  grid-template-columns: 104px minmax(0, 1fr);
+  gap: var(--spacing-sm);
+  align-items: start;
+}
+
+.palName {
+  padding-top: 10px;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-label-normal);
+}
+
+.palSteps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2xs);
+}
+
+.palStep {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 40px;
+}
+
+.palTile {
+  display: block;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+}
+
+.palTileBordered {
+  box-shadow: inset 0 0 0 1px var(--color-line-normal);
+}
+
+.palLabel {
+  font-size: var(--font-size-xxs);
+  color: var(--color-label-assistive);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Semantic 참조가 없는 예비 원시값의 자리표시 대시 */
+.palNoRef {
+  color: var(--color-label-assistive);
+}
+
+@media (max-width: 640px) {
+  .palFamily {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-2xs);
+  }
+  .palName {
+    padding-top: 0;
+  }
+}

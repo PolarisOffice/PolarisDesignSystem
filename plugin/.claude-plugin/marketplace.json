@@ -1,0 +1,15 @@
+{
+  "name": "PDS",
+  "owner": {
+    "name": "Polaris Office"
+  },
+  "plugins": [
+    {
+      "name": "design-md",
+      "source": "./plugins/design-md",
+      "description": "DESIGN.md 디자인 시스템을 로컬 AI 에 연결 — 컴포넌트 코드·디자인 토큰을 그대로 가져와 적용 (PDS 서버 필요).",
+      "version": "0.1.0"
+    }
+  ],
+  "description": "Polaris Design System 킷 — DESIGN.md 로 정의한 디자인 시스템(토큰·컴포넌트·조합 규칙)을 Claude Code 에 연결합니다."
+}

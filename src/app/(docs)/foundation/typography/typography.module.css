@@ -1,0 +1,100 @@
+/* 원본 typography.md 의 `.font-preview-*` / `.font-weight-*` / `.type-scale` 견본 / `.responsive-*`
+ * (표 골격 자체는 SpecTable 이 흡수 — type-scale-outer 는 SpecTable.module.css 의 9개 흡수 목록에 있다) */
+
+.previewBox {
+  border: 1px solid var(--color-line-neutral);
+  border-radius: 12px;
+  padding: 40px 32px;
+  text-align: center;
+  background: var(--color-fill-neutral);
+  margin: 12px 0 32px;
+}
+
+.previewText {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--color-label-normal);
+  line-height: 1.4;
+}
+
+.weightSection {
+  margin: 0 0 48px;
+}
+
+.weightLabel {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-label-alternative);
+  margin-bottom: 16px;
+}
+
+.weightRow {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--color-line-neutral);
+  font-size: 16px;
+  color: var(--color-label-normal);
+}
+
+.weightRow:last-child {
+  border-bottom: none;
+}
+
+/* Font size 표의 견본 텍스트 — 크기·굵기는 행 데이터에서 인라인으로 */
+.scaleSample {
+  line-height: 1;
+  color: var(--color-label-normal);
+}
+
+/* 반응형 비교 */
+.usageLabel {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-label-alternative);
+  margin-bottom: 16px;
+}
+
+.responsiveGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin: 12px 0 0;
+}
+
+@media (max-width: 640px) {
+  .responsiveGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.responsiveColLabel {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-accent-normal);
+  margin-bottom: 16px;
+}
+
+.responsiveRow {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--color-line-neutral);
+}
+
+.responsiveRow:last-child {
+  border-bottom: none;
+}
+
+.responsiveStyleName {
+  color: var(--color-label-neutral);
+  min-width: 80px;
+}
+
+.responsiveSize {
+  font-weight: 700;
+  color: var(--color-label-normal);
+}

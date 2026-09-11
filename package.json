@@ -1,0 +1,54 @@
+{
+  "name": "pds",
+  "version": "0.1.0",
+  "private": true,
+  "description": "DESIGN.md 디자인 시스템 셀프호스트 서버 — 업로드·비주얼 가이드·MCP(로컬 AI 연결)",
+  "engines": {
+    "node": ">=20"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "next dev",
+    "build": "npm run pds:build && npm run tokens:sync && npm run md:gen && npm run skill:gen && npm run skill:zip && next build",
+    "start": "next start",
+    "smoke": "tsx scripts/smoke.ts",
+    "pds:build": "npm run build --workspace @polarisoffice/pds-react",
+    "predev": "npm run pds:build && npm run tokens:sync && npm run md:gen && npm run skill:gen && npm run skill:zip",
+    "tokens:sync": "node scripts/sync-pds-tokens-css.mjs",
+    "tokens:check": "node scripts/sync-pds-tokens-css.mjs --check",
+    "md:gen": "node scripts/generate-pds-design-md.mjs",
+    "md:check": "node scripts/generate-pds-design-md.mjs --check",
+    "skill:gen": "node scripts/generate-pds-skill.mjs",
+    "skill:check": "node scripts/generate-pds-skill.mjs --check",
+    "skill:zip": "node scripts/build-pds-skill-zip.mjs",
+    "release:pds": "node scripts/release-pds.mjs",
+    "verify:figma": "node scripts/verify-figma.mjs",
+    "verify:dark": "node scripts/verify-dark.mjs",
+    "verify:slots": "node scripts/verify-slots.mjs",
+    "docs:slug-check": "tsx scripts/slug-check.ts",
+    "docs:headings-refresh": "tsx scripts/refresh-headings.ts",
+    "docs:anchor-check": "node scripts/anchor-check.mjs",
+    "docs:link-check": "node scripts/link-check.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "@polarisoffice/pds-react": "*",
+    "jszip": "^3.10.1",
+    "next": "^16.2.7",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-markdown": "^9.0.1",
+    "remark-gfm": "^4.0.0",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "playwright": "^1.62.1",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}

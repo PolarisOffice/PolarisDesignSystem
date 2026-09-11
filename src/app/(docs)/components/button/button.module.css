@@ -1,0 +1,149 @@
+/* Button 페이지 전용 — 배치 도해 + 실물 프리뷰(검토 반영 2026-08-28).
+   (색 칩은 여러 페이지가 쓰므로 components/docs/Swatch 로 공용화) */
+
+.placementGrid {
+  display: grid;
+  /* 3박스(Desktop · Mobile 세로 · Mobile 가로) — 폭 따라 3→2→1열 */
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-sm);
+  margin: var(--spacing-sm) 0 var(--spacing-2xl);
+}
+
+@media (max-width: 640px) {
+  .placementGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.placementBox {
+  border: 1px solid var(--color-line-neutral);
+  border-radius: 10px;
+  padding: var(--spacing-md);
+  background: var(--color-layer-surface);
+}
+
+.placementLabel {
+  margin: 0 0 var(--spacing-2xs);
+  font-size: var(--font-size-xxs);
+  color: var(--color-label-alternative);
+}
+
+.placementOrder {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-label-neutral);
+}
+
+/* ── 실물 프리뷰(검토 반영 2026-08-28) ─────────────────────────────
+   Variant 밴드 · State 그리드 · Hierarchy 사례 줄 — 셋 다 패키지 Button 실물 렌더.
+   배경은 조용한 면(fill-neutral)만 쓴다. */
+
+/* 스펙 표 앞에 붙는 variant 실물 행 — seed action-button#variant 문법(2026-08-28 피드백 2차:
+   "요소들이 퍼져있는 게 아니라 가운데 정렬"). 반반 그리드에서 라벨 클러스터는 중앙 거터에
+   오른끝 정렬, 버튼은 거터에서 왼끝 정렬 — 한 덩어리가 무대 가운데에서 만나고, 행끼리는
+   칩 오른끝·버튼 왼끝이 같은 축에 선다(seed 와 동일한 리듬). */
+.variantRows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xl);
+  padding: var(--spacing-2xl) var(--spacing-xl);
+  background: var(--color-fill-neutral);
+  border-radius: var(--radius-md);
+  margin: var(--spacing-sm) 0 0;
+}
+
+.variantRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: var(--spacing-3xl);
+}
+
+.variantRowHead {
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2xs);
+}
+
+.variantRow > button {
+  justify-self: start;
+}
+
+.variantRowKey {
+  font-size: var(--font-size-xs);
+  color: var(--color-label-alternative);
+}
+
+.variantChip {
+  display: inline-block;
+  padding: var(--spacing-4xs) var(--spacing-2xs);
+  border-radius: var(--radius-full);
+  background: var(--color-accent-normal);
+  color: var(--color-static-white);
+  font-size: var(--font-size-xxs);
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+@media (max-width: 640px) {
+  .variantRow {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: var(--spacing-xs);
+  }
+
+  .variantRowHead {
+    justify-self: center;
+  }
+}
+
+/* State 그리드 — 5열(변형 라벨 + 상태 4종). 좁은 화면은 바깥 래퍼가 가로 스크롤을 맡는다 */
+.stateGridOuter {
+  overflow-x: auto;
+  background: var(--color-fill-neutral);
+  border-radius: var(--radius-md);
+  margin: var(--spacing-sm) 0 0;
+}
+
+.stateGrid {
+  width: max-content;
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: max-content repeat(4, max-content);
+  align-items: center;
+  justify-items: center;
+  column-gap: var(--spacing-md);
+  row-gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  min-width: max-content;
+}
+
+.stateColLabel {
+  font-size: var(--font-size-xxs);
+  color: var(--color-label-alternative);
+}
+
+.stateRowLabel {
+  justify-self: start;
+  padding-right: var(--spacing-sm);
+  font-size: var(--font-size-xxs);
+  font-weight: 600;
+  color: var(--color-label-neutral);
+}
+
+/* 프리뷰 각주 — 표시용 상태 고정·Pressed 규칙 안내 */
+.previewNote {
+  margin: var(--spacing-2xs) 0 var(--spacing-2xl);
+  font-size: var(--font-size-xxs);
+  color: var(--color-label-alternative);
+}
+
+/* Hierarchy 사례 실물 줄 — CaseBlock 의 children 로 들어간다 */
+.hierarchyRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-2xs);
+}

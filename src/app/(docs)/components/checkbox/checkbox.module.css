@@ -1,0 +1,25 @@
+/* Checkbox & Radio 페이지 전용 — Design 탭 Case 실물 프리뷰 (2026-08-28 디자인팀장 검토
+   반영: Case 에도 실물이 필요하다).
+   프리뷰는 그림이다 — AnatomyFigure 의 inert 결정(2026-08-19)을 따라 클릭·포커스를 막는다.
+   살아있는 데모는 Code 탭에 따로 있다. */
+
+/* 단독 케이스 — desc 의 상태 열거 순서대로 가로 나열. CaseList 섹션이 이미 조용한
+   면(fill-neutral)이라 상자를 또 두르지 않는다(toggle .casePreview 와 같은 취지) */
+.casePreview {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-md);
+}
+
+/* 그룹 케이스 — Code 탭 데모와 같은 세로 축. 간격도 데모(4px)와 같은 spacing-3xs.
+   그룹 덩어리는 무대 중앙에 놓되(2026-08-28 피드백: 케이스 03·04 중앙정렬) 내부 항목은
+   체크리스트 관례대로 왼끝 정렬을 유지한다 — max-content 로 줄여 auto 마진이 중앙을 잡는다 */
+.casePreviewColumn {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-3xs);
+  width: max-content;
+  margin-inline: auto;
+}

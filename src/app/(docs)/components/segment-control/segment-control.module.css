@@ -1,0 +1,10 @@
+/* Segment Control 페이지 전용 — Design 탭 Case 실물 프리뷰 (2026-08-28, toggle 패턴 확장).
+   프리뷰는 그림이다 — AnatomyFigure 의 inert 결정(2026-08-19)을 따라 클릭·포커스를 막는다.
+   살아있는 데모는 Code 탭에 따로 있다. */
+
+/* Case 프리뷰 — toggle.module.css 의 .casePreview 와 같은 결정: CaseList 섹션이 이미
+   조용한 면(fill-neutral)이므로 상자를 또 두르지 않고 실물만 본문 흐름(왼쪽 정렬)에 얹는다 */
+.casePreview {
+  display: flex;
+  justify-content: center;
+}

@@ -1,0 +1,37 @@
+/* UX 라이팅 원칙 — 사이트 공용 프리미티브(SpecTable·UsageGrid)를 최대한 쓰고,
+   여기에는 원칙 목록과 좋은/나쁜 예 비교만 정의한다. */
+
+/* ── 원칙·규칙 표의 첫 칸 (이름 + 한 줄 설명) ── */
+.principleNum {
+  margin-right: 6px;
+  font-size: var(--font-size-xxs);
+  font-weight: 700;
+  color: var(--color-label-assistive);
+  font-variant-numeric: tabular-nums;
+}
+
+.principleTitle {
+  color: var(--color-label-normal);
+}
+
+.principleDesc {
+  display: block;
+  margin-top: 4px;
+  font-size: var(--font-size-xxs);
+  line-height: 1.6;
+  color: var(--color-label-neutral);
+}
+
+/* 표 안의 '이러지 않기' 열 — 구분 신호는 색이 아니라 헤더의 ✗ 와 취소선이 진다.
+   색을 낮춰 구분하면 정작 읽어야 할 나쁜 예가 안 읽힌다(다크 AA 미달 실측). */
+.badCell {
+  color: var(--color-label-neutral);
+  text-decoration: line-through;
+  text-decoration-color: var(--color-line-strong);
+}
+
+@media (max-width: 640px) {
+  .principle {
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+}

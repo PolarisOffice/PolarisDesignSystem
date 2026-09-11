@@ -1,0 +1,56 @@
+/* 원본 grid.md 의 `.grid-terms` / `.grid-svg-wrap` / `.bp-token` / `.bp-val`
+ * (원본 <style> 의 .grid-diagram-* 계열은 본문에서 안 쓰는 사장 규칙이라 이식하지 않음) */
+
+.terms {
+  margin: 16px 0 32px;
+}
+
+.term {
+  margin: 0 0 16px 16px;
+}
+
+.termTitle {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-label-normal);
+  margin-bottom: 4px;
+}
+
+.termDesc {
+  font-size: var(--font-size-xs);
+  color: var(--color-label-neutral);
+  line-height: 1.6;
+}
+
+.svgWrap {
+  border: 1px solid var(--color-line-neutral);
+  border-radius: 12px;
+  background: var(--color-fill-neutral);
+  margin: 24px 0 48px;
+  padding: 40px 24px;
+}
+
+.svgWrap svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* 토큰명 뱃지 — SpecTable .token 과 동일 처리 (2026-08-28) */
+.tokenName {
+  display: inline-block;
+  padding: var(--spacing-4xs) var(--spacing-2xs);
+  border-radius: var(--radius-xs);
+  background: var(--color-fill-normal);
+  line-height: 1.5;
+  font-size: var(--font-size-xxxs);
+  font-weight: 500;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  color: var(--color-label-neutral);
+}
+
+.colsVal {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-label-normal);
+}

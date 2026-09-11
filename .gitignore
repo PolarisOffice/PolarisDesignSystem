@@ -1,0 +1,24 @@
+# 의존성·빌드 산출물 (상위 repo 에 중첩 배치돼도 이 파일이 그대로 적용됨)
+node_modules/
+.next/
+# 워크스페이스 패키지 빌드 산출물 — predev/build 가 소스에서 만든다
+packages/*/dist/
+next-env.d.ts
+*.tsbuildinfo
+
+# 업로드된 디자인 시스템 — 로컬 데이터 (샘플만 커밋). 파일명 규약 = {name}.md
+designs/*.md
+!designs/aurora.md
+# PDS 는 킷의 대표 예시로 동봉한다 — 손으로 쓴 컴포넌트 패키지가 붙는 유일한 시스템.
+# pds.md 는 generate-pds-design-md.mjs 가 만드는 생성물이지만, 킷을 받은 사람이
+# 업로드 없이 바로 가이드를 볼 수 있어야 해서 커밋한다.
+!designs/pds.md
+# 저장 실패 시 잔존 가능한 임시 파일
+designs/*.tmp
+
+# 생성물 — 업로드용 산출 md (저장소가 아니다)
+/generated/
+# 오프라인 스킬 zip — 빌드(prebuild)가 SKILL/ + src/ 에서 조립한다 (scripts/build-pds-skill-zip.mjs)
+/public/pds-design-skill.zip
+.vercel
+.env*

@@ -1,0 +1,92 @@
+/* 문서 헤딩 — 원본 custom.css 의 `.vp-doc h2 { margin-top:48px; padding-top:24px }` 를 따른다.
+   앵커 링크는 hover 시에만 노출 (VitePress .header-anchor 동작). */
+
+.h2 {
+  position: relative;
+  margin: var(--spacing-3xl) 0 var(--spacing-sm);
+  /* 구분선 아래 간격 — 원본 24px 는 위(48px)와 차이가 커 보였다. 위아래를 비슷하게
+     맞춰달라는 검토(2026-08-28)로 40px 로 넓힌다. */
+  padding-top: var(--spacing-2xl);
+  border-top: 1px solid var(--color-line-neutral);
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+  color: var(--color-label-normal);
+  scroll-margin-top: var(--docs-anchor-offset, 64px); /* 고정 헤더에 가리지 않게 — docs-tokens.css 단일 소스 */
+}
+
+.h3 {
+  position: relative;
+  margin: var(--spacing-xl) 0 var(--spacing-2xs);
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+  color: var(--color-label-normal);
+  scroll-margin-top: var(--docs-anchor-offset, 64px);
+}
+
+.h4 {
+  margin: var(--spacing-md) 0 var(--spacing-3xs);
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--color-label-normal);
+  scroll-margin-top: var(--docs-anchor-offset, 64px);
+}
+
+.anchor {
+  /* 아이콘을 제목 글줄 가운데에 앉힌다 — inline 이면 baseline 에 걸려 아래로 처진다 */
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  margin-left: var(--spacing-2xs);
+  color: var(--color-label-assistive);
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.anchor:hover {
+  color: var(--color-label-neutral);
+}
+
+/* 제목이 한글·라틴 섞여 있어 한 값으로 둘 다 맞출 수 없다 — vertical-align:middle 은
+   라틴 x-height 기준이라 라틴 제목엔 맞고 한글 옆에선 2.1px 처진다(24px 잉크 실측).
+   절반만 보정해 양쪽 오차를 ±1.4px 안에 둔다. em 이라 H2·H3 에 비례 적용 */
+.anchor svg {
+  transform: translateY(-0.045em);
+}
+
+.h2:hover .anchor,
+.h3:hover .anchor,
+.anchor:focus-visible {
+  opacity: 1;
+}
+
+/* 복사 직후 피드백 — 헤딩 크기(#)를 그대로 두면 '복사됨' 세 글자가 제목만큼 커진다.
+   등장 인터랙션(살짝 떠오르며 페이드)은 2026-08-28 피드백 */
+.anchor[data-copied] {
+  opacity: 1;
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  color: var(--color-accent-normal);
+  animation: anchor-copied-in var(--duration-normal) var(--ease-out);
+}
+
+@keyframes anchor-copied-in {
+  from {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anchor[data-copied] {
+    animation: none;
+  }
+}

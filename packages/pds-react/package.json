@@ -1,0 +1,51 @@
+{
+  "name": "@polarisoffice/pds-react",
+  "version": "1.0.6",
+  "description": "Polaris Design System — React components. 토큰 CSS 변수 기반, 런타임 스타일 엔진 없음.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "sideEffects": [
+    "*.css"
+  ],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json",
+    "./tokens.css": "./dist/tokens.css"
+  },
+  "scripts": {
+    "build": "node ../../scripts/generate-pds-tokens.mjs && tsc -p tsconfig.build.json && node ../../scripts/strip-dist-comments.mjs",
+    "typecheck": "tsc -p tsconfig.build.json --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "typescript": "^5.7.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "polaris",
+    "design-system",
+    "react",
+    "components",
+    "pds"
+  ],
+  "engines": {
+    "node": ">=18"
+  }
+}

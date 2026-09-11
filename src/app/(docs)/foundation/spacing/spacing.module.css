@@ -1,0 +1,55 @@
+/* 원본 spacing.md 의 `.sp-swatch` / `.sp-token-name` / `.sp-px-val` / `.usage-*` */
+
+.swatch {
+  display: inline-block;
+  background: var(--color-accent-normal);
+  opacity: 0.25;
+  border: 1px solid var(--color-accent-normal);
+}
+
+/* 토큰명 뱃지 — SpecTable .token 과 동일 처리 (2026-08-28) */
+.tokenName {
+  display: inline-block;
+  padding: var(--spacing-4xs) var(--spacing-2xs);
+  border-radius: var(--radius-xs);
+  background: var(--color-fill-normal);
+  line-height: 1.5;
+  font-size: var(--font-size-xxxs);
+  font-weight: 500;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  color: var(--color-label-neutral);
+}
+
+.pxVal {
+  /* 표 본문(13px)과 통일 — Radius 페이지 px 열 위계 피드백(2026-08-28)과 같은 정렬 */
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-label-normal);
+}
+
+.usageGroup {
+  margin: var(--spacing-lg) 0;
+}
+
+.usageTitle {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-label-normal);
+  margin-bottom: 4px;
+}
+
+.usageRange {
+  font-size: var(--font-size-xxs);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  color: var(--color-accent-normal);
+  margin-bottom: 6px;
+}
+
+.usageList {
+  font-size: var(--font-size-xs);
+  color: var(--color-label-neutral);
+  line-height: 2;
+  padding-left: 1.2em;
+  margin: 0;
+}

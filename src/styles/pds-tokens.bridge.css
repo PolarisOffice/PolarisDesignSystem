@@ -1,0 +1,24 @@
+/* 문서 사이트 전용 — 빌드가 packages/pds-react/tokens.css 뒤에 이 파일을 이어 붙여 src/app/pds-tokens.css 를 만든다
+   (scripts/sync-pds-tokens-css.mjs). 여기만 손으로 관리한다. */
+
+/* ============================================================
+   7. (문서 사이트 전용) 구 폰트 토큰 별칭 브리지
+      2026-08-13 타이포 체계 교체(--font-size-* → --typography-*)의 하위호환.
+      값이 아니라 var() 참조라 모바일(≤768px) 반응형도 자동으로 따라간다.
+      문서 CSS ~96곳이 아직 구 이름을 사용 — 점진 마이그레이션 후 삭제 예정.
+      ⚠️ 신규 코드는 --typography-* 를 직접 사용할 것.
+   ============================================================ */
+
+:root {
+  --font-size-5xl:  var(--typography-display-font-size);
+  --font-size-4xl:  var(--typography-title-font-size);
+  --font-size-3xl:  var(--typography-heading1-font-size);
+  --font-size-2xl:  var(--typography-heading2-font-size);
+  --font-size-xl:   var(--typography-heading3-font-size);
+  --font-size-lg:   var(--typography-heading4-font-size);
+  --font-size-md:   var(--typography-body1-font-size);
+  --font-size-sm:   var(--typography-body2-font-size);
+  --font-size-xs:   var(--typography-body3-font-size);
+  --font-size-xxs:  var(--typography-caption1-font-size);
+  --font-size-xxxs: var(--typography-caption2-font-size);
+}

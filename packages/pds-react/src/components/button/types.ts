@@ -18,6 +18,7 @@ export type ButtonVariant =
 export type ButtonSize = 64 | 54 | 48 | 40 | 32 | 24;
 
 export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'color'> {
+  /** 채움·외곽선 계열 선택. 기본 `primary`, 목록 밖 값은 `primary` 로 대체된다(개발 모드에서 경고) */
   variant?: ButtonVariant;
   size?: ButtonSize;
   /** 컨테이너 가로 전체를 채운다 */

@@ -1,6 +1,6 @@
 {
   "name": "@polarisoffice/pds-react",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Polaris Design System — React components. 토큰 CSS 변수 기반, 런타임 스타일 엔진 없음.",
   "license": "Apache-2.0",
   "repository": {

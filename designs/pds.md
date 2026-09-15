@@ -1,7 +1,7 @@
 ---
 name: pds
 title: "Polaris Design System"
-version: 1.0.6
+version: 1.0.7
 description: "폴라리스오피스 제품군의 단일 디자인 기준. 컴포넌트 구현은 npm 패키지로 제공됩니다."
 tokens:
   color:

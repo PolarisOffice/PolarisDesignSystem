@@ -1,0 +1,100 @@
+# @polarisoffice/pds-react 자동 발행 — npm Trusted Publishing(OIDC). 토큰·OTP 없음.
+#
+# 이 파일은 정본(owen-vibeagent)에서는 PDS/.github/ 아래라 실행되지 않고, 미러 동기화가 미러 레포
+# (PolarisOffice/PolarisDesignSystem) 루트 .github/ 로 실어 나른 뒤 거기서만 돈다. npmjs.com 의 Trusted Publisher
+# 설정(owner PolarisOffice · repo PolarisDesignSystem · workflow npm-publish.yml)과 파일명이 일치해야 한다.
+#
+# 흐름: 정본 `npm run release:pds -- patch` → PR → develop 머지 → 미러 동기화(스냅샷 커밋) → 이 워크플로
+#   packages/pds-react/package.json 의 version 이 npm 에 없는 새 버전이면 빌드 → npm publish → 그 커밋에 태그.
+#   같은 버전 재실행·버전 변경 없는 push 는 skip(멱등). 미러는 스냅샷이라 정본 태그가 안 넘어오므로
+#   트리거는 태그가 아니라 "version 변경" 이고, 태그는 발행 뒤 여기서 찍는다.
+#
+# 가드: 새 버전이 현재 latest 보다 낮으면 실패(실수로 낮은 번호를 publish 하면 npm 이 latest 를 그리로 옮긴다).
+# provenance: 레포가 public 이면 npm CLI 가 자동 생성(private 인 동안은 발행만).
+# 위협 모델: OIDC 토큰은 이 레포 main 의 이 파일에서만 유효(포크·PR 브랜치 불가). 남는 구멍 = main 직접 push →
+#   미러 main 브랜치 보호(동기화 계정만 bypass)로 막는다. 이 잡의 GITHUB_TOKEN 은 태그 push 용 contents: write.
+
+name: npm publish
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'packages/pds-react/package.json'
+      - '.github/workflows/npm-publish.yml'
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: npm-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.repository == 'PolarisOffice/PolarisDesignSystem'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write   # 발행 후 태그 push
+      id-token: write   # npm Trusted Publishing(OIDC)
+    defaults:
+      run:
+        working-directory: packages/pds-react
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: true   # 태그 push 에 GITHUB_TOKEN 사용
+
+      # 발행 여부 판정은 setup-node 앞에서 — setup-node(registry-url)가 쓰는 .npmrc 의 자리표시 토큰이
+      # npm view(공개 조회)에 섞이지 않게. 러너 기본 node/npm 으로 충분하다.
+      - name: Decide
+        id: decide
+        run: |
+          set -eu
+          name="$(node -p "require('./package.json').name")"
+          version="$(node -p "require('./package.json').version")"
+          if ! printf '%s' "$version" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+            echo "::error::version '$version' 은 X.Y.Z 형식이어야 해요(프리릴리스는 아직 미지원)"; exit 1
+          fi
+          if npm view "$name@$version" version >/dev/null 2>&1; then
+            echo "::notice::$name@$version 은 이미 npm 에 있어요 — 발행 건너뜀"
+            echo "publish=false" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          latest="$(npm view "$name" version)"
+          if ! node -e 'const [a,b]=process.argv.slice(1).map(v=>v.split(".").map(Number));process.exit(a[0]!==b[0]?(a[0]>b[0]?0:1):a[1]!==b[1]?(a[1]>b[1]?0:1):a[2]>b[2]?0:1)' "$version" "$latest"; then
+            echo "::error::새 버전 $version 이 현재 latest $latest 보다 높지 않아요 — 발행하면 latest 태그가 뒤로 밀려요"; exit 1
+          fi
+          echo "publish $name@$version (latest $latest)"
+          echo "publish=true" >> "$GITHUB_OUTPUT"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          registry-url: 'https://registry.npmjs.org'
+
+      # OIDC 발행은 npm 11.5.1+ — 러너 기본 npm 은 더 낮다
+      - name: Update npm
+        run: npm install -g npm@latest && npm --version
+
+      - name: Install (workspace root)
+        if: steps.decide.outputs.publish == 'true'
+        working-directory: .
+        run: npm install --no-audit --no-fund
+
+      # prepublishOnly 가 build(토큰 생성 → tsc → dist 주석 제거)를 한 번 더 돌린다 — 발행물은 항상 소스에서
+      - name: Publish
+        if: steps.decide.outputs.publish == 'true'
+        run: npm publish --access public
+
+      - name: Tag
+        if: steps.decide.outputs.publish == 'true'
+        env:
+          TAG: pds-react@${{ steps.decide.outputs.version }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git tag -a "$TAG" -m "@polarisoffice/pds-react ${{ steps.decide.outputs.version }}"
+          git push origin "$TAG"
+          echo "tagged $TAG on $(git rev-parse --short HEAD)"

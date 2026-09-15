@@ -2,23 +2,25 @@
 /**
  * @polarisoffice/pds-react 릴리스 준비 — 사람이 정하는 건 버전 번호 하나.
  *
- *   npm run release:pds -- patch|minor|major|X.Y.Z [--dry-run] [--allow-unmerged-source]
+ *   npm run release:pds -- patch|minor|major|X.Y.Z [--dry-run]
  *   (patch/minor/major 는 npm latest 와 package.json 중 큰 쪽 기준으로 계산 — 번호를 직접 정하지 않아도 된다)
  *
  * 하는 일(순서대로, 하나라도 실패하면 exit 1 — 실패 지점 이전 변경은 워킹트리에 남는다):
  *   0. 버전: semver · package.json 보다 큼 · npm latest 보다 큼
- *   1. 브랜치: 워킹트리 clean · HEAD ⊇ origin/develop · develop 에 없는 패키지 소스 변경 없음
+ *   1. 브랜치: 워킹트리 clean · HEAD ⊇ origin/develop. develop 에 없는 패키지 소스 변경은 **경고만** —
+ *      이 스크립트는 발행하지 않고 PR 을 만들 뿐이라 리뷰는 PR 에서 받는다("코드 + bump 를 한 PR 에" 가 기본 흐름)
  *      (2026-09-04 1.0.5 사고 재발 차단 — 옛 피처 브랜치 체크아웃에서 발행돼 develop 에
  *      이미 있던 Sub 버튼 다크 수정 2건이 tarball 에 빠졌다. docs/pds-release.md)
  *   2. package.json version 기록
  *   3. pds:build → tokens:sync → md:gen → skill:gen → skill:zip (pds.md·SKILL 이 새 버전으로 재생성)
  *   4. 검증: dist·tokens.css 헤더·pds.md·SKILL.md 버전 일치, tarball 구성
- *   5. 커밋 + 태그 `pds-react@X.Y.Z` (어느 커밋이 발행됐는지 영구 기록)
- *   6. 다음 할 일 출력 — publish(OTP, 사람) · push · PR · PAX 재업로드 필요 여부
+ *   5. 커밋
+ *   6. 다음 할 일 출력 — push · PR · PAX 재업로드 필요 여부
  *
- * publish 자체는 하지 않는다: OTP 가 필요하고 되돌릴 수 없어서. (후속: GitHub Actions +
- * npm Trusted Publishing 으로 태그 push 트리거 자동화.)
- * --dry-run 은 4 까지 돌린 뒤 변경을 되돌린다(커밋·태그 없음).
+ * publish 는 하지 않는다: PR 이 develop 에 머지되면 미러 동기화 → 미러의 npm-publish 워크플로
+ * (PDS/.github/workflows/npm-publish.yml, npm Trusted Publishing)가 발행하고 그 미러 커밋에 태그 `pds-react@X.Y.Z`
+ * 를 찍는다. 정본에는 태그를 찍지 않는다(스쿼시 머지되면 고아 커밋을 가리키고, 미러엔 안 넘어간다).
+ * --dry-run 은 4 까지 돌린 뒤 변경을 되돌린다(커밋 없음).
  */
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
@@ -32,7 +34,6 @@ const PKG_JSON = join(PKG_DIR, 'package.json');
 const PKG_NAME = '@polarisoffice/pds-react';
 const MD = join(PDS, 'designs/pds.md');
 const SKILL_MD = join(PKG_DIR, 'SKILL/SKILL.md');
-const TAG_PREFIX = 'pds-react@';
 /** develop 에 없는 변경이 있으면 발행 불가한 경로 — 소스·패키지 메타. SKILL/ 은 md 파생물이라 제외 */
 const SOURCE_PATHS = ['src', 'tokens.css', 'tsconfig.build.json', 'LICENSE', 'NOTICE', 'README.md'].map(
   (p) => `PDS/packages/pds-react/${p}`,
@@ -71,7 +72,7 @@ const cmp = (a, b) => {
 
 const BUMPS = ['patch', 'minor', 'major'];
 if (!versionArg || (!semverRe.test(versionArg) && !BUMPS.includes(versionArg))) {
-  fail('사용법: npm run release:pds -- patch|minor|major|X.Y.Z [--dry-run] [--allow-unmerged-source]');
+  fail('사용법: npm run release:pds -- patch|minor|major|X.Y.Z [--dry-run]');
 }
 const bump = (base, kind) => {
   const [M, m, p] = base.split('.').map(Number);
@@ -104,17 +105,15 @@ const ahead = must(git(['diff', '--name-only', 'origin/develop', '--', ...SOURCE
 const pkgNonVersion = diffLines(must(git(['diff', 'origin/develop', '--', 'PDS/packages/pds-react/package.json']), 'git diff 실패').stdout).filter(
   (l) => !/^[-+]\s*"version":/.test(l),
 );
-if ((ahead || pkgNonVersion.length) && !flags.has('--allow-unmerged-source')) {
-  fail(
-    `develop 에 아직 없는 패키지 소스 변경이 있어요(리뷰 전 코드 발행 금지):\n${[ahead, ...pkgNonVersion].filter(Boolean).join('\n')}\n의도한 거면 --allow-unmerged-source`,
-  );
+if (ahead || pkgNonVersion.length) {
+  // 발행은 머지 후 미러 CI 가 하므로 여기서 막을 이유가 없다 — 리뷰어가 코드와 bump 를 같은 PR 에서 본다는 사실만 알린다
+  console.log(`  ⚠ develop 에 아직 없는 패키지 변경이 이 브랜치에 있어요 — 이 PR 에 코드 + 버전 bump 가 함께 들어가요(리뷰어가 둘 다 확인):\n${[ahead, ...pkgNonVersion].filter(Boolean).map((l) => `      ${l}`).join('\n')}`);
 }
 const mainLag = must(git(['log', '--oneline', 'origin/main..origin/develop', '--', 'PDS/packages/pds-react']), 'git log 실패').stdout.trim();
 if (mainLag) {
   console.log(`  ⚠ main 에 아직 안 나간 패키지 변경 ${mainLag.split('\n').length}건 — PAX 가이드(정적 동봉)는 다음 main 배포 때 따라와요`);
 }
-if (git(['tag', '-l', `${TAG_PREFIX}${version}`]).stdout.trim()) fail(`태그 ${TAG_PREFIX}${version} 가 이미 있어요`);
-console.log('  ok — develop 최신 포함 · 미머지 소스 없음');
+console.log('  ok — develop 최신 포함');
 
 /* 2) bump */
 step(`package.json version → ${version}`);
@@ -161,12 +160,12 @@ if (dryRun) {
   step('dry-run — 변경 되돌림');
   must(git(['checkout', '--', 'PDS']), 'git checkout 실패');
   must(run('npm', ['run', 'pds:build'], { cwd: PDS }), 'dist 복원 빌드 실패');
-  console.log(`  ok — 실제 실행이면 커밋 + 태그 ${TAG_PREFIX}${version}. PAX 재업로드 ${reupload}`);
+  console.log(`  ok — 실제 실행이면 커밋. PAX 재업로드 ${reupload}`);
   process.exit(0);
 }
 
-/* 5) 커밋·태그 */
-step('커밋·태그');
+/* 5) 커밋 */
+step('커밋');
 must(git(['add', '--', 'PDS']), 'git add 실패');
 const staged = must(git(['diff', '--cached', '--name-only']), 'git diff 실패').stdout.trim();
 console.log(staged.split('\n').map((l) => `  + ${l}`).join('\n'));
@@ -177,9 +176,9 @@ const msg = [
   `PAX 재업로드 ${reupload}.`,
 ].join('\n');
 must(git(['commit', '-q', '-m', msg]), 'git commit 실패');
-must(git(['tag', '-a', `${TAG_PREFIX}${version}`, '-m', `${PKG_NAME}@${version}`]), 'git tag 실패');
 
 step('다음 할 일');
-console.log(`  1. 발행:  cd PDS/packages/pds-react && npm publish --otp=<인증앱 6자리>
-  2. 푸시:  git push --follow-tags   → develop 대상 PR
+console.log(`  1. 푸시:  git push   → develop 대상 PR → 리뷰·머지
+  2. 발행:  자동 — 머지 후 미러 동기화(수 분) → 미러 Actions 'npm publish' 가 ${version} 발행 + 태그
+            확인: https://github.com/PolarisOffice/PolarisDesignSystem/actions · npm view ${PKG_NAME} version
   3. PAX 관리자 > 디자인 탭 pds.md 재업로드: ${reupload}`);

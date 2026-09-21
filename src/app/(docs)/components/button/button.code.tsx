@@ -59,7 +59,7 @@ ${BUTTON_GHOST_VARIANTS.map((v) => `<Button variant="${v.name}">${v.label}</Butt
   {
     id: 'default',
     title: 'Default',
-    desc: '흰 배경 아웃라인 기본 버튼이에요. 고스트와 달리 배경을 칠하고 hover 가 정의돼 있어요 (Figma Type=Default).',
+    desc: '흰 배경에 테두리가 있는 기본 버튼이에요. Ghost 와 달리 배경을 칠하고 hover 색이 있어요.',
     previewName: 'Button',
     code: `${IMPORT}
 
@@ -113,7 +113,7 @@ import { DownloadIcon } from '${PDS_PACKAGE}';
   {
     id: 'disabled',
     title: 'Disabled',
-    desc: 'Button 의 Disabled 는 투명도가 아니라 색상 자체를 교체해요.',
+    desc: 'Disabled 는 투명도가 아니라 색을 바꿔요.',
     previewName: 'Button',
     code: `${IMPORT}
 

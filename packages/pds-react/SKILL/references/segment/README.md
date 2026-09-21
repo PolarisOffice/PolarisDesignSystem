@@ -15,27 +15,27 @@
 - **Variant** — Pill(필터링) · Filled(뷰 전환) · Outlined(2차 컨트롤).
 - **Count Badge** — Count badge 는 Pill 전용이에요. Filled/Outlined 에는 표시하지 않아요.
 - **Layout · Size** — Fill 은 옵션 5개 이하일 때만. 같은 화면 내 사이즈는 통일해요.
-- **Controlled** — 항상 하나만 선택돼요. 복수 선택이 필요하면 Checkbox 나 Filter Chip 을 쓰세요.
+- **Controlled** — 항상 하나만 선택돼요. 복수 선택은 Checkbox 나 Filter Chip 이에요.
 
 **구성**
 
-- **Pill (필터링)** — 카테고리·상태별로 콘텐츠를 걸러낼 때. Count badge 로 각 옵션의 결과 수를 함께 보여줘요.
+- **Pill (필터링)** — 카테고리·상태로 걸러낼 때. Count badge 로 결과 수를 보여줘요.
 - **Filled (뷰 전환)** — 리스트/그리드/캘린더처럼 표시 방식을 전환하는 주요 컨트롤.
 - **Outlined (서브 컨트롤)** — 카드나 툴바 안처럼 배경이 이미 채워진 영역의 2차 컨트롤.
 
 **권장**
 
-- 데이터 필터링: 카테고리·상태별 콘텐츠 걸러내기
-- 뷰 전환: 리스트/그리드/캘린더 표시 방식 선택
-- 옵션이 2–5개 이내인 경우
-- 선택 결과가 같은 화면에 즉시 반영될 때
+- 카테고리·상태 필터링
+- 리스트/그리드/캘린더 뷰 전환
+- 옵션 2~5개
+- 선택 결과가 같은 화면에 바로 반영될 때
 
 **피하기**
 
-- 페이지·섹션 간 네비게이션 이동이 목적일 때
-- 선택마다 URL이 달라지는 라우팅 구조
-- 옵션이 6개 이상으로 많을 때
-- 탭마다 완전히 다른 콘텐츠 영역으로 이동할 때
+- 페이지·섹션 이동(네비게이션 몫)
+- 선택마다 URL 이 바뀌는 라우팅
+- 옵션 6개 이상
+- 탭마다 전혀 다른 콘텐츠로 이동
 
 ## 예제
 
@@ -52,7 +52,7 @@ const items = [
 <SegmentControl variant="filled" items={items} defaultValue="all" />
 <SegmentControl variant="outlined" items={items} defaultValue="all" />
 
-// ── 제어 모드 — 항상 하나만 선택돼요. 복수 선택이 필요하면 Checkbox 나 Filter Chip 을 쓰세요.
+// ── 제어 모드 — 항상 하나만 선택돼요. 복수 선택은 Checkbox 나 Filter Chip 이에요.
 // 바깥 상태와 묶을 때는 value + onChange. key 로 리마운트하지 않는다(모션이 사라진다).
 const [view, setView] = useState('all');
 

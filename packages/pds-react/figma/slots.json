@@ -415,5 +415,41 @@
     "slot": "toaster",
     "component": "Toaster",
     "_scope": "toast() 첫 호출 때 자동 마운트된다 — 직접 심을 필요 없다. 위치를 직접 잡고 싶을 때만 배치"
+  },
+  "progress-circle": {
+    "slot": "progress-circle/{size}",
+    "component": "ProgressCircle",
+    "axes": {
+      "size": [
+        18,
+        24,
+        32,
+        48
+      ]
+    },
+    "_rule": "트랙 없이 호 하나가 돈다 — 색은 color 로 바꾼다(딤 위 static/white, 버튼 안 currentColor)"
+  },
+  "progress-bar": {
+    "slot": "progress-bar/{type}",
+    "component": "ProgressBar",
+    "axes": {
+      "type": [
+        "indeterminate",
+        "determinate"
+      ]
+    },
+    "_rule": "너비는 영역에 맞춘다 — 구멍이 폭을 가져야 보인다. determinate 는 value(0~100)"
+  },
+  "skeleton": {
+    "slot": "skeleton/{shape}",
+    "component": "Skeleton",
+    "axes": {
+      "shape": [
+        "rect",
+        "circle",
+        "text"
+      ]
+    },
+    "_rule": "실제 콘텐츠와 같은 위치·크기로 둔다. width/height 로 맞춘다"
   }
 }

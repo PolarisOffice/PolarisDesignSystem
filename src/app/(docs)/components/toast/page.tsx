@@ -15,8 +15,7 @@ export default function ToastPage() {
     <>
       <h1>{meta.title}</h1>
       <PageLead>
-        화면 상단 또는 하단에 일시적으로 표시되는 알림 메시지예요. 사용자 액션의 결과를 간단하게 전달할
-        때 사용해요.
+        액션의 결과를 짧게 알려주고 사라지는 메시지예요. 화면 상단이나 하단에 떠요.
       </PageLead>
       <DocTabs
         design={<ToastDesign />}

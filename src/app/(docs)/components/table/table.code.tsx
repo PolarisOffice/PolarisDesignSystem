@@ -23,7 +23,7 @@ export const EXAMPLES: CodeExampleSpec[] = [
   {
     id: 'base',
     title: 'Base',
-    desc: '헤더 행 + 데이터 행. 헤더는 항상 포함해 컨텍스트를 제공해요.',
+    desc: '헤더 행 + 데이터 행. 헤더는 항상 넣어요.',
     previewName: 'Table',
     preview: <Table columns={columns} rows={rows} />,
     code: `${IMPORT}

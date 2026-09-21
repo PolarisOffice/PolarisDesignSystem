@@ -59,16 +59,13 @@ export default function ContextMenuDesign() {
 
       <H3>State</H3>
       <p>
-        메뉴 아이템은 세 가지 상태를 가져요. <strong>Default</strong>는 아직 상호작용이 없는 기본 상태,{' '}
-        <strong>Hover</strong>는 포인터가 올라왔을 때 배경을 채워 피드백을 전달,{' '}
-        <strong>Selected</strong>는 현재 선택된 값을 굵은 글씨로 명시해요.{' '}
+        Default · Hover(배경 채움) · Selected(굵은 글씨) 세 상태예요.{' '}
         <TabSwitchLink to="code">코드로 보기</TabSwitchLink>
       </p>
 
       <H3>Base — Single List</H3>
       <p>
-        가장 기본적인 단일 목록 형태예요. 너비는 고정하지 않고 부모 컨테이너 기준 <strong>fill</strong>로
-        채워 사용하며, 컨텍스트에 따라 전체 폭을 조절해요.
+        기본 단일 목록이에요. 너비는 고정하지 않고 부모 기준 fill 로 채워요.
       </p>
 
       {/* 표준 명칭 'Case' 로 개칭(2026-08-21, Figma 1054:24690 case1·case2 추가 반영).
@@ -77,9 +74,8 @@ export default function ContextMenuDesign() {
 
       <H3>아이템 구성</H3>
       <p>
-        아이템은 세 가지 구성으로 사용해요. <strong>Case 1·2 는 한 메뉴 안에서 혼용</strong>될 수
-        있어요. 체브론은 하위 메뉴가 있는 항목에만 붙어요. 반면 <strong>Case 3 선택 목록은 거의
-        단독</strong>으로 쓰고, 명령·하위 메뉴 항목과 한 목록에 섞지 않아요.
+        구성은 세 가지예요. Case 1·2 는 한 메뉴에 섞일 수 있고(체브론은 하위 메뉴가 있을 때만), Case 3
+        선택 목록은 거의 단독으로 써요.
       </p>
       {/* 버튼 Hierarchy 형 케이스 블록 (2026-08-28 피드백 — "그레이박스로 싸서 위계 분리").
           견본은 MENU_CASES.sample 단일 소스, 실물 Menu/MenuItem 렌더 */}
@@ -106,9 +102,7 @@ export default function ContextMenuDesign() {
 
       <H3>Multi-column + Scroll</H3>
       <p>
-        항목 수가 많을 때 두 가지 방식으로 대응해요. <strong>멀티 컬럼</strong>은 옵션을 병렬로 나열해
-        선택 범위를 한눈에 보여줄 때, <strong>스크롤</strong>은 목록 길이를 제한하면서 전체 항목을 탐색할 수
-        있게 할 때 사용해요.
+        항목이 많으면 멀티 컬럼(선택 범위를 한눈에)이나 스크롤(길이 제한) 중 하나예요.
       </p>
       {/* 실물 프리뷰 (2026-08-28 디자인 검토 반영 — 텍스트로만 서술되던 두 방식을 실물로).
           멀티 컬럼: 패키지에 컬럼 prop 이 없어 진짜 Menu 컨테이너 안에 진짜 MenuItem 을

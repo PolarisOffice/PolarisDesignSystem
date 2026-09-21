@@ -12,9 +12,12 @@ import {
   InputField,
   MenuItem,
   Popup,
+  ProgressBar,
+  ProgressCircle,
   Radio,
   SegmentControl,
   Select,
+  Skeleton,
   Table,
   Tabs,
   Toast,
@@ -235,6 +238,29 @@ export default function Showcase() {
         <Row label="열기">
           <Button variant="default" size={40} onClick={() => setPopup('one')}>ONE BTN</Button>
           <Button variant="default" size={40} onClick={() => setPopup('two')}>TWO BTN</Button>
+        </Row>
+      </Section>
+
+      <Section title="Loading" note="ProgressCircle 4크기 · ProgressBar 2종 · Skeleton 3모양. 버튼 안 스피너는 loading 으로 켠다.">
+        <Row label="ProgressCircle">
+          <ProgressCircle size={18} />
+          <ProgressCircle size={24} />
+          <ProgressCircle size={32} />
+          <ProgressCircle size={48} />
+        </Row>
+        <Row label="버튼 안">
+          <Button variant="primary" size={40} loading>저장중</Button>
+          {/* 라벨 없이 스피너만 — 버튼 폭은 라벨이 있을 때 그대로 둔다 */}
+          <Button variant="primary" size={40} loading aria-label="저장중" style={{ width: 79 }} />
+        </Row>
+        <Row label="ProgressBar" align="start">
+          <div style={{ width: 240 }}><ProgressBar /></div>
+          <div style={{ width: 240 }}><ProgressBar type="determinate" value={60} /></div>
+        </Row>
+        <Row label="Skeleton" align="start">
+          <Skeleton />
+          <Skeleton shape="circle" />
+          <Skeleton shape="text" />
         </Row>
       </Section>
 

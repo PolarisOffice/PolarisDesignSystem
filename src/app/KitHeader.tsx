@@ -1,11 +1,11 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { KIT_NAV_LINK, TOP_NAV } from '@/lib/docs/nav';
+import { TOP_NAV } from '@/lib/docs/nav';
 import SearchDialog from '@/components/docs/SearchDialog';
-import { IS_EMBED, withBase } from '@/lib/basePath';
+import { withBase } from '@/lib/basePath';
 
 /** 테마 저장 키 — layout.tsx 의 무플래시 인라인 스크립트와 **동일 문자열**이어야 한다. */
 const THEME_KEY = 'PDS-theme';
@@ -13,7 +13,8 @@ const THEME_KEY = 'PDS-theme';
 type Theme = 'light' | 'dark';
 
 /**
- * 상단 GNB — PDS 문서 사이트의 네비(Docs / AI Integration)와 테마 토글.
+ * 상단 GNB — PDS 문서 사이트의 섹션 4개(Getting started / Foundation / Component / AI Integration)와
+ * 검색·테마 토글.
  *
  * 메뉴 정의는 [nav.ts](../lib/docs/nav.ts)의 TOP_NAV 단일 소스를 쓴다 — 원본 config.js 의
  * `activeMatch` 정규식을 술어로 옮겨 놓은 것이다.
@@ -34,28 +35,6 @@ export default function KitHeader() {
   useEffect(() => {
     setNavOpen(false);
   }, [pathname]);
-
-  // 초협폭 GNB 오버플로 메뉴(⋯) — 텍스트 링크들이 접히는 대신 팝오버 리스트로 노출
-  const [menuOpen, setMenuOpen] = useState(false);
-  const overflowRef = useRef<HTMLSpanElement>(null);
-  useEffect(() => {
-    setMenuOpen(false);
-  }, [pathname]);
-  useEffect(() => {
-    if (!menuOpen) return;
-    const onDown = (e: PointerEvent) => {
-      if (!overflowRef.current?.contains(e.target as Node)) setMenuOpen(false);
-    };
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setMenuOpen(false);
-    };
-    document.addEventListener('pointerdown', onDown);
-    document.addEventListener('keydown', onKey);
-    return () => {
-      document.removeEventListener('pointerdown', onDown);
-      document.removeEventListener('keydown', onKey);
-    };
-  }, [menuOpen]);
 
   const [theme, setTheme] = useState<Theme | null>(null);
 
@@ -100,7 +79,7 @@ export default function KitHeader() {
       </Link>
       </div>
       <nav>
-        {/* 데스크톱 인라인 링크들 — 초협폭에선 통째로 숨고 ⋯ 오버플로가 대신한다 */}
+        {/* 데스크톱 인라인 링크들 — 960 이하에선 숨고, ☰ 드로어 맨 위의 섹션 묶음(Sidebar)이 대신한다 */}
         <span className="kit-nav-links">
           {TOP_NAV.map((item) => {
             const active = item.isActive(pathname);
@@ -110,84 +89,22 @@ export default function KitHeader() {
               </Link>
             );
           })}
-          {/* 내 디자인 시스템 — 문서 탭이 아니라 도구 진입점이라 버튼 형태로 구분(nav.ts KIT_NAV_LINK 주석).
-              PAX 동봉본은 업로드 도구를 싣지 않으므로 숨긴다 */}
-          {!IS_EMBED && (
-            <Link
-              href={KIT_NAV_LINK.link}
-              className="kit-header-kit-link"
-              aria-current={KIT_NAV_LINK.isActive(pathname) ? 'page' : undefined}
-            >
-              {KIT_NAV_LINK.text}
-            </Link>
-          )}
-        </span>
-        {/* 초협폭 오버플로 메뉴 — 리스트 항목은 인라인과 동일한 단일 소스(TOP_NAV + KIT_NAV_LINK) */}
-        <span className="kit-nav-overflow" ref={overflowRef}>
-          <button
-            type="button"
-            className="kit-nav-more"
-            onClick={() => setMenuOpen((v) => !v)}
-            aria-haspopup="menu"
-            aria-expanded={menuOpen}
-            aria-label="메뉴 더보기"
-            title="메뉴 더보기"
-          >
-            <MoreIcon />
-          </button>
-          {menuOpen && (
-            <div className="kit-nav-popover" role="menu">
-              {TOP_NAV.map((item) => (
-                <Link
-                  key={item.text}
-                  role="menuitem"
-                  href={item.link}
-                  aria-current={item.isActive(pathname) ? 'page' : undefined}
-                >
-                  {item.text}
-                </Link>
-              ))}
-              {/* 문서 탭 ↔ 도구 진입점 위계 분리 — 인라인의 버튼 형태 구분을 리스트에선 구분선이 담당 */}
-              {!IS_EMBED && (
-                <>
-                  <span className="kit-nav-popover-divider" aria-hidden="true" />
-                  <Link
-                    role="menuitem"
-                    href={KIT_NAV_LINK.link}
-                    aria-current={KIT_NAV_LINK.isActive(pathname) ? 'page' : undefined}
-                  >
-                    {KIT_NAV_LINK.text}
-                  </Link>
-                </>
-              )}
-            </div>
-          )}
-        </span>
-        {/* 아이콘 버튼 쌍은 자체 gap 으로 묶는다 — nav 의 20px gap 은 텍스트 링크 간격용 */}
-        <span className="kit-header-icons">
-          <SearchDialog />
-          <button
-            type="button"
-            className="kit-theme-toggle"
-            onClick={toggle}
-            aria-label={theme === 'dark' ? '라이트 모드로 전환' : '다크 모드로 전환'}
-            title={theme === 'dark' ? '라이트 모드로 전환' : '다크 모드로 전환'}
-          >
-            {theme === null ? null : theme === 'dark' ? <MoonIcon /> : <SunIcon />}
-          </button>
         </span>
       </nav>
+      {/* 아이콘 묶음은 그리드 3번째 칸 — 가운데 메뉴가 화면 중앙을 지키게 nav 밖으로 뺀다 */}
+      <span className="kit-header-icons">
+        <SearchDialog />
+        <button
+          type="button"
+          className="kit-theme-toggle"
+          onClick={toggle}
+          aria-label={theme === 'dark' ? '라이트 모드로 전환' : '다크 모드로 전환'}
+          title={theme === 'dark' ? '라이트 모드로 전환' : '다크 모드로 전환'}
+        >
+          {theme === null ? null : theme === 'dark' ? <MoonIcon /> : <SunIcon />}
+        </button>
+      </span>
     </header>
-  );
-}
-
-function MoreIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <circle cx="5" cy="12" r="2" />
-      <circle cx="12" cy="12" r="2" />
-      <circle cx="19" cy="12" r="2" />
-    </svg>
   );
 }
 

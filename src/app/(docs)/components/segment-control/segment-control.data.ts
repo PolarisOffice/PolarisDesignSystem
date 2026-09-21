@@ -30,7 +30,7 @@ export const SEG_CASES: readonly { n: string; title: string; desc: string; sampl
   {
     n: '01',
     title: 'Pill (필터링)',
-    desc: '카테고리·상태별로 콘텐츠를 걸러낼 때. Count badge 로 각 옵션의 결과 수를 함께 보여줘요.',
+    desc: '카테고리·상태로 걸러낼 때. Count badge 로 결과 수를 보여줘요.',
     sample: { variant: 'pill', items: SEG_PILL_SAMPLE_ITEMS, defaultValue: 'all' },
   },
   {
@@ -66,16 +66,16 @@ export const SEG_CASES: readonly { n: string; title: string; desc: string; sampl
 /** 언제 Segment Control 이고 언제 Tabs 인가 — DO/DON'T 가 아니라 컴포넌트 선택 기준이다 */
 export const SEG_VS_TABS = {
   do: [
-    '데이터 필터링: 카테고리·상태별 콘텐츠 걸러내기',
-    '뷰 전환: 리스트/그리드/캘린더 표시 방식 선택',
-    '옵션이 2–5개 이내인 경우',
-    '선택 결과가 같은 화면에 즉시 반영될 때',
+    '카테고리·상태 필터링',
+    '리스트/그리드/캘린더 뷰 전환',
+    '옵션 2~5개',
+    '선택 결과가 같은 화면에 바로 반영될 때',
   ],
   dont: [
-    '페이지·섹션 간 네비게이션 이동이 목적일 때',
-    '선택마다 URL이 달라지는 라우팅 구조',
-    '옵션이 6개 이상으로 많을 때',
-    '탭마다 완전히 다른 콘텐츠 영역으로 이동할 때',
+    '페이지·섹션 이동(네비게이션 몫)',
+    '선택마다 URL 이 바뀌는 라우팅',
+    '옵션 6개 이상',
+    '탭마다 전혀 다른 콘텐츠로 이동',
   ],
 } as const;
 
@@ -118,7 +118,7 @@ export const SEG_VARIANTS = ['pill', 'filled', 'outlined'] as const;
 
 /** Anatomy — 2026-08-13 신설. 같은 페이지 Specification 값에서만 유도(창작 없음) */
 export const SEG_ANATOMY = [
-  { n: '01', title: 'Container', desc: 'Filled/Outlined 는 패딩 3px·radius-md 배경 상자, Pill 은 배경 없이 항목만 나열해요' },
-  { n: '02', title: 'Segment Item', desc: '선택 단위. 선택 시 배경·글자색이 전환되며 radius-sm(8px)을 가져요' },
-  { n: '03', title: 'Count Badge', desc: 'Pill 전용. 각 옵션의 결과 수를 표시하는 radius-full 배지예요' },
+  { n: '01', title: 'Container', desc: 'Filled/Outlined 는 패딩 3px·radius-md 상자, Pill 은 배경 없이 항목만' },
+  { n: '02', title: 'Segment Item', desc: '선택 단위. 선택되면 배경·글자색이 바뀌고 radius-sm(8px)' },
+  { n: '03', title: 'Count Badge', desc: 'Pill 전용. 결과 수를 표시하는 radius-full 배지' },
 ] as const;

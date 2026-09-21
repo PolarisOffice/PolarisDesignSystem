@@ -1,0 +1,71 @@
+/* 위계 3층(2026-09-18): 버전 H2(24/700) › 메타·눈썹(12 흐림) › 항목(14 본문).
+   종전엔 날짜·라벨·항목·패치 요약이 전부 14px 이라 층이 안 나뉘었다 */
+
+/* 제목에 딸린 메타 — 문단 여백 없이 H2 바로 아래 */
+.meta {
+  margin: calc(-1 * var(--spacing-xs)) 0 var(--spacing-lg);
+  font-size: var(--font-size-xxs);
+  color: var(--color-label-assistive);
+}
+
+/* 구분 라벨(추가/변경/수정) — 항목보다 작고 흐린 눈썹 */
+.eyebrow {
+  margin: var(--spacing-md) 0 var(--spacing-3xs);
+  font-size: var(--font-size-xxs);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--color-label-assistive);
+}
+
+/* 패치 릴리스 묶음 — 접힌 상태가 기본. 열면 버전마다 내용이 나온다 */
+.patches {
+  margin: var(--spacing-2xl) 0;
+}
+
+/* 항목과 같은 급(14/400) — 굵게 두면 눈썹·버전 제목과 경쟁한다 */
+.patchesSummary {
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  font-weight: 400;
+  color: var(--color-label-neutral);
+  list-style: none;
+}
+
+.patchesSummary::-webkit-details-marker {
+  display: none;
+}
+
+.patchesSummary::before {
+  content: '▸';
+  display: inline-block;
+  width: 1em;
+  color: var(--color-label-assistive);
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.patches[open] > .patchesSummary::before {
+  transform: rotate(90deg);
+}
+
+.patchesSummary:hover {
+  color: var(--color-label-normal);
+}
+
+.patch {
+  margin-top: var(--spacing-md);
+  padding-left: 1em;
+}
+
+.patchHead {
+  margin: 0;
+  font-size: var(--font-size-sm);
+}
+
+.patchHead strong {
+  color: var(--color-label-normal);
+}
+
+/* 패치 안의 날짜는 버전 옆 인라인 — 블록 메타 마진을 끈다 */
+.patchHead .meta {
+  margin: 0 0 0 var(--spacing-2xs);
+}

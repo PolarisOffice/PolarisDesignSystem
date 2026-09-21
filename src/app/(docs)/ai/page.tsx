@@ -2,8 +2,9 @@ import type { Metadata } from 'next';
 import { H2, H3 } from '@/components/docs/Heading';
 import PageLead from '@/components/docs/PageLead';
 import { pageMeta } from '@/lib/docs/pages';
+import InfoNote from '@/components/docs/InfoNote';
+import DownloadButton from '@/components/docs/DownloadButton';
 import s from './ai.module.css';
-import { withBase } from '@/lib/basePath';
 
 const meta = pageMeta('/ai')!;
 export const metadata: Metadata = { title: meta.title, description: meta.description };
@@ -53,26 +54,22 @@ export default function AiPage() {
       <H2>설치 방법</H2>
 
       <H3>ZIP 다운로드</H3>
-      <div className={s.installBlock}>
-        <a
-          href={withBase('/pds-design-skill.zip')}
-          download
-          className={`${s.installCode} ${s.downloadLink}`}
-        >
-          ⬇ pds-design-skill.zip 다운로드
-        </a>
+      {/* 로고 에셋 페이지와 같은 공통 다운로드 버튼(시스템 Button) */}
+      <div className={s.download}>
+        <DownloadButton href="/pds-design-skill.zip" icon>
+          pds-design-skill.zip 다운로드
+        </DownloadButton>
       </div>
       <p>
         압축을 풀어 <code>pds-design</code> 폴더를 프로젝트의 <code>.claude/skills/</code>(또는 쓰는 AI 도구의
         스킬 디렉터리)에 넣으세요. AI 가 화면을 만들 때 SKILL.md 규칙대로 <code>src/</code> 를{' '}
         <code>components/pds/</code> 로, 토큰 CSS 를 <code>styles/design-tokens.css</code> 로 복사해 씁니다.
       </p>
-      <blockquote className={s.note}>
-        <p>
-          <strong>참고</strong> 프로젝트는 TypeScript 여야 해요(소스가 .tsx). 서체 Pretendard 는 프로젝트가
-          직접 로드합니다 — 없으면 시스템 한글 서체로 보여요.
-        </p>
-      </blockquote>
+      {/* 사이트 공통 안내 바 — 색 띠·"참고" 라벨 콜아웃은 쓰지 않는다(InfoNote 주석) */}
+      <InfoNote>
+        프로젝트는 TypeScript 여야 해요(소스가 .tsx). 서체 Pretendard 는 프로젝트가 직접 로드합니다 — 없으면 시스템
+        한글 서체로 보여요.
+      </InfoNote>
 
       <H2>파일 구조</H2>
       <p>스킬 파일은 아래 구조로 구성되어 있어요.</p>

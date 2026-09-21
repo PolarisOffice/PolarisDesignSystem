@@ -10,13 +10,13 @@
   font-size: var(--font-size-xxs);
   font-weight: 500;
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  color: var(--color-label-normal);
+  color: var(--color-label-neutral);
 }
 
 .signal {
   font-size: var(--font-size-xxs);
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  color: var(--color-label-neutral);
+  color: var(--color-label-alternative);
 }
 
 /* Shadow Preview */

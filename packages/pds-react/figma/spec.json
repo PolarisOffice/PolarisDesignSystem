@@ -44,7 +44,7 @@
         "padding": "0px 8px",
         "fontSize": "13px",
         "fontWeight": "500",
-        "borderRadius": "4px"
+        "borderRadius": "6px"
       }
     },
     "variants": {
@@ -63,7 +63,7 @@
       },
       "sub": {
         "backgroundColor": "rgb(217, 234, 255)",
-        "color": "rgb(29, 127, 249)"
+        "color": "rgb(20, 88, 173)"
       },
       "gray": {
         "backgroundColor": "rgb(242, 244, 246)",
@@ -284,5 +284,70 @@
     "backgroundColor": "rgba(0, 0, 0, 0.5)",
     "spinner": 48,
     "labelFontSize": "16px"
+  },
+  "progressCircle": {
+    "_node": "3192:1894",
+    "sizes": {
+      "18": {
+        "box": 18,
+        "ring": 12,
+        "stroke": 1.5
+      },
+      "24": {
+        "box": 24,
+        "ring": 16,
+        "stroke": 2
+      },
+      "32": {
+        "box": 32,
+        "ring": 22,
+        "stroke": 3
+      },
+      "48": {
+        "box": 48,
+        "ring": 32,
+        "stroke": 4
+      }
+    },
+    "indicator": "rgb(114, 120, 127)",
+    "_noteIndicator": "label/alternative 기본. 어두운 배경·Black 버튼 위는 static/white — 48 박스를 픽셀로 읽어 확인(트랙 없음)",
+    "cycleMs": 2000,
+    "trimEndMs": 1667,
+    "trimLagMs": 333,
+    "spinDeg": 356.4,
+    "ease": "cubic-bezier(0.333, 0, 0.667, 1)"
+  },
+  "progressBar": {
+    "_node": "3192:1907",
+    "height": 4,
+    "borderRadius": "9999px",
+    "indeterminateWidthPct": 30,
+    "indeterminateCycleMs": 1500,
+    "indeterminateEase": "linear",
+    "determinateTransition": "200ms ease-out",
+    "track": "rgb(242, 244, 246)",
+    "_noteTrack": "fill/normal · Indicator 는 label/alternative 기본"
+  },
+  "skeleton": {
+    "_node": "3192:1914",
+    "rect": {
+      "width": 240,
+      "height": 120,
+      "borderRadius": "12px"
+    },
+    "circle": {
+      "size": 48,
+      "borderRadius": "9999px"
+    },
+    "text": {
+      "width": 240,
+      "height": 16,
+      "borderRadius": "6px"
+    },
+    "fill": "rgb(242, 244, 246)",
+    "cycleMs": 2000,
+    "opacity": "100% → 30% → 100%",
+    "ease": "ease-in-out",
+    "_noteFill": "fill/normal 하나만 — 오버레이가 없어 다크 별도 지정 불필요. shimmer 그라데이션 아님"
   }
 }

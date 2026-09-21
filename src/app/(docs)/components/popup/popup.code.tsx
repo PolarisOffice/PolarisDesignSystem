@@ -10,7 +10,7 @@ export const EXAMPLES: CodeExampleSpec[] = [
   {
     id: 'two-btn',
     title: 'TWO BTN',
-    desc: '되돌릴 수 없는 액션 전 확인. 취소 수단을 반드시 제공하고, 우측(Primary)에 위계가 높은 CTA 를 둬요.',
+    desc: '되돌릴 수 없는 액션 전 확인. 취소 수단을 두고 오른쪽에 주요 CTA 를 놓아요.',
     previewName: 'Popup',
     preview: (
       <DemoRow>

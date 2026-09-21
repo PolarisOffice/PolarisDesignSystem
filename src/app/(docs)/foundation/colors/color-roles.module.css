@@ -16,7 +16,7 @@
   flex-wrap: wrap;
   gap: var(--spacing-2xs) var(--spacing-lg);
   font-size: var(--font-size-xs);
-  color: var(--color-label-neutral);
+  color: var(--color-label-alternative);
 }
 
 /* 토큰 그룹 — 제목 한 줄 + 표 */

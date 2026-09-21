@@ -2,17 +2,13 @@ import type { Metadata } from 'next';
 import AssetCard, { AssetPair } from '@/components/docs/AssetCard';
 import { H2, H3 } from '@/components/docs/Heading';
 import PageLead from '@/components/docs/PageLead';
-import InfoNote from '@/components/docs/InfoNote';
 import { slugify } from '@/lib/docs/slug';
 import { pageMeta } from '@/lib/docs/pages';
-import SpecTable from '@/components/docs/SpecTable';
 import DownloadButton from '@/components/docs/DownloadButton';
 import DownloadMenu from '@/components/docs/DownloadMenu';
 import Po26Actions from './Po26Actions';
 import {
   LOGO_DONTS,
-  LOGO_MEDIUMS,
-  LOGO_VERSIONS,
   PO26_ALL_ITEMS,
   PO26_DONT_LOGO,
   PO26_GUIDE_COMING_SOON,
@@ -134,19 +130,15 @@ export default function BrandLogoPage() {
   return (
     <>
       <h1>{meta.title}</h1>
-      <PageLead>
-        폴라리스 브랜드 로고 에셋을 다운로드할 수 있어요. 로고는 브랜드 일관성을 위해 규정을
-        엄격히 준수해야 해요.
-      </PageLead>
       {/* 로고는 브랜드 자산 라이선스 대상 — 규칙 본문은 /terms 3절이 담고, 여기서는 그리로 안내만 한다
-          (2026-09-04 결정: "사내·승인 사용자만" 문구 대신 약관 준수 안내). 앵커는 헤딩 텍스트를 사이트
-          slugify 로 만든다 — 한글 앵커가 조합형 자모(NFKD)라 손으로 쓴 NFC 문자열은 id 와 불일치.
-          문자열은 terms/page.tsx 의 3절 H2 텍스트와 같아야 한다 */}
-      <InfoNote>
-        로고 에셋은 브랜드 자산 가이드를 따라요. 사용 전에{' '}
+          (2026-09-04 결정: "사내·승인 사용자만" 문구 대신 약관 준수 안내. 2026-09-18 안내 박스를 리드에 합침).
+          앵커는 헤딩 텍스트를 사이트 slugify 로 만든다 — 한글 앵커가 조합형 자모(NFKD)라 손으로 쓴 NFC
+          문자열은 id 와 불일치. 문자열은 terms/page.tsx 의 3절 H2 텍스트와 같아야 한다 */}
+      <PageLead>
+        폴라리스 로고 파일과 사용 기준이에요. 사용 전에{' '}
         <a href={withBase(`/terms#${slugify('3. 브랜드 자산 (Brand Assets License)')}`)}>이용약관의 브랜드 자산 조항</a>을
-        확인하고, 그 조건을 지켜 사용해 주세요.
-      </InfoNote>
+        확인해 주세요.
+      </PageLead>
 
       <div className={s.titleRow}>
         <H2>폴라리스오피스 로고</H2>
@@ -155,8 +147,8 @@ export default function BrandLogoPage() {
       {/* 2026-08-28 검토 반영 — "리본"·"폴라리스 블루" 명칭 삭제, 버전 선택 기준의 핵심
           ("컬러 로고가 기본")을 상단으로 끌어올린다. 상세 기준 표는 아래 섹션 유지. */}
       <p>
-        컬러 심볼과 워드마크로 구성돼요. <strong>컬러 로고가 기본</strong>이고, 흑백·회색조는 컬러
-        표현이 제한되는 경우에만 보완적으로 사용해요. 어두운 배경에서는 워드마크만 흰색으로 바뀌어요.
+        심볼과 워드마크로 구성돼요. 컬러 로고가 기본이고, 흑백·회색조는 컬러를 쓸 수 없을 때만 써요. 어두운
+        배경에선 워드마크만 흰색이에요.
       </p>
 
       <AssetPair>
@@ -191,48 +183,14 @@ export default function BrandLogoPage() {
         </DownloadButton>
       </div>
 
-      <H3>화면용 / 인쇄용 구분</H3>
-      <p>
-        용도에 맞지 않는 로고를 사용하면 색상이 다르게 표현될 수 있어요. 외주 업체에 전달하는 경우{' '}
-        <strong>AI(Adobe Illustrator) 파일</strong>을 사용해요. 예) 영상 제작 시{' '}
-        <code>화면용_전체로고.ai</code>, 명함·현수막 제작 시 <code>인쇄용_전체로고.ai</code> 전달.
-      </p>
-      <SpecTable
-        caption="화면용/인쇄용 구분"
-        columns={[
-          { key: 'name', header: '구분', width: '14%' },
-          { key: 'mode', header: '색 공간', width: '12%' },
-          { key: 'purpose', header: '목적', width: '28%' },
-          { key: 'examples', header: '예시', width: '46%' },
-        ]}
-        rows={LOGO_MEDIUMS.map((m) => ({
-          name: <strong>{m.name}</strong>,
-          mode: m.mode,
-          purpose: m.purpose,
-          examples: m.examples,
-        }))}
-      />
-
-      <H3>로고 버전 선택 기준</H3>
-      <p>
-        <strong>컬러 로고가 기본</strong>이에요. 흑백·회색조는 컬러 표현이 제한되는 경우에만
-        보완적으로 사용해요.
-      </p>
-      <SpecTable
-        caption="로고 버전별 사용 기준"
-        columns={[
-          { key: 'name', header: '버전', width: '14%' },
-          { key: 'rule', header: '지위', width: '14%' },
-          { key: 'desc', header: '기준', width: '42%' },
-          { key: 'examples', header: '예시 상황', width: '30%' },
-        ]}
-        rows={LOGO_VERSIONS.map((v) => ({
-          name: <strong>{v.name}</strong>,
-          rule: v.rule,
-          desc: v.desc,
-          examples: v.examples,
-        }))}
-      />
+      {/* 상세 규칙(매체별 파일·버전 선택 기준 표 2개)은 PDF 가 맡기로 하고 핵심만 남긴다(2026-09-18).
+          표 데이터(logo.data.ts LOGO_MEDIUMS·LOGO_VERSIONS)는 pds.md 의 AI 용 로고 규칙 생성이 계속 쓰므로 유지 */}
+      <ul>
+        <li>화면용(RGB)은 디지털에, 인쇄용(CMYK)은 실물 제작에 써요. 외주 전달은 AI 파일로.</li>
+        <li>컬러 로고가 기본, 흑백·회색조는 컬러를 쓸 수 없을 때만.</li>
+        <li>어두운 배경에는 어두운 배경용 로고를 써요.</li>
+        <li>비율·색·서체를 바꾸거나 자르지 않아요.</li>
+      </ul>
 
       {SHOW_LOGO_DONTS && (
         <>

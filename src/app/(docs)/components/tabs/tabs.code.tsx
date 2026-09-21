@@ -31,7 +31,7 @@ export const EXAMPLES: CodeExampleSpec[] = [
   {
     id: 'variant',
     title: 'Variant',
-    desc: 'Primary 는 페이지 최상단 메인 네비게이션, Secondary 는 섹션 내 서브 카테고리 전환에 써요.',
+    desc: 'Primary 는 최상단 메인 네비게이션, Secondary 는 섹션 안 서브 카테고리예요.',
     previewName: 'Tabs',
     /* layout="hug" 명시 (2026-08-28 검토 — "하단 라인이 hug로 적용이 안되어 있음"):
        기본 fill 은 폭이 없는 데모 컨테이너에서 세 탭이 자연 폭 합을 등분해

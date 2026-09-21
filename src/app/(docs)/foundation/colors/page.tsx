@@ -29,8 +29,7 @@ function Overview() {
     <>
       <H2>색상의 세 가지 책임</H2>
       <p>
-        폴라리스는 Word·Sheet·Slide 를 아우르는 멀티 포맷 오피스 제품군이에요. 그래서 하나의 색상 체계가
-        세 가지 맥락을 동시에 담당해요.
+        Word·Sheet·Slide 를 아우르는 제품군이라 색 체계 하나가 세 맥락을 맡아요.
       </p>
       <div className={s.dutyList}>
         {ROLE_CARDS.map((card) => (
@@ -88,8 +87,8 @@ function Overview() {
 
       <H2>Semantic → Primitive 계층</H2>
       <p>
-        컴포넌트는 항상 Semantic 토큰만 참조하고, Semantic 은 내부에서 Primitive 를 var() 로 참조해요.
-        리브랜딩과 다크 모드는 이 한 겹 아래에서만 바뀌어요.
+        컴포넌트는 Semantic 토큰만 쓰고, Semantic 이 Primitive 를 참조해요. 리브랜딩·다크 모드는 그 아래
+        층에서만 바뀌어요.
       </p>
       <SpecTable
         caption="Semantic 과 Primitive 계층"
@@ -101,12 +100,12 @@ function Overview() {
         rows={[
           {
             layer: <strong>Semantic</strong>,
-            desc: '역할 기반 색상. 컴포넌트와 UI 에 직접 적용하는 토큰이며, "이 색이 무엇을 의미하는가"로 참조해요.',
+            desc: '역할 기반 토큰. 컴포넌트에 직접 써요.',
             ex: <SpecToken>--color-accent-normal</SpecToken>,
           },
           {
             layer: <strong>Primitive</strong>,
-            desc: '팔레트 원시값. 색조·채도·명도로만 구성된 원시 색상이며 체계의 기반이지만 컴포넌트에는 직접 쓰지 않아요.',
+            desc: '팔레트 원시값. 컴포넌트에 직접 쓰지 않아요.',
             ex: <SpecToken>--primitive-po-blue-60</SpecToken>,
           },
         ]}
@@ -141,15 +140,15 @@ function Roles() {
   return (
     <>
       <p className={s.tabLead}>
-        컴포넌트와 화면에 직접 쓰는 <strong>Semantic 토큰</strong> 전체예요. 이름이 곧 쓰임이라 &quot;이 색이
-        무엇을 의미하는가&quot;로 참조하고, 값(hex)은 토큰 뒤에서 테마에 따라 바뀌어요.
+        컴포넌트와 화면에 직접 쓰는 <strong>Semantic 토큰</strong> 전체예요. 이름이 곧 쓰임이고, 값은 테마에
+        따라 바뀌어요.
       </p>
       <RolesSection />
 
       <H2>포맷 앱 색상</H2>
       <p>
-        파일 포맷을 구분하거나 포맷별 화면을 표현할 때 사용해요. 포맷마다 주색과 인터랙션 상태(hover·pressed),
-        다크 모드에서 회색톤으로 보정되는 <SpecToken>-adaptive</SpecToken> 2종을 합쳐 총 5토큰이에요.
+        포맷 구분과 포맷별 화면에 써요. 포맷마다 주색·hover·pressed와 다크 보정{' '}
+        <SpecToken>-adaptive</SpecToken> 2종, 총 5토큰이에요.
       </p>
       <SpecTable
         caption="포맷 앱 색상 토큰"
@@ -181,14 +180,13 @@ function Roles() {
         })}
       />
       <p className={s.note}>
-        *-adaptive 는 다크 모드에서만 회색톤으로 변환돼요. 우측 상단 테마 토글로 확인할 수 있어요.
+        -adaptive 는 다크 모드에서만 회색톤으로 바뀌어요.
       </p>
 
       <H2>구독 플랜 색상</H2>
       <p>
-        요금제를 구분하는 색상이에요. 요금제 뱃지·업셀 UI·기능 잠금 상태에서 글자색{' '}
-        <SpecToken>{'--color-plan-{name}'}</SpecToken> 과 10% 알파 배경{' '}
-        <SpecToken>{'--color-plan-{name}-bg'}</SpecToken> 쌍으로 써요.
+        요금제 뱃지·업셀·잠금 UI에서 글자색 <SpecToken>{'--color-plan-{name}'}</SpecToken> 과 10% 배경{' '}
+        <SpecToken>-bg</SpecToken> 를 쌍으로 써요.
       </p>
       <SpecTable
         caption="구독 요금제 색상 토큰"
@@ -215,10 +213,8 @@ function Roles() {
 
       <H2>AI 전용 색상</H2>
       <p>
-        AI 기능과 상호작용을 표현하는 주요 컬러예요. 폴라리스에서 보라색 계열은 <strong>AI 기능에만</strong>{' '}
-        사용해요. AI 어시스턴트, AI 생성 콘텐츠, AI 툴바에 <SpecToken>accent/ai</SpecToken> 토큰을 일관되게
-        적용하면 사용자는 &quot;이 기능은 AI다&quot;를 색상만으로 즉시 인식해요. 다른 UI 요소에 보라색을
-        임의로 사용하지 마세요.
+        보라색은 <strong>AI 기능에만</strong> 써요. 어시스턴트·생성 콘텐츠·AI 툴바에{' '}
+        <SpecToken>accent/ai</SpecToken> 를 일관되게 쓰고, 다른 요소엔 쓰지 않아요.
       </p>
       <SpecTable
         caption="AI 전용 색상 토큰"
@@ -253,8 +249,8 @@ function Palette() {
   return (
     <>
       <p className={s.tabLead}>
-        Semantic 토큰이 내부적으로 참조하는 <strong>Primitive 스케일</strong>이에요. 컴포넌트에는 Roles 탭의
-        Semantic 토큰만 쓰고, 아래 hex 를 직접 하드코딩하지 마세요.
+        Semantic 토큰이 참조하는 <strong>Primitive 스케일</strong>이에요. 컴포넌트에는 hex 대신 Semantic 탭의
+        토큰을 써요.
       </p>
       <PaletteSection />
     </>
@@ -273,8 +269,7 @@ export default function ColorsPage() {
       {/* 2026-08-28 책임 03 교체(플랜→AI)에 맞춰 리드도 세 책임 나열로 정렬 — 플랜 토큰은
           Roles 탭에 남아 있으므로 리드에서만 뺀다 */}
       <PageLead>
-        폴라리스 색상 시스템은 접근성을 바탕으로 UI 계층, 포맷 앱 아이덴티티, AI 기능을 하나의 체계로
-        표현해요.
+        UI 계층·포맷 아이덴티티·AI 기능을 하나의 색 체계로 표현해요.
       </PageLead>
 
       <PageTabs
@@ -282,8 +277,10 @@ export default function ColorsPage() {
         ariaLabel="컬러 문서 보기 전환"
         tabs={[
           { id: 'overview', label: 'Overview', content: <Overview /> },
-          { id: 'roles', label: 'Roles', content: <Roles /> },
-          { id: 'palette', label: 'Palette', content: <Palette /> },
+          // 라벨은 Overview 의 "Semantic → Primitive 계층" 표와 같은 이름(2026-09-18: 구 Roles/Palette).
+          // id 는 URL ?tab= 에 쓰이므로 그대로
+          { id: 'roles', label: 'Semantic', content: <Roles /> },
+          { id: 'palette', label: 'Primitive', content: <Palette /> },
         ]}
       />
     </>

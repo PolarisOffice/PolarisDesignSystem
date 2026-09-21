@@ -15,8 +15,7 @@ export default function SegmentControlPage() {
     <>
       <h1>{meta.title}</h1>
       <PageLead>
-        상호 배타적인 옵션을 즉시 필터링하거나 뷰를 전환할 때 사용해요. 선택 결과가 같은 화면에 바로
-        반영돼요.
+        옵션 하나를 골라 같은 화면에서 바로 필터링하거나 뷰를 전환해요.
       </PageLead>
       <DocTabs
         design={<SegmentControlDesign />}

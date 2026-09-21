@@ -4,25 +4,25 @@
   font-size: var(--font-size-xxs);
   font-weight: 500;
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  color: var(--color-label-normal);
+  color: var(--color-label-neutral);
 }
 
 .val {
   font-size: var(--font-size-xs);
   font-weight: 600;
-  color: var(--color-label-normal);
+  color: var(--color-label-neutral);
 }
 
 .curve {
   font-size: var(--font-size-xxs);
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  color: var(--color-label-normal);
+  color: var(--color-label-neutral);
 }
 
 .transition {
   font-size: var(--font-size-xxs);
   line-height: 1.8;
-  color: var(--color-label-neutral);
+  color: var(--color-label-alternative);
 }
 
 /* Easing 곡선 미리보기 — 좌하단(시작)→우상단(끝), 대각 기준선 위에 베지어 곡선 */

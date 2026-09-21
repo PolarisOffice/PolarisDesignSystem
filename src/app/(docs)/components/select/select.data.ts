@@ -4,14 +4,14 @@ export const SELECT_ANATOMY = [
   {
     n: '01',
     title: 'Container',
-    desc: '트리거 영역 전체. 상태(default/open/filled/disabled)에 따라 border 색상이 변경됨',
+    desc: '트리거 영역. 상태에 따라 테두리 색이 바뀌어요',
   },
   {
     n: '02',
     title: 'Placeholder / Value',
-    desc: '선택 전에는 Placeholder, 선택 후에는 선택된 값 텍스트를 표시',
+    desc: '선택 전엔 Placeholder, 후엔 선택한 값',
   },
-  { n: '03', title: 'Chevron Icon', desc: '닫힘 시 아래 방향, 열림 시 위 방향으로 전환' },
+  { n: '03', title: 'Chevron Icon', desc: '닫히면 아래, 열리면 위' },
 ] as const;
 
 /** 프리뷰 공용 견본 — Design 탭 Anatomy 견본과 같은 값(단일 소스, 창작 없음).
@@ -54,7 +54,7 @@ export const SELECT_STATES: readonly {
     state: 'Disabled',
     border: '#e8ebed',
     token: '--color-line-neutral',
-    desc: '비활성화, 배경·radius는 Default와 동일, 텍스트·아이콘만 opacity: 40%',
+    desc: '배경·radius 는 그대로, 텍스트·아이콘만 40%',
     preview: { disabled: true },
   },
 ];
@@ -69,15 +69,15 @@ export const SELECT_SIZES = [
 
 export const SELECT_USAGE = {
   do: [
-    '5개 이상의 옵션 선택 시 Dropdown 사용',
-    '선택된 값은 trigger 텍스트에 반영',
-    '메뉴 리스트는 Context & Menu Item 컴포넌트 사용',
-    'trigger 너비에 맞게 메뉴 너비 일치',
+    '옵션 5개 이상일 때',
+    '선택한 값은 trigger 에 표시',
+    '메뉴는 Context & Menu Item 사용',
+    '메뉴 너비는 trigger 와 같게',
   ],
   dont: [
-    '2–4개 옵션은 Segment Control 사용 권장',
-    '메뉴 내 복잡한 UI 삽입 금지',
-    'Disabled 상태에서 tooltip 없이 단순 비활성화 금지',
+    '옵션 2~4개(Segment Control 몫)',
+    '메뉴 안에 복잡한 UI',
+    '이유 안내 없는 Disabled',
   ],
 } as const;
 

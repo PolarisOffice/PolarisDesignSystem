@@ -40,7 +40,7 @@ toast.error('파일 업로드에 실패했습니다.', { position: 'bottom' });`
   {
     id: 'duration',
     title: 'Duration',
-    desc: '자동 닫힘 기본값 3,000ms 는 유지하는 것을 권장해요.',
+    desc: '자동 닫힘 3,000ms 는 그대로 두는 걸 권해요.',
     previewName: 'Toast',
     preview: (
       <DemoRow>

@@ -33,7 +33,7 @@ ${TOOLTIP_POSITIONS.map((p) => `<Tooltip content="Text" placement="${p}"><IconBu
   {
     id: 'arrow',
     title: 'Arrow',
-    desc: '트리거와 툴팁의 관계가 맥락상 명확하지 않을 때만 화살표를 붙여요.',
+    desc: '트리거와의 관계가 불분명할 때만 화살표를 붙여요.',
     previewName: 'Tooltip',
     preview: (
       <DemoRow gap="wide">
@@ -57,7 +57,7 @@ ${TOOLTIP_POSITIONS.map((p) => `<Tooltip content="Text" placement="${p}"><IconBu
   {
     id: 'timing',
     title: 'Timing',
-    desc: '첫 호버 600ms, 연속 호버 100ms(cascade), 무호버 1,500ms 경과 시 리셋. 기본값이라 보통 건드리지 않아요.',
+    desc: '첫 호버 600ms, 연속 호버 100ms, 1,500ms 쉬면 리셋. 보통 건드리지 않아요.',
     previewName: 'Tooltip',
     // 타이밍은 정지 화면으로 못 보여준다 — 실제 호버해 보게 둔다
     preview: (

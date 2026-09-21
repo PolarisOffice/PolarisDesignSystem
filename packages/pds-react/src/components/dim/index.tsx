@@ -2,6 +2,7 @@
 
 import { color, font } from '../../tokens.js';
 import { withSupported } from '../../supported.js';
+import { ProgressCircle } from '../progress-circle/index.js';
 
 import type { CSSProperties } from 'react';
 import type { DimProps } from './types.js';
@@ -9,13 +10,11 @@ import type { DimProps } from './types.js';
 /**
  * PDS Figma `Component/Overlay → dim` 실측.
  *
- * 스피너는 디자인에서 Lottie(spiner_ai.json)로 들어가 있다. 패키지는 런타임
- * 의존을 두지 않으므로 같은 크기(48px)의 회전 원호로 대신한다 — 모양이
- * 정확히 같지는 않다는 점을 여기 남긴다.
+ * 스피너는 Loading 스펙(3192:1894)의 ProgressCircle 48 을 그대로 쓴다 —
+ * 딤 위에서는 Indicator 를 `static/white` 로 지정하라는 색 규칙을 따른다.
  */
 const SPINNER = 48;
 const GAP = 8;
-const SPIN_KEYFRAMES = '@keyframes pds-dim-spin{to{transform:rotate(360deg)}}';
 
 const wrap = (fullscreen: boolean): CSSProperties => ({
   ...(fullscreen ? { position: 'fixed', inset: 0 } : { position: 'absolute', inset: 0 }),
@@ -33,24 +32,7 @@ function DimBase({ loading = true, label = 'loading', fullscreen = false, classN
     <div className={className} role={loading ? 'status' : undefined} aria-busy={loading} style={wrap(fullscreen)}>
       {loading && (
         <>
-          <style>{SPIN_KEYFRAMES}</style>
-          <svg
-            width={SPINNER}
-            height={SPINNER}
-            viewBox="0 0 48 48"
-            aria-hidden="true"
-            focusable="false"
-            style={{ animation: 'pds-dim-spin 900ms linear infinite' }}
-          >
-            <circle cx="24" cy="24" r="20" stroke={color.staticWhite} strokeOpacity="0.25" strokeWidth="4" fill="none" />
-            <path
-              d="M24 4a20 20 0 0 1 20 20"
-              stroke={color.accentNormal}
-              strokeWidth="4"
-              strokeLinecap="round"
-              fill="none"
-            />
-          </svg>
+          <ProgressCircle size={SPINNER} color={color.staticWhite} aria-hidden />
           <span
             style={{
               fontFamily: font.family,

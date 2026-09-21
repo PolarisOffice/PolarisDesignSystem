@@ -64,8 +64,8 @@ export default function TabsDesign() {
 
       <H3>Variant</H3>
       <p>
-        <strong>Primary</strong>는 페이지 최상단 메인 네비게이션, <strong>Secondary</strong>는 섹션 내 서브
-        카테고리 전환에 써요. 선택된 탭은 하단 2px 강조선으로 표시해요.
+        Primary 는 페이지 최상단 메인 네비게이션, Secondary 는 섹션 안 서브 카테고리에 써요. 선택 탭은 하단
+        2px 선으로 표시해요.
       </p>
       {/* 실물 프리뷰(2026-08-28, toggle 패턴) — 텍스트로만 서술되던 유형 축을 실물로 보인다.
           프리뷰는 그림이므로 inert 로 클릭·포커스를 막고, 폭 없는 컨테이너의 fill 어긋남
@@ -84,7 +84,7 @@ export default function TabsDesign() {
 
       <H3>Layout</H3>
       <p>
-        <strong>Fill</strong>은 탭 너비를 균등 분할하고, <strong>Hug</strong>는 레이블 길이에 맞춰요.
+        Fill 은 탭 너비를 균등 분할하고, Hug 는 레이블 길이에 맞춰요.
       </p>
       {/* 등분(fill) vs 레이블 폭(hug)의 차이는 같은 폭 위에서만 드러난다 — 둘 다 고정 폭
           무대(.layoutStage, Anatomy 래퍼와 같은 400px)에 올려 대조한다 */}
@@ -132,28 +132,24 @@ export default function TabsDesign() {
 
       <H3>Fill과 Hug 레이아웃</H3>
       <p>
-        <strong>Fill</strong>은 탭이 3–5개이고 균등한 시각적 무게감이 필요할 때 써요. 탭 너비가 동일해야
-        정렬이 자연스러운 화면에 적합해요. <strong>Hug</strong>는 탭이 6개 이상이거나 레이블 길이가 제각각일
-        때 써요. 레이블을 억지로 균등 분할하면 짧은 탭이 어색하게 넓어지는 문제를 방지할 수 있어요.
+        Fill 은 탭이 3~5개이고 균등한 무게가 필요할 때, Hug 는 6개 이상이거나 레이블 길이가 제각각일 때 써요.
+        억지로 균등 분할하면 짧은 탭이 어색하게 넓어져요.
       </p>
 
       <H3>탭 수 제한</H3>
       <p>
-        최소 2개, 최대 7개 이내로 유지해요. 8개를 초과하면 사용자가 전체 탭을 인식하기 어려워져요. 이 경우
-        Hug + 가로 스크롤 패턴을 검토하세요.
+        2~7개로 유지해요. 8개를 넘으면 한눈에 안 들어오니 Hug + 가로 스크롤을 검토해요.
       </p>
 
       <H3>2 Depth 탭 구조</H3>
       <p>
-        1차 분류 → <strong>Primary</strong>, 2차 분류 → <strong>Secondary</strong>로 조합해요. Primary 아래
-        Secondary를 중첩하는 것이 최대 깊이예요. 3 depth 이상의 탭 중첩은 사용자 혼란을 유발하므로 사용하지
-        않아요.
+        1차 분류는 Primary, 2차 분류는 Secondary 예요. Primary 아래 Secondary 까지가 최대 깊이고, 3 depth 는
+        쓰지 않아요.
       </p>
 
       <H3>탭 vs 다른 컴포넌트</H3>
       <p>
-        탭은 <strong>동일 계층의 콘텐츠를 전환</strong>할 때만 써요. 아래 상황에서는 다른 컴포넌트가 더
-        적합해요.
+        탭은 같은 계층의 콘텐츠를 오갈 때만 써요. 아래 상황은 다른 컴포넌트 몫이에요.
       </p>
       <SpecTable
         caption="탭 대신 쓸 컴포넌트"

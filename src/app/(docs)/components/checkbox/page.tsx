@@ -15,8 +15,7 @@ export default function CheckboxPage() {
     <>
       <h1>{meta.title}</h1>
       <PageLead>
-        Checkbox는 다중 선택, Radio는 단일 선택 항목에 사용해요. 목록에서 옵션을 선택하거나 동의 여부를
-        확인할 때 사용해요.
+        Checkbox 는 다중 선택, Radio 는 단일 선택이에요. 옵션 고르기나 동의 확인에 써요.
       </PageLead>
       <DocTabs
         design={<CheckboxDesign />}

@@ -19,7 +19,7 @@
   font-size: var(--font-size-xxxs);
   font-weight: 500;
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  color: var(--color-label-neutral);
+  color: var(--color-label-alternative);
 }
 
 .pxVal {
@@ -27,5 +27,5 @@
   font-size: var(--font-size-xs);
   font-weight: 500;
   font-variant-numeric: tabular-nums;
-  color: var(--color-label-normal);
+  color: var(--color-label-neutral);
 }

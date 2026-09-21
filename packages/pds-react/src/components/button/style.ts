@@ -5,18 +5,19 @@ import type { ButtonSize, ButtonVariant } from './types.js';
 
 /** 크기별 치수 — 높이(px)가 곧 size 값 */
 export const SIZES: Record<ButtonSize, CSSProperties> = {
-  64: { height: 64, padding: '0 32px', fontSize: 18, fontWeight: 700, borderRadius: radius.md },
+  // 64 만 Heading4 타이포(행간 1.4·자간 −1.5%) — Figma Size=64 변형(2026-09-18 대조)
+  64: { height: 64, padding: '0 32px', fontSize: 18, fontWeight: 700, lineHeight: 1.4, letterSpacing: '-0.015em', borderRadius: radius.md },
   54: { height: 54, padding: '0 20px', fontSize: 16, fontWeight: 700, borderRadius: radius.md },
   48: { height: 48, padding: '0 16px', fontSize: 16, fontWeight: 700, borderRadius: radius.md },
   40: { height: 40, padding: '0 12px', fontSize: 14, fontWeight: 500, borderRadius: radius.sm },
   32: { height: 32, padding: '0 10px', fontSize: 14, fontWeight: 500, borderRadius: radius.sm },
-  // 24 는 4px(button.md 사이즈 표) — 2026-08-28 스케일 재편으로 4 의 이름이 xs → xxs
-  24: { height: 24, padding: '0 8px', fontSize: 13, fontWeight: 500, borderRadius: radius.xxs },
+  // 24 는 radius/xs(6px) — Figma Size=24 변형(2026-09-18 대조, 구 4px 은 낡은 스냅샷)
+  24: { height: 24, padding: '0 8px', fontSize: 13, fontWeight: 500, borderRadius: radius.xs },
 };
 
-/** 아이콘 간격 — 크기에 비례 */
+/** 아이콘 간격 — 전 사이즈 4px(Figma 2026-09-18: 48·40·32·24 itemSpacing 0→4, 64·54 는 원래 4) */
 export const GAPS: Record<ButtonSize, number> = {
-  64: 8, 54: 8, 48: 6, 40: 6, 32: 4, 24: 4,
+  64: 4, 54: 4, 48: 4, 40: 4, 32: 4, 24: 4,
 };
 
 interface Face {
@@ -43,7 +44,8 @@ export const FACES: Record<ButtonVariant, Face> = {
       color: color.labelNormal,
       border: `1px solid ${color.lineNeutral}`,
     },
-    hover: { backgroundColor: color.interactionHover },
+    // Figma Hover=On 은 글자도 label/neutral 로 한 단 가라앉는다(Default·Gray 공통)
+    hover: { backgroundColor: color.interactionHover, color: color.labelNeutral },
   },
   ai: {
     base: { backgroundColor: color.aiNormal, color: color.staticWhite },
@@ -58,7 +60,7 @@ export const FACES: Record<ButtonVariant, Face> = {
   },
   gray: {
     base: { backgroundColor: color.fillNormal, color: color.labelNormal },
-    hover: { backgroundColor: color.fillStrong },
+    hover: { backgroundColor: color.fillStrong, color: color.labelNeutral },
   },
   black: {
     // 배경 action-normal 은 다크에서 흰색으로 뒤집힌다 — 글자도 같이 뒤집히는
@@ -90,8 +92,10 @@ export const FACES: Record<ButtonVariant, Face> = {
 /** 모든 변형 공통 — 비활성 표현은 하나로 통일한다(PDS Specification 의 Disabled 행) */
 export const DISABLED: CSSProperties = {
   backgroundColor: color.fillStrong,
-  color: color.labelDisabled,
-  border: '1px solid transparent',
+  // Figma Type=Disabled: 글자 label/assistive, 테두리 line/neutral — 구 labelDisabled 는 tokens.css 에
+  // 정의가 없어 폴백 #aeafb0 로 그려지고 있었다(2026-09-18 대조). 다크에서 테두리가 면과 달라 보인다
+  color: color.labelAssistive,
+  border: `1px solid ${color.lineNeutral}`,
   cursor: 'not-allowed',
 };
 

@@ -31,7 +31,7 @@ export const EXAMPLES: CodeExampleSpec[] = [
   {
     id: 'base',
     title: 'Base',
-    desc: '5개 이상의 옵션을 고를 때 써요. 2–4개면 Segment Control 이 나아요.',
+    desc: '옵션 5개 이상일 때 써요. 2~4개면 Segment Control 이 나아요.',
     previewName: 'Select',
     preview: (
       <DemoRow>

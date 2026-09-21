@@ -51,8 +51,9 @@
   height: auto;
   /* 원본은 1600×620 이지만 띠로 좁혀 쓴다(2026-09-02) — 이 그래픽은 정보를 담지 않는데
      첫 화면의 절반(372px)을 가져가 "비어 보인다"는 피드백을 받았다. 세로만 잘라내므로
-     (object-fit: cover) 그라디언트 인상은 그대로다. page.tsx 의 height 속성과 쌍 */
-  aspect-ratio: 1600 / 300;
+     (object-fit: cover) 그라디언트 인상은 그대로다. page.tsx 의 height 속성과 쌍.
+     2026-09-21: 300 → 340 (사용자 지정 — 240·270 은 짧다는 피드백) */
+  aspect-ratio: 1600 / 340;
   /* 비율만 두면 좁은 화면에서 63px(375px 실측)까지 얇아져 이미지가 덜 불러와진 것처럼 보인다.
      띠로는 읽히되 사고처럼 보이지 않는 하한을 둔다 — 콘텐츠 폭 512px 아래에서만 작동한다 */
   min-height: 96px;
@@ -143,11 +144,6 @@ a.card:focus-visible {
   outline-offset: 2px;
 }
 
-/* 역할 카드 — 카드 자체는 링크가 아니라 hover 반응 없음 */
-.cardStatic {
-  cursor: default;
-}
-
 .cardHead {
   display: flex;
   align-items: center;
@@ -180,40 +176,9 @@ a.card:focus-visible {
   font-variant-numeric: tabular-nums;
 }
 
-/* 카드 하단 링크 줄 — 역할 카드 전용 */
-.cardLinks {
-  margin-top: 6px;
-  font-size: var(--font-size-xs);
-}
-
-.cardLinks a {
-  color: var(--color-accent-normal);
-  text-decoration: none;
-  transition: color var(--duration-fast) var(--ease-out);
-}
-
-.cardLinks a:hover {
-  text-decoration: underline;
-}
-
-.cardLinks a:focus-visible {
-  outline: 2px solid var(--color-accent-normal);
-  outline-offset: 3px;
-}
-
-/* 구분점은 마크업이 아니라 CSS 로 — 항목이 늘거나 줄어도 문장부호가 남지 않는다 */
-.cardLinks a + a::before {
-  content: ' · ';
-  color: var(--color-label-assistive);
-  text-decoration: none;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .card,
   .arrow,
-  .cardLinks a {
-    transition: none;
-  }
 
   a.card:hover .arrow {
     transform: none;

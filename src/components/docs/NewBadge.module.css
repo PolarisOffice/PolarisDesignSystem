@@ -1,0 +1,13 @@
+/* New 표시 — 이름 옆 주황 'N' 한 글자(PDS state/new). 배경 없이 글자만, 항목 글자와 세로 중앙 정렬.
+   (2026-09-18: 글자 알약 → 6px 점 → 이 형태. 점은 뭔지 모른다는 피드백, 알약은 크고 두껍다는 피드백) */
+.n {
+  display: inline-block;
+  margin-left: var(--spacing-3xs);
+  color: var(--color-state-new);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  vertical-align: middle;
+  /* middle 만으로는 글자 중심보다 1px 아래(실측 1.3px) — 시각 중심으로 보정 */
+  transform: translateY(-1px);
+}

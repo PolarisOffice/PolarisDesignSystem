@@ -98,6 +98,20 @@
   }
 }
 
+/* Size 표 아래 사이즈별 실물 — Variant 밴드·State 그리드와 같은 회색 무대(2026-09-18: 맨 배경에
+   버튼만 놓이니 어디까지가 견본인지 애매하다는 피드백). 밑변 정렬로 높이 차이가 그대로 보인다 */
+.sizeBand {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-xl);
+  background: var(--color-fill-neutral);
+  border-radius: var(--radius-md);
+  margin: var(--spacing-sm) 0 0;
+}
+
 /* State 그리드 — 5열(변형 라벨 + 상태 4종). 좁은 화면은 바깥 래퍼가 가로 스크롤을 맡는다 */
 .stateGridOuter {
   overflow-x: auto;
@@ -129,7 +143,7 @@
   padding-right: var(--spacing-sm);
   font-size: var(--font-size-xxs);
   font-weight: 600;
-  color: var(--color-label-neutral);
+  color: var(--color-label-alternative);
 }
 
 /* 프리뷰 각주 — 표시용 상태 고정·Pressed 규칙 안내 */

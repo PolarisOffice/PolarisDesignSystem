@@ -1,7 +1,11 @@
 import type { Metadata } from 'next';
 import PageLead from '@/components/docs/PageLead';
-import { CardGrid, DocCard } from '@/components/docs/CardGrid';
+import { H2 } from '@/components/docs/Heading';
+import { PreviewCard, PreviewGrid } from '@/components/docs/CardGrid';
+import { COMPONENT_PREVIEWS } from './component-previews';
 import { COMPONENT_GROUPS } from '@/lib/docs/components-catalog';
+import { isNew } from '@/lib/docs/changelog';
+import NewBadge from '@/components/docs/NewBadge';
 import { pageMeta } from '@/lib/docs/pages';
 
 const meta = pageMeta('/components')!;
@@ -14,20 +18,29 @@ export default function ComponentsIndexPage() {
       <h1>{meta.title}</h1>
       <PageLead>Polaris Design System의 모든 컴포넌트를 둘러보세요.</PageLead>
 
-      {/* 카테고리 라벨 없이 단일 그리드 — 개수가 적어 분류가 소음이라는 결정(2026-08-13),
-          순서는 사이드바와 동일한 이름 오름차순 */}
-      <CardGrid>
-        {COMPONENT_GROUPS.flatMap((g) => g.items)
-          .sort((a, b) => a.name.localeCompare(b.name, 'en'))
-          .map((item) => (
-            <DocCard
-              key={item.slug}
-              href={`/components/${item.slug}`}
-              name={item.name}
-              desc={item.desc}
-            />
-          ))}
-      </CardGrid>
+      {/* Figma 와 같은 소분류로 묶는다(2026-09-18 — 구 단일 그리드 대체). 사이드바와 같은 순서·같은 소스.
+          카드는 갤러리형 + 실물 프리뷰(2026-09-21, component-previews.tsx) */}
+      {COMPONENT_GROUPS.map((group) => (
+        <section key={group.label}>
+          <H2>{group.label}</H2>
+          <PreviewGrid>
+            {group.items.map((item) => (
+              <PreviewCard
+                key={item.slug}
+                href={`/components/${item.slug}`}
+                name={
+                  <>
+                    {item.name}
+                    {isNew(item.since) && <NewBadge />}
+                  </>
+                }
+                desc={item.desc}
+                preview={COMPONENT_PREVIEWS[item.slug]}
+              />
+            ))}
+          </PreviewGrid>
+        </section>
+      ))}
     </>
   );
 }

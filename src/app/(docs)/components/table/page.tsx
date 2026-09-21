@@ -15,8 +15,7 @@ export default function TablePage() {
     <>
       <h1>{meta.title}</h1>
       <PageLead>
-        행과 열로 구성된 데이터를 시각적으로 정렬하여 표시하는 컴포넌트예요. 복잡한 정보를 비교하거나
-        참조할 때 사용해요.
+        행과 열로 데이터를 정렬해 보여줘요. 비교하거나 찾아볼 정보에 써요.
       </PageLead>
       <DocTabs
         design={<TableDesign />}

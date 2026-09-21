@@ -15,8 +15,7 @@ export default function PopupPage() {
     <>
       <h1>{meta.title}</h1>
       <PageLead>
-        사용자의 확인이나 선택이 필요한 중요한 상황에 사용하는 모달 다이얼로그예요. 화면을 차단하고
-        사용자의 즉각적인 응답을 요구해요.
+        확인이나 선택이 꼭 필요할 때 화면을 막고 응답을 받는 모달이에요.
       </PageLead>
       <DocTabs
         design={<PopupDesign />}

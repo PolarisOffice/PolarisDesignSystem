@@ -15,8 +15,7 @@ export default function TabsPage() {
     <>
       <h1>{meta.title}</h1>
       <PageLead>
-        페이지 또는 카테고리 이동할 때 사용하는 컴포넌트예요. 사용자가 동일 계층의 콘텐츠 영역 간을
-        전환할 수 있도록 해요.
+        같은 계층의 콘텐츠 영역을 오갈 때 써요.
       </PageLead>
       <DocTabs
         design={<TabsDesign />}

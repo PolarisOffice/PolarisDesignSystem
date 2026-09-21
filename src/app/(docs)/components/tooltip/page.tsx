@@ -15,8 +15,7 @@ export default function TooltipPage() {
     <>
       <h1>{meta.title}</h1>
       <PageLead>
-        요소에 대한 추가 설명을 호버 시 표시하는 컴포넌트예요. 강조하고자 하는 요소에서 8px 상단 노출을
-        기본으로 해요.
+        호버하면 요소의 짧은 설명을 띄워요. 기본은 요소 위 8px 이에요.
       </PageLead>
       <DocTabs
         design={<TooltipDesign />}

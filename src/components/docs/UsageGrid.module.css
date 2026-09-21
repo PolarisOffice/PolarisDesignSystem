@@ -48,7 +48,7 @@
 
 .list {
   font-size: var(--font-size-xs);
-  color: var(--color-label-neutral);
+  color: var(--color-label-alternative);
   padding-left: 1.2em;
   line-height: 2;
   margin: 0;

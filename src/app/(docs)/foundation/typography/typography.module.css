@@ -26,7 +26,7 @@
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--color-label-alternative);
+  color: var(--color-label-assistive);
   margin-bottom: 16px;
 }
 
@@ -53,7 +53,7 @@
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--color-label-alternative);
+  color: var(--color-label-assistive);
   margin-bottom: 16px;
 }
 

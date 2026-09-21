@@ -24,7 +24,8 @@ const ROUTES = fixture.pages.map((p) => p.route.replace(/\/$/, '') || '/');
 
 /** href 수집 (SSR HTML 기준 — 클라이언트 전용 링크는 없다, 전 페이지 정적) */
 function collectHrefs(html) {
-  return [...html.matchAll(/<a\s[^>]*href="([^"]+)"/g)].map((m) => m[1]);
+  // SSR HTML 은 속성값의 & 를 &amp; 로 이스케이프한다 — 원래 URL 로 되돌려 검사
+  return [...html.matchAll(/<a\s[^>]*href="([^"]+)"/g)].map((m) => m[1].replace(/&amp;/g, '&'));
 }
 
 const pageHtml = new Map(); // route → html (앵커 검사 재사용)
@@ -53,6 +54,9 @@ for (const route of ROUTES) {
 
     const [pathAndQuery, rawHash] = href.split('#');
     const path = (pathAndQuery.split('?')[0] || route).replace(/\/$/, '') || '/';
+    // 쿼리는 대상 판정(정적 에셋·라우트)에서만 떼고 요청엔 붙인다 — `/api/guide/design-content?name=…`
+    // 처럼 쿼리로 대상을 고르는 링크를 쿼리 없이 치면 400 이 나 오탐이었다(2026-09-18 /kit 실측)
+    const query = pathAndQuery.includes('?') ? pathAndQuery.slice(pathAndQuery.indexOf('?')) : '';
 
     // 앵커만 있는 링크(#foo)는 현재 페이지 대상
     const targetRoute = pathAndQuery === '' ? route : path;
@@ -64,7 +68,7 @@ for (const route of ROUTES) {
       continue;
     }
 
-    const target = await fetchPage(targetRoute);
+    const target = await fetchPage(targetRoute + query);
     if (target.status !== 200) {
       failures.push(`  ${route} → ${href} — HTTP ${target.status}`);
       continue;

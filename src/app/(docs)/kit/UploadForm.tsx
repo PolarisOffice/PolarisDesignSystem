@@ -93,9 +93,14 @@ export default function UploadForm() {
         onDragLeave={() => setOver(false)}
         onDrop={(e) => { e.preventDefault(); setOver(false); const f = e.dataTransfer.files?.[0]; if (f && !busy) void upload(f); }}
       >
-        <span className={s.dropTitle}>{busy ? '올리는 중…' : 'DESIGN.md 를 여기에 놓거나 클릭해서 선택'}</span>
+        {/* 2026-09-21 재설계 — 점선 상자에 글만 있던 것을 아이콘 + 제목 + 힌트로. 영역 전체가 버튼(선택 알약은 뺐다) */}
+        <svg className={s.dropIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M12 16V4M7 9l5-5 5 5" />
+          <path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3" />
+        </svg>
+        <span className={s.dropTitle}>{busy ? '올리는 중…' : 'DESIGN.md 를 여기에 놓으세요'}</span>
         <span className={s.dropHint}>
-          검증을 통과하면 즉시 발행됩니다. getdesign.md 계열 외부 <code>DESIGN.md</code> 도 무수정 업로드를 지원합니다.
+          검증을 통과하면 바로 발행돼요. getdesign.md 계열 <code>DESIGN.md</code> 도 그대로 올릴 수 있어요.
         </span>
         <input ref={inputRef} type="file" accept=".md" aria-label="DESIGN.md 파일 선택" onChange={onFile} disabled={busy} hidden />
       </div>

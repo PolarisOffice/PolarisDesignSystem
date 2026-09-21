@@ -10,23 +10,23 @@
 
 ## 사용 규칙
 
-- **Base** — 5개 이상의 옵션을 고를 때 써요. 2–4개면 Segment Control 이 나아요.
+- **Base** — 옵션 5개 이상일 때 써요. 2~4개면 Segment Control 이 나아요.
 - **Size** — LG(폼) · MD(필터·검색바) · SM(툴바·인라인).
 - **State** — Disabled 는 텍스트·아이콘만 40% 로 흐려지고 배경·radius 는 그대로예요.
 - **Controlled** — 선택된 값은 trigger 텍스트에 반영돼요.
 
 **권장**
 
-- 5개 이상의 옵션 선택 시 Dropdown 사용
-- 선택된 값은 trigger 텍스트에 반영
-- 메뉴 리스트는 Context & Menu Item 컴포넌트 사용
-- trigger 너비에 맞게 메뉴 너비 일치
+- 옵션 5개 이상일 때
+- 선택한 값은 trigger 에 표시
+- 메뉴는 Context & Menu Item 사용
+- 메뉴 너비는 trigger 와 같게
 
 **피하기**
 
-- 2–4개 옵션은 Segment Control 사용 권장
-- 메뉴 내 복잡한 UI 삽입 금지
-- Disabled 상태에서 tooltip 없이 단순 비활성화 금지
+- 옵션 2~4개(Segment Control 몫)
+- 메뉴 안에 복잡한 UI
+- 이유 안내 없는 Disabled
 
 ## 예제
 

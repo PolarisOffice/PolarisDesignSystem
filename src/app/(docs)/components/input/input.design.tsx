@@ -96,8 +96,7 @@ export default function InputDesign() {
 
       <H3>Size</H3>
       <p>
-        MD(52px)가 기본값이며 폼 입력에 써요. SM 은 공간이 제한된 곳에 사용해요. Input 의 Disabled 는
-        투명도 35% 예요.
+        MD(52px)가 기본이고 폼에 써요. SM 은 좁은 곳에 써요. Disabled 는 투명도 35% 예요.
       </p>
 
       <H2>Type</H2>
@@ -123,12 +122,10 @@ export default function InputDesign() {
 
       <H3>Placeholder vs Labeled</H3>
       <p>
-        <strong>Placeholder only</strong> (Simple): 짧은 단일 입력 (검색창, 인라인 필터). 레이블 공간이 없는
-        경우.
+        Placeholder only(Simple): 검색창·인라인 필터처럼 레이블 자리가 없는 짧은 입력.
       </p>
       <p>
-        <strong>Labeled</strong>: 폼 입력처럼 입력 후에도 어떤 필드인지 확인이 필요한 경우. 입력 완료 후
-        title label이 남아 컨텍스트를 유지해요.
+        Labeled: 입력 후에도 어떤 필드인지 알아야 하는 폼. title 이 남아 맥락을 지켜요.
       </p>
 
       <H2>Specification</H2>

@@ -55,9 +55,8 @@ export default function ToggleDesign() {
 
       <H3>Base</H3>
       <p>
-        ON / OFF / Disabled 세 가지 상태를 가져요. Toggle 의 Disabled 는{' '}
-        <strong>투명도 38%</strong> 로 처리해요. 컴포넌트마다 Disabled 방식이 다른 것은 의도된
-        차이예요. <TabSwitchLink to="code">코드로 보기</TabSwitchLink>
+        ON / OFF / Disabled 세 상태예요. Disabled 는 투명도 38% 이고, 컴포넌트마다 다른 건 의도예요.{' '}
+        <TabSwitchLink to="code">코드로 보기</TabSwitchLink>
       </p>
       <SpecTable
         caption="Toggle 상태별 실물과 트랙 색상"

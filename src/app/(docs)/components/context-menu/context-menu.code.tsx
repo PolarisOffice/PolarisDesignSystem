@@ -9,8 +9,8 @@ const IMPORT = `import { Menu, MenuItem, MenuDivider } from '${PDS_PACKAGE}';`;
 export const EXAMPLES: CodeExampleSpec[] = [
   {
     id: 'base',
-    title: 'Base — Single List',
-    desc: '너비는 고정하지 않고 부모 컨테이너 기준 fill 로 채워요.',
+    title: 'Base · Single List',
+    desc: '너비는 부모 기준 fill 로 채워요.',
     previewName: 'Menu',
     preview: (
       <DemoRow>

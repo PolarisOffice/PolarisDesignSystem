@@ -18,7 +18,7 @@ export const ROLE_CARDS: RoleCard[] = [
   {
     num: '01',
     title: 'UI 계층 표현',
-    desc: '텍스트·아이콘의 강조도, 배경의 깊이, 구분선의 강도를 색상으로 표현해요. 사용자가 정보의 위계를 직관적으로 파악할 수 있도록 해요.',
+    desc: '텍스트 강조도, 배경 깊이, 선 강도를 색으로 나눠 정보 위계를 드러내요.',
     chips: [
       { label: 'label', hex: '#26282b', token: '--color-label-normal' },
       { label: 'fill', hex: '#f2f4f6', token: '--color-fill-normal' },
@@ -28,7 +28,7 @@ export const ROLE_CARDS: RoleCard[] = [
   {
     num: '02',
     title: '포맷 앱 아이덴티티',
-    desc: 'Word·Sheet·Slide·PDF·Image·Note 각 포맷은 고유한 색상 아이덴티티를 가져요. 사용자가 어떤 파일을 다루고 있는지 색상으로 즉시 인식할 수 있어요.',
+    desc: '포맷마다 고유 색이 있어 어떤 파일을 다루는지 색만으로 알 수 있어요.',
     chips: [
       { label: 'Word', hex: '#1d7ff9', token: '--color-format-word' },
       { label: 'Sheet', hex: '#51b41b', token: '--color-format-sheet' },
@@ -41,7 +41,7 @@ export const ROLE_CARDS: RoleCard[] = [
     /* 2026-08-28 팀장 재검토 — 구 '서비스 계층 구분'(플랜 등급을 색으로 파악) 서술은 실사용과
        달라 삭제하고, 실제로 색 구분이 필요한 AI 기능 중심으로 교체. 플랜 토큰 정의 자체는
        Roles 탭에 유지된다. */
-    desc: '보라색 계열은 AI 기능 전용이에요. AI 어시스턴트·AI 생성 콘텐츠에 일관되게 적용해 사용자가 "이 기능은 AI다"를 색상만으로 즉시 인식해요. 장식 목적으로는 쓰지 않아요.',
+    desc: '보라색은 AI 기능 전용이에요. 어시스턴트·생성 콘텐츠에 일관되게 쓰고, 장식엔 쓰지 않아요.',
     chips: [
       { label: 'Normal', hex: '#6f3ad0', token: '--color-ai-normal' },
       { label: 'Strong', hex: '#511bb2', token: '--color-ai-strong' },
@@ -132,10 +132,10 @@ export const PLAN_COLORS: { name: string; token: string; hex: string; bg: string
 
 /** AI 전용 토큰 4종 — tokens.css §2 AI. Figma Color-Semantic 의 AI 그룹 행 구성 그대로 */
 export const AI_TOKENS: { name: string; token: string; hex: string; desc: string }[] = [
-  { name: 'Normal', token: '--color-ai-normal', hex: '#6f3ad0', desc: '주요 AI 액션 및 핵심 요소에 사용' },
-  { name: 'Strong', token: '--color-ai-strong', hex: '#511bb2', desc: '강조되거나 상호작용 상태를 표현하는 요소에 사용' },
-  { name: 'Hover', token: '--color-ai-hover', hex: '#f5f1fd', desc: '마우스 오버 상태나 요소 위 배경으로 사용' },
-  { name: 'Pressed', token: '--color-ai-pressed', hex: '#e0d1ff', desc: '클릭 상태나 선택된 상태의 배경으로 사용' },
+  { name: 'Normal', token: '--color-ai-normal', hex: '#6f3ad0', desc: '주요 AI 액션·핵심 요소' },
+  { name: 'Strong', token: '--color-ai-strong', hex: '#511bb2', desc: '강조·상호작용 상태' },
+  { name: 'Hover', token: '--color-ai-hover', hex: '#f5f1fd', desc: 'hover 배경' },
+  { name: 'Pressed', token: '--color-ai-pressed', hex: '#e0d1ff', desc: 'pressed·선택 배경' },
 ];
 
 export const RELATED_DOCS: { href: string; name: string; desc: string }[] = [

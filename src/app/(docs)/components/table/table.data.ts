@@ -23,11 +23,11 @@ export const TABLE_SAMPLE_ROWS: TableSampleRow[] = [
 ];
 
 export const TABLE_ANATOMY = [
-  { n: '01', title: 'Container', desc: '테이블 전체를 감싸는 영역. 둥근 모서리와 외곽선을 가짐' },
-  { n: '02', title: 'Header Row', desc: '각 열의 제목을 표시. 배경색으로 데이터 행과 구분' },
-  { n: '03', title: 'Row', desc: '하나의 데이터 항목을 나타내는 가로 단위' },
-  { n: '04', title: 'Row Divider', desc: '행과 행을 구분하는 경계선' },
-  { n: '05', title: 'Cell', desc: '행과 열이 교차하는 가장 작은 데이터 단위' },
+  { n: '01', title: 'Container', desc: '테이블 전체. 둥근 모서리와 외곽선' },
+  { n: '02', title: 'Header Row', desc: '열 제목. 배경색으로 데이터 행과 구분' },
+  { n: '03', title: 'Row', desc: '데이터 한 건' },
+  { n: '04', title: 'Row Divider', desc: '행 사이 경계선' },
+  { n: '05', title: 'Cell', desc: '행과 열이 만나는 칸' },
 ] as const;
 
 export const TABLE_SPEC = [
@@ -45,10 +45,10 @@ export const TABLE_SPEC = [
 
 export const TABLE_USAGE = {
   do: [
-    '열 너비는 콘텐츠 길이에 맞게 조정',
-    '열 구분선은 필요할 때만 사용',
-    '헤더는 항상 포함하여 컨텍스트 제공',
-    'Cell padding 최소 24/16 유지',
+    '열 너비는 콘텐츠 길이에 맞게',
+    '열 구분선은 필요할 때만',
+    '헤더는 항상 포함',
+    'Cell padding 최소 24/16',
   ],
-  dont: ['모바일 화면 너비에서 복잡한 테이블 사용 금지', '열 구분선 불필요하게 남용 금지'],
+  dont: ['좁은 화면(모바일)에 복잡한 테이블', '열 구분선 남용'],
 } as const;

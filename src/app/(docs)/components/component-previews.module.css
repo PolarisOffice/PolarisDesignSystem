@@ -1,0 +1,49 @@
+/* Component Overview 카드 프리뷰의 보조 스타일 — 실물 컴포넌트 배치·축소만 */
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Popup 미니 패널 — 실제 Popup 은 fixed 다이얼로그라 카드에 못 넣는다 */
+.popupMini {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  background: var(--color-background-base);
+  box-shadow: var(--shadow-lg);
+}
+.popupTitle {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-label-normal);
+}
+.popupBtns {
+  display: flex;
+  gap: 4px;
+  justify-content: flex-end;
+}
+
+/* Toast 는 position:fixed — 무대 안에 흐름 배치로 중화 */
+.toastStatic {
+  position: static !important;
+  transform: none !important;
+  zoom: 0.85;
+}
+
+/* Tooltip 말풍선이 트리거 위로 뜨므로 그 자리를 확보 */
+.tooltipTile {
+  padding-top: 28px;
+}
+
+.menuTile {
+  width: 140px;
+  zoom: 0.9;
+}
+
+.tableTile {
+  width: 200px;
+  zoom: 0.75;
+}

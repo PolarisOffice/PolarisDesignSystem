@@ -58,6 +58,7 @@ export const PDS_LIVE_COMPONENTS: ReadonlySet<string> = new Set([
   'popup',
   'toast',
   'tabs',
+  'loading',
 ]);
 
 /** 이 컴포넌트의 Code 탭이 실물을 렌더하는가 — 전역 스위치 AND 개별 배선 */
@@ -67,10 +68,3 @@ export function isComponentLive(slug: string): boolean {
 
 /** Figma 원본 파일 — 코드 옆에 두는 게 사내 디자인 시스템에선 실제로 가장 쓸모 있다 */
 export const PDS_FIGMA_URL = 'https://www.figma.com/design/WYHAWNLrCGhbo4Ude41TYl';
-
-/**
- * 문서 최근 업데이트 일자 — 푸터 "업데이트 YYYY.MM.DD" 표기(2026-08-28 검토 벤치마크).
- * 콘텐츠가 의미 있게 갱신된 릴리즈 때 손으로 올린다 — 빌드 날짜 자동화는 내용 없는
- * 재빌드에도 날짜가 바뀌어 거짓 신호라 쓰지 않는다.
- */
-export const PDS_UPDATED = '2026.08.28';

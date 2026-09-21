@@ -18,11 +18,6 @@
           "tag": "h2",
           "id": "시스템-이해하기",
           "text": "시스템 이해하기"
-        },
-        {
-          "tag": "h2",
-          "id": "역할별로-읽는-법",
-          "text": "역할별로 읽는 법"
         }
       ]
     },
@@ -66,8 +61,8 @@
       "headings": [
         {
           "tag": "h1",
-          "id": "로고-에셋",
-          "text": "로고 에셋"
+          "id": "logo",
+          "text": "Logo"
         },
         {
           "tag": "h2",
@@ -78,16 +73,56 @@
           "tag": "h2",
           "id": "사용-가이드라인",
           "text": "사용 가이드라인"
+        }
+      ]
+    },
+    {
+      "route": "/changelog",
+      "headings": [
+        {
+          "tag": "h1",
+          "id": "changelog",
+          "text": "Changelog"
         },
         {
-          "tag": "h3",
-          "id": "화면용-인쇄용-구분",
-          "text": "화면용 / 인쇄용 구분"
+          "tag": "h2",
+          "id": "_1-1-0",
+          "text": "1.1.0"
         },
         {
-          "tag": "h3",
-          "id": "로고-버전-선택-기준",
-          "text": "로고 버전 선택 기준"
+          "tag": "h2",
+          "id": "_1-0-0",
+          "text": "1.0.0"
+        }
+      ]
+    },
+    {
+      "route": "/components",
+      "headings": [
+        {
+          "tag": "h1",
+          "id": "component",
+          "text": "Component"
+        },
+        {
+          "tag": "h2",
+          "id": "feedback",
+          "text": "Feedback"
+        },
+        {
+          "tag": "h2",
+          "id": "action",
+          "text": "Action"
+        },
+        {
+          "tag": "h2",
+          "id": "overlay",
+          "text": "Overlay"
+        },
+        {
+          "tag": "h2",
+          "id": "contents",
+          "text": "Contents"
         }
       ]
     },
@@ -348,6 +383,76 @@
           "tag": "h3",
           "id": "icon",
           "text": "Icon"
+        }
+      ]
+    },
+    {
+      "route": "/components/loading",
+      "headings": [
+        {
+          "tag": "h1",
+          "id": "loading",
+          "text": "Loading"
+        },
+        {
+          "tag": "h2",
+          "id": "anatomy",
+          "text": "Anatomy"
+        },
+        {
+          "tag": "h2",
+          "id": "properties",
+          "text": "Properties"
+        },
+        {
+          "tag": "h3",
+          "id": "type",
+          "text": "Type"
+        },
+        {
+          "tag": "h3",
+          "id": "size",
+          "text": "Size"
+        },
+        {
+          "tag": "h3",
+          "id": "bar-type",
+          "text": "Bar Type"
+        },
+        {
+          "tag": "h3",
+          "id": "color",
+          "text": "Color"
+        },
+        {
+          "tag": "h2",
+          "id": "case",
+          "text": "Case"
+        },
+        {
+          "tag": "h2",
+          "id": "guidelines",
+          "text": "Guidelines"
+        },
+        {
+          "tag": "h2",
+          "id": "specification",
+          "text": "Specification"
+        },
+        {
+          "tag": "h3",
+          "id": "progress-circle",
+          "text": "Progress Circle"
+        },
+        {
+          "tag": "h3",
+          "id": "progress-bar",
+          "text": "Progress Bar"
+        },
+        {
+          "tag": "h3",
+          "id": "skeleton",
+          "text": "Skeleton"
         }
       ]
     },
@@ -866,8 +971,8 @@
         },
         {
           "tag": "h4",
-          "id": "_2-케스케이드-모드-cascade-연속-호버",
-          "text": "2. 케스케이드 모드 (Cascade / 연속 호버)"
+          "id": "_2-cascade-연속-호버",
+          "text": "2. Cascade (연속 호버)"
         },
         {
           "tag": "h2",
@@ -892,12 +997,22 @@
       ]
     },
     {
+      "route": "/foundation",
+      "headings": [
+        {
+          "tag": "h1",
+          "id": "foundation",
+          "text": "Foundation"
+        }
+      ]
+    },
+    {
       "route": "/foundation/colors",
       "headings": [
         {
           "tag": "h1",
-          "id": "컬러-시스템",
-          "text": "컬러 시스템"
+          "id": "color",
+          "text": "Color"
         },
         {
           "tag": "h2",
@@ -931,43 +1046,43 @@
         },
         {
           "tag": "h3",
-          "id": "label-—-텍스트·아이콘-전경색",
-          "text": "Label — 텍스트·아이콘 전경색"
+          "id": "label",
+          "text": "Label"
         },
         {
           "tag": "h3",
-          "id": "accent-—-브랜드·강조",
-          "text": "Accent — 브랜드·강조"
+          "id": "accent",
+          "text": "Accent"
         },
         {
           "tag": "h3",
-          "id": "state-—-시스템-상태",
-          "text": "State — 시스템 상태"
+          "id": "state",
+          "text": "State"
         },
         {
           "tag": "h3",
-          "id": "fill-—-배경-채움",
-          "text": "Fill — 배경 채움"
+          "id": "fill",
+          "text": "Fill"
         },
         {
           "tag": "h3",
-          "id": "line-—-선·테두리",
-          "text": "Line — 선·테두리"
+          "id": "line",
+          "text": "Line"
         },
         {
           "tag": "h3",
-          "id": "interaction-—-인터랙션-오버레이",
-          "text": "Interaction — 인터랙션 오버레이"
+          "id": "interaction",
+          "text": "Interaction"
         },
         {
           "tag": "h3",
-          "id": "background-layer-—-화면-배경",
-          "text": "Background & Layer — 화면 배경"
+          "id": "background-layer",
+          "text": "Background & Layer"
         },
         {
           "tag": "h3",
-          "id": "static-—-고정-색상",
-          "text": "Static — 고정 색상"
+          "id": "static",
+          "text": "Static"
         },
         {
           "tag": "h2",
@@ -1287,12 +1402,37 @@
       ]
     },
     {
+      "route": "/kit",
+      "headings": [
+        {
+          "tag": "h1",
+          "id": "내-디자인-시스템",
+          "text": "내 디자인 시스템"
+        },
+        {
+          "tag": "h2",
+          "id": "올라온-디자인-시스템",
+          "text": "올라온 디자인 시스템"
+        },
+        {
+          "tag": "h2",
+          "id": "내-design-md-올리기",
+          "text": "내 DESIGN.md 올리기"
+        },
+        {
+          "tag": "h2",
+          "id": "ai-연결",
+          "text": "AI 연결"
+        }
+      ]
+    },
+    {
       "route": "/terms",
       "headings": [
         {
           "tag": "h1",
-          "id": "이용약관",
-          "text": "이용약관"
+          "id": "terms-of-use",
+          "text": "Terms of Use"
         },
         {
           "tag": "h2",

@@ -16,14 +16,13 @@
   border-radius: var(--radius-md);
   background: var(--color-layer-surface);
   text-decoration: none;
-  transition: border-color var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out);
+  transition: background var(--duration-normal) var(--ease-in-out);
   cursor: pointer;
 }
 
+/* hover — 파란 링 대신 면색 한 단(2026-09-21, Overview 프리뷰 카드·사이드바와 같은 "색만 페이드") */
 .card:hover {
-  border-color: var(--color-accent-normal);
-  /* 원본과 동일 — 테두리를 2px 로 키우지 않고 링을 겹쳐 레이아웃 흔들림을 막는다 */
-  box-shadow: 0 0 0 1px var(--color-accent-normal);
+  background: var(--color-fill-neutral);
 }
 
 .name {
@@ -37,4 +36,77 @@
   font-size: var(--font-size-xxs);
   color: var(--color-label-alternative);
   line-height: 1.5;
+}
+
+.meta {
+  margin-top: var(--spacing-2xs);
+  font-size: var(--font-size-xxs);
+  color: var(--color-label-alternative);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── 프리뷰 카드(갤러리형) — Overview 전용 ── */
+.previewGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--spacing-sm);
+  margin: 0 0 var(--spacing-3xl);
+}
+
+.previewCard {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.previewTile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 140px;
+  border-radius: var(--radius-lg);
+  background: var(--color-fill-neutral);
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+  transition: background var(--duration-normal) var(--ease-in-out);
+}
+
+.previewInner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--duration-normal) var(--ease-in-out);
+}
+
+/* hover — 파란 링 대신(2026-09-21 시안 H1+H3): 무대 색 한 단 진해짐 + 프리뷰만 6% 확대.
+   사이드바·GNB 의 "색만 페이드" 문법과 같은 시간·이징 */
+.previewCard:hover .previewTile {
+  background: var(--color-fill-normal);
+}
+.previewCard:hover .previewInner {
+  transform: scale(1.06);
+}
+@media (prefers-reduced-motion: reduce) {
+  .previewCard:hover .previewInner {
+    transform: none;
+  }
+}
+
+.previewBody {
+  padding: 0 2px;
+}
+
+.previewName {
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  color: var(--color-label-normal);
+  margin-bottom: 2px;
+}
+
+@media (max-width: 640px) {
+  .previewGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }

@@ -15,8 +15,7 @@ export default function InputPage() {
     <>
       <h1>{meta.title}</h1>
       <PageLead>
-        사용자로부터 텍스트 데이터를 입력받을 때 사용해요. 레이블, 아이콘, 에러 메시지를 조합하여 다양한
-        입력 상황을 표현해요.
+        텍스트를 입력받을 때 써요. 레이블·아이콘·에러 메시지를 조합해요.
       </PageLead>
       <DocTabs
         design={<InputDesign />}

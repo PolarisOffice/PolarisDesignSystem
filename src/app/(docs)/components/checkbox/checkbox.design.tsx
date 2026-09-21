@@ -36,8 +36,7 @@ export default function CheckboxDesign() {
     <>
       <H2>Anatomy</H2>
       <p>
-        Checkbox 와 Radio 는 컨트롤 모양만 다르고 구성은 같아요. 체크박스는 6px 라운드 박스,
-        라디오는 원형이에요.
+        둘은 컨트롤 모양만 달라요. 체크박스는 6px 라운드 박스, 라디오는 원형이에요.
       </p>
       {/* 실물 기반 도해(2026-08-19) — 패키지 Checkbox 를 렌더해 파트를 실측·콜아웃한다.
           번호는 아래 legend(CHECKBOX_ANATOMY)와 같은 축. Icon 은 Control 안에 겹치므로
@@ -57,9 +56,8 @@ export default function CheckboxDesign() {
 
       <H3>Base</H3>
       <p>
-        Checkbox 는 미선택 · 선택 · 부분 선택(indeterminate) · 비활성 <strong>네 상태</strong>, Radio 는 부분
-        선택이 없는 <strong>세 상태</strong>를 가져요. 컨트롤은 21×21px(터치 영역 32×32)이며, Disabled 는
-        투명도 60% 예요.
+        Checkbox 는 미선택·선택·부분 선택·비활성 네 상태, Radio 는 부분 선택이 없는 세 상태예요. 컨트롤
+        21×21px(터치 32×32), Disabled 는 투명도 60% 예요.
       </p>
 
       <H2>Case</H2>
@@ -101,8 +99,7 @@ export default function CheckboxDesign() {
 
       <H2>Specification</H2>
       <p>
-        Checkbox·Radio 의 Disabled 는 <strong>투명도 60%</strong> 예요. PDS 에서 가장 높은 값이며,
-        컴포넌트별 Disabled 처리가 다른 것은 의도된 차이예요.
+        Disabled 는 투명도 60% 예요. PDS 에서 가장 높은 값이고, 컴포넌트마다 다른 건 의도예요.
       </p>
 
       <H3>Checkbox</H3>

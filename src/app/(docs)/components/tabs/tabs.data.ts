@@ -28,14 +28,14 @@ export const TABS_STATE_SAMPLE_DEFAULT = 'all';
 
 export const TABS_VARIANT_USAGE = {
   do: [
-    '페이지 최상단 메인 네비게이션에는 Primary 사용',
-    '섹션 내 서브 카테고리 전환에는 Secondary 사용',
-    '탭이 2개 이상일 경우 서로 다른 Variant 조합',
+    '최상단 메인 네비게이션은 Primary',
+    '섹션 안 서브 카테고리는 Secondary',
+    '2 depth 면 Primary 아래 Secondary',
   ],
   dont: [
-    '같은 계층에 Primary와 Secondary 혼용 금지',
-    '탭을 드롭다운·필터 대체재로 오용 금지',
-    '페이지 간 라우팅에는 네비게이션 사용',
+    '같은 계층에 Primary 와 Secondary 혼용',
+    '드롭다운·필터 대신 탭 쓰기',
+    '페이지 간 라우팅(네비게이션 몫)',
   ],
 } as const;
 
@@ -98,7 +98,7 @@ export const TAB_TOKEN_CORRECTIONS = [
 
 /** Anatomy — 2026-08-13 신설. 같은 페이지 Specification 값에서만 유도(창작 없음) */
 export const TABS_ANATOMY = [
-  { n: '01', title: 'Tab Item', desc: '레이블 단위. 선택 시 굵기 700, 색이 variant 별 선택색으로 바뀌어요' },
-  { n: '02', title: 'Indicator', desc: '선택 탭 하단 2px 강조선. duration-fast(150ms)로 슬라이드해요' },
-  { n: '03', title: 'Divider', desc: '탭바 하단 1px 구분선. 탭 영역과 콘텐츠를 나눠요' },
+  { n: '01', title: 'Tab Item', desc: '레이블 단위. 선택되면 굵기 700, variant 별 선택색' },
+  { n: '02', title: 'Indicator', desc: '선택 탭 아래 2px 선. 150ms 로 슬라이드해요' },
+  { n: '03', title: 'Divider', desc: '탭바 아래 1px 선. 탭과 콘텐츠를 나눠요' },
 ] as const;

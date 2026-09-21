@@ -32,8 +32,7 @@ export default function PopupDesign() {
   return (
     <>
       <p className="kit-muted">
-        이 문서의 치수·스펙은 <strong>Web 기준</strong>이에요 (2026-08-21 개편, Figma Popup 의 web
-        변형이 정본). Mobile 변형 스펙은 추후 반영 예정이에요.
+        치수·스펙은 Web 기준이에요. Mobile 은 추후 반영해요.
       </p>
 
       <H2>Anatomy</H2>
@@ -86,16 +85,15 @@ export default function PopupDesign() {
 
       <H3>Close (X) Button</H3>
       <p>
-        X 버튼은 버튼 레이블이 <strong>&apos;닫기&apos;가 아닌 경우</strong>에 추가해요.
-        &apos;닫기&apos; 레이블 버튼이 있는 경우와 Alert처럼 정보성 모달에는 X를 표시하지 않아요.
+        버튼 레이블이 &apos;닫기&apos;가 아닐 때만 X 를 넣어요. &apos;닫기&apos; 버튼이 있거나 정보성 모달이면 넣지
+        않아요.
       </p>
 
       <H2>Case</H2>
 
       <H3>의도와 맥락</H3>
       <p>
-        Popup은 사용자의 명시적인 응답 없이는 다음 단계로 진행할 수 없는 상황에 사용해요. 화면을 차단하는
-        만큼, 꼭 필요한 경우에만 제한적으로 사용해야 해요.
+        응답 없이는 다음 단계로 못 가는 상황에만 써요. 화면을 막는 만큼 꼭 필요할 때만이에요.
       </p>
       <CaseList>
         {/* 케이스마다 예문을 실물 Popup 으로 렌더 (2026-08-28 검토 반영 — toast 와 같은 패턴).
@@ -143,7 +141,7 @@ export default function PopupDesign() {
 
       <H3>배치</H3>
       <p>
-        Desktop 은 <strong>오른쪽</strong>이 주요 액션, Mobile 은 <strong>위</strong>가 주요 액션이에요.
+        Desktop 은 오른쪽이 주요 액션, Mobile 은 위가 주요 액션이에요.
       </p>
 
 

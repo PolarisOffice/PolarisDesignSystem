@@ -19,7 +19,7 @@
 **가이드라인**
 
 - 다중 선택에는 Checkbox, 단일 선택에는 Radio 를 써요.
-- Radio 에는 부분 선택(indeterminate)이 없어요. 「전체 선택」 제어가 필요하면 Checkbox 그룹을 써요.
+- Radio 엔 부분 선택이 없어요. 전체 선택 제어는 Checkbox 그룹으로 해요.
 
 ## 예제
 

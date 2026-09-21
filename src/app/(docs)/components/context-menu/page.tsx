@@ -15,8 +15,7 @@ export default function ContextMenuPage() {
     <>
       <h1>{meta.title}</h1>
       <PageLead>
-        컨텍스트 메뉴 및 드롭다운 리스트에서 사용하는 메뉴 아이템 컴포넌트예요. base는 fill로 두고 전체
-        width를 조절하여 사용해요.
+        컨텍스트 메뉴와 드롭다운 목록의 아이템이에요. 너비는 부모에 맞춰 fill 로 채워요.
       </PageLead>
       <DocTabs
         design={<ContextMenuDesign />}

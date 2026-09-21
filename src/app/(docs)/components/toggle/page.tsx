@@ -15,8 +15,7 @@ export default function TogglePage() {
     <>
       <h1>{meta.title}</h1>
       <PageLead>
-        켜짐/꺼짐 두 가지 상태를 즉시 전환할 때 사용해요. 설정 화면에서 옵션을 활성화하거나
-        비활성화할 때 주로 사용해요.
+        켜짐/꺼짐을 바로 전환해요. 설정 화면의 옵션 on/off 에 써요.
       </PageLead>
       <DocTabs
         design={<ToggleDesign />}

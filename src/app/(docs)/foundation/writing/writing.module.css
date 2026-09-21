@@ -19,7 +19,7 @@
   margin-top: 4px;
   font-size: var(--font-size-xxs);
   line-height: 1.6;
-  color: var(--color-label-neutral);
+  color: var(--color-label-alternative);
 }
 
 /* 표 안의 '이러지 않기' 열 — 구분 신호는 색이 아니라 헤더의 ✗ 와 취소선이 진다.

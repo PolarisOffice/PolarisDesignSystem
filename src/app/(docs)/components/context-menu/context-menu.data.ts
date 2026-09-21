@@ -4,14 +4,14 @@ export const MENU_ANATOMY = [
   {
     n: '01',
     title: 'Container (Menu List)',
-    desc: '아이템을 감싸는 리스트 컨테이너. radius 8px, padding 4px, 아이템 간 gap 4px, shadow-md',
+    desc: '리스트 컨테이너. radius 8px, padding 4px, gap 4px, shadow-md',
   },
   {
     n: '02',
     title: 'Menu Item (Check Icon + Label)',
-    desc: '높이 28px 단일 아이템. 18×18 체크 아이콘과 레이블(gap 8px)로 구성, hover 시 배경 채움',
+    desc: '높이 28px. 18×18 체크 아이콘 + 레이블(gap 8px), hover 시 배경 채움',
   },
-  { n: '03', title: 'Divider', desc: '항목 그룹을 구분하는 1px 구분선. 그룹 분리가 필요할 때만 사용' },
+  { n: '03', title: 'Divider', desc: '그룹을 나누는 1px 선. 필요할 때만' },
 ] as const;
 
 /** 아이템 구성 케이스 — Figma 1054:24690 Case 밴드 (case1·case2 는 2026-08-21 추가분).
@@ -29,7 +29,7 @@ export const MENU_CASES: readonly { n: string; title: string; desc: string; samp
   {
     n: '01',
     title: 'Case 1 · 텍스트 전용',
-    desc: '체크·아이콘 없이 레이블만. 선택 상태를 표시할 필요가 없는 단순 명령 목록에 사용해요.',
+    desc: '레이블만. 선택 표시가 필요 없는 명령 목록이에요.',
     sample: [
       { label: '새 문서' },
       { label: '열기' },
@@ -49,7 +49,7 @@ export const MENU_CASES: readonly { n: string; title: string; desc: string; samp
   {
     n: '03',
     title: 'Case 1+2 · 혼용',
-    desc: '한 메뉴 안에 하위 메뉴가 있는 항목과 없는 항목이 섞일 수 있어요. 체브론은 하위 메뉴가 있는 항목에만 붙어, 화살표 유무가 곧 "더 들어갈 수 있는가"의 신호예요.',
+    desc: '하위 메뉴가 있는 항목과 없는 항목이 섞여요. 체브론 유무가 곧 더 들어갈 수 있는지의 신호예요.',
     sample: [
       { label: '이름 바꾸기' },
       { label: '내보내기', submenu: true },
@@ -59,7 +59,7 @@ export const MENU_CASES: readonly { n: string; title: string; desc: string; samp
   {
     n: '04',
     title: 'Case 3 · 체크 + 텍스트',
-    desc: '현재 값을 표시하는 선택 목록. 거의 단독으로 사용하고, 명령·하위 메뉴 항목과 한 목록에 섞지 않아요. 체크 자리는 항상 유지해 레이블 정렬이 흔들리지 않게 해요.',
+    desc: '현재 값을 표시하는 선택 목록. 거의 단독으로 쓰고, 체크 자리는 항상 남겨 정렬을 지켜요.',
     sample: [
       { label: '자동 저장', check: true, selected: true },
       { label: '맞춤법 검사', check: true },
@@ -78,15 +78,15 @@ export const MENU_SCROLL_ITEMS: readonly string[] = Array.from({ length: 12 }, (
 
 export const MENU_USAGE = {
   do: [
-    '아이템 너비는 컨텍스트에 맞게 fill로 조절',
-    '항목 과다 시 max-height + 스크롤 적용',
-    '항목 그룹 구분이 필요하면 Divider 사용',
-    '선택된 항목은 Selected 상태로 명확히 표시',
+    '너비는 부모 기준 fill',
+    '항목이 많으면 max-height + 스크롤',
+    '그룹 구분이 필요하면 Divider',
+    '선택된 항목은 Selected 로 표시',
   ],
   dont: [
-    '한 메뉴에 10개 이상의 항목 나열 금지 (그룹 분리 검토)',
-    '메뉴 아이템 내 복잡한 UI(이미지, 멀티라인) 배치 금지',
-    '고정 너비(px) 지정 금지 (부모 컨테이너 기준 fill 사용)',
+    '한 메뉴에 10개 이상(그룹 분리 검토)',
+    '아이템 안에 이미지·멀티라인 같은 복잡한 UI',
+    '고정 너비(px) 지정',
   ],
 } as const;
 

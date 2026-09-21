@@ -64,20 +64,18 @@ export default function TooltipDesign() {
 
       <H3>Position</H3>
       <p>
-        기본 Position은 <strong>Top</strong>이에요. 화면 가장자리에 가려지는 경우 자동으로 반대 방향으로
-        fallback해요. <TabSwitchLink to="code">네 방향을 코드와 함께 보기</TabSwitchLink>
+        기본은 Top 이에요. 가장자리에 가려지면 반대 방향으로 자동 전환해요.{' '}
+        <TabSwitchLink to="code">네 방향을 코드와 함께 보기</TabSwitchLink>
       </p>
 
       <H3>Base</H3>
       <p>
-        툴팁은 트리거 요소와 <strong>8px</strong> 간격을 두고 노출돼요. 이 간격은 요소와 툴팁 사이의
-        시각적 여유를 확보하고, 마우스 이동 중 의도치 않은 닫힘을 막아요.
+        트리거와 8px 떨어져 떠요. 시각적 여유를 주고, 마우스가 지나갈 때 잘못 닫히는 걸 막아요.
       </p>
 
       <H2>Case</H2>
       <p>
-        툴팁에 화살표(Arrow)를 포함할지 여부는 트리거 요소와 툴팁의 관계가 맥락상 명확한지에 따라
-        결정해요.
+        화살표는 트리거와의 관계가 불분명할 때만 붙여요.
       </p>
       {/* 실물 프리뷰 (2026-08-28 디자인 검토 반영 — 텍스트로만 서술되던 두 갈래를 실물로).
           호버로만 뜨는 컴포넌트지만 Anatomy 와 같은 open(문서용 컨트롤드 모드)이 있어
@@ -120,10 +118,8 @@ export default function TooltipDesign() {
         }))}
       />
 
-      <H4>2. 케스케이드 모드 (Cascade / 연속 호버)</H4>
-      <p>
-        사용자가 이미 툴팁 하나를 봤다면, 도구 탐색 중으로 판단하여 다음 툴팁은 즉시 표시해요.
-      </p>
+      <H4>2. Cascade (연속 호버)</H4>
+      <p>툴팁을 하나 봤으면 탐색 중으로 보고 다음 툴팁은 바로 띄워요.</p>
       <SpecTable
         caption="케스케이드 모드의 표시 지연"
         columns={[

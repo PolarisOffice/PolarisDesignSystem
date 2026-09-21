@@ -26,7 +26,6 @@ const nextConfig: NextConfig = {
       // 리소스 페이지 폐지(2026-08-19) — Figma 링크는 헤더 아이콘, 에셋은 브랜드 로고 페이지
       { source: '/resources', destination: '/', permanent: true },
       // 컴포넌트 목록 페이지 숨김(2026-08-19) — 사이드바 라벨은 비링크, 첫 컴포넌트로 보낸다
-      { source: '/components', destination: '/components/button', permanent: true },
       { source: '/components/dropdown', destination: '/components/select', permanent: true },
       // 2026-08-13 Color Palette 단독 페이지를 Roles 하단 축약 섹션으로 병합 — 구 앵커
       // (#po-blue 등)는 브라우저가 fragment 를 보존해 넘어오고 anchor-aliases 가 착지시킨다

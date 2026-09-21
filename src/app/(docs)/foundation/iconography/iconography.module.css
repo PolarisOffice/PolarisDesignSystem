@@ -58,13 +58,13 @@
 .svMono {
   font-size: 12px;
   font-family: monospace;
-  color: var(--color-label-neutral);
+  color: var(--color-label-alternative);
 }
 
 .thSub {
   font-size: 10px;
   font-weight: 400;
-  color: var(--color-label-alternative);
+  color: var(--color-label-assistive);
   display: block;
 }
 

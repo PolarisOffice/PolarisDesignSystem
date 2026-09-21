@@ -70,8 +70,8 @@ export default function SelectDesign() {
 
       <H3>State</H3>
       <p>
-        상태에 따라 테두리 색이 바뀌어요. Select 의 Disabled 는 <strong>텍스트·아이콘만 opacity 40%</strong>
-        이고 배경·radius 는 Default 와 같아요. <TabSwitchLink to="code">코드로 보기</TabSwitchLink>
+        상태에 따라 테두리 색이 바뀌어요. Disabled 는 텍스트·아이콘만 40% 로 흐려지고 배경·radius 는
+        그대로예요. <TabSwitchLink to="code">코드로 보기</TabSwitchLink>
       </p>
       <SpecTable
         caption="Select 상태별 실물과 테두리"
@@ -107,8 +107,7 @@ export default function SelectDesign() {
 
       <H3>Size</H3>
       <p>
-        세 가지 크기를 제공해요. <strong>LG</strong>는 폼 등 일반 입력 영역, <strong>MD</strong>는 컴팩트한
-        필터·검색바, <strong>SM</strong>은 공간이 가장 제한된 툴바·인라인 영역에 사용해요.
+        LG 는 폼, MD 는 필터·검색바, SM 은 툴바·인라인처럼 가장 좁은 곳에 써요.
       </p>
       <SpecTable
         caption="Select 사이즈별 치수"
@@ -152,7 +151,7 @@ export default function SelectDesign() {
       />
 
       <H3>Menu</H3>
-      <p>메뉴 리스트와 항목은 <strong>Context &amp; Menu Item</strong> 컴포넌트의 스펙을 그대로 써요.</p>
+      <p>메뉴 목록과 항목은 Context &amp; Menu Item 스펙을 그대로 써요.</p>
       <SpecTable
         caption="Select 메뉴 스펙"
         columns={SPEC_COLUMNS}

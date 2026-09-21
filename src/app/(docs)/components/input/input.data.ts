@@ -27,14 +27,14 @@ export const INPUT_TYPES: readonly { n: string; title: string; desc: string; sam
   {
     n: '01',
     title: 'Simple (Placeholder only)',
-    desc: '짧은 단일 입력에 써요. 검색창·인라인 필터처럼 레이블 공간이 없는 경우에 적합해요.',
+    desc: '검색창·인라인 필터처럼 레이블 자리가 없는 짧은 입력에 써요.',
     // Code 탭 Base(Simple) 그대로
     sample: { placeholder: 'placeholder' },
   },
   {
     n: '02',
     title: 'Labeled',
-    desc: '입력 후에도 어떤 필드인지 알아야 할 때 써요. 활성화 시 title이 상단에 고정돼 컨텍스트를 유지해줘요.',
+    desc: '입력 후에도 어떤 필드인지 알아야 할 때 써요. title 이 위에 남아 맥락을 지켜요.',
     // 값이 있어야 title 고정(desc 의 핵심)이 보인다 — Code 탭 Error 예제의 값 재사용,
     // error 는 빼서 Done 배치만 남긴다. 빈 Labeled 는 Simple 과 픽셀이 같아 견본이 못 된다
     sample: { label: '이메일', value: 'polaris@' },
@@ -42,14 +42,14 @@ export const INPUT_TYPES: readonly { n: string; title: string; desc: string; sam
   {
     n: '03',
     title: 'Visible 아이콘',
-    desc: '비밀번호 필드에만 써요. 눈 아이콘을 탭하면 입력값이 노출돼요. 기본 상태는 숨김(eye-off)이에요.',
+    desc: '비밀번호에만 써요. 눈 아이콘을 누르면 값이 보이고, 기본은 숨김이에요.',
     // Anatomy 견본 값 재사용(error 없이). 눈 아이콘은 type=password 의 기본 동작
     sample: { label: '비밀번호', type: 'password', value: 'pds1234' },
   },
   {
     n: '04',
     title: '사람 아이콘',
-    desc: '이메일·아이디처럼 입력 유형을 아이콘으로 암시할 때 써요. Left Icon은 입력 목적을 직관적으로 전달해요.',
+    desc: '이메일·아이디처럼 입력 유형을 아이콘으로 알릴 때 써요.',
     // Code 탭 Left Icon 예제 그대로
     sample: { label: '아이디', placeholder: '아이디 입력', userIcon: true },
   },
@@ -71,7 +71,7 @@ export const INPUT_CASES: readonly {
   {
     n: '01',
     title: 'Active',
-    desc: '사용자가 필드를 탭하거나 클릭한 순간이에요. Border가 Blue로 바뀌고 커서가 나타나요.',
+    desc: '필드를 누른 상태예요. 테두리가 파랗게 바뀌고 커서가 떠요.',
     // Labeled(Type 02) 견본과 같은 값 — 값이 있어야 Focus 와 같은 배치가 된다
     sample: { label: '이메일', value: 'polaris@' },
     activeBorder: true,
@@ -79,14 +79,14 @@ export const INPUT_CASES: readonly {
   {
     n: '02',
     title: 'Error',
-    desc: '유효성 검사에 실패했을 때예요. 빨간 테두리만으론 부족해요. 반드시 Error Message로 무엇이 잘못됐는지 구체적으로 알려줘야 해요.',
+    desc: '유효성 실패예요. 빨간 테두리만으론 부족하니 무엇이 틀렸는지 Error Message 로 알려요.',
     // Code 탭 Error 예제 그대로
     sample: { label: '이메일', value: 'polaris@', error: '이메일 형식이 올바르지 않습니다.' },
   },
   {
     n: '03',
     title: '입력완료 && Focus out',
-    desc: '포커스가 빠져나간 후 값이 남아 있는 상태예요. Border는 기본색으로 돌아오지만 입력 값은 유지돼요.',
+    desc: '포커스가 빠진 뒤 값이 남은 상태예요. 테두리는 기본색, 값은 유지돼요.',
     // Done 배치 = Type 02(Labeled)와 같은 상태라 같은 견본을 쓴다
     sample: { label: '이메일', value: 'polaris@' },
   },

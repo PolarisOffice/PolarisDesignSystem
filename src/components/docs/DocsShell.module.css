@@ -4,28 +4,30 @@
 .layout {
   display: grid;
   grid-template-columns: 232px minmax(0, 1fr) 224px; /* 사이드바 축소 (2026-08-13 피드백) */
-  gap: 0 var(--spacing-2xl);
-  max-width: 1440px;
+  /* 본문 양옆 숨 — 사이드바·목차와 본문 사이 64(2026-09-18, 구 40) */
+  gap: 0 var(--spacing-4xl);
+  /* 폭·여백은 헤더와 공유하는 단일 소스(globals.css :root) — 헤더 로고·아이콘과 줄을 맞춘다 */
+  max-width: var(--kit-page-max);
   margin: 0 auto;
-  padding: 0 var(--spacing-lg);
+  padding: 0 var(--kit-gutter);
   align-items: start;
 }
 
 /* ── 사이드바 — Seed Design 문법 (2026-08-13 재편) ──
-   접기 없음. 흐린 섹션 라벨 + 평탄 항목 목록, 활성 항목은 채운 알약(pill).
+   접기 없음. 흐린 섹션 라벨 + 평탄 항목 목록, 활성 항목은 hover 와 같은 채운 박스.
    이전의 collapsed 트리 + 계층별 들여쓰기는 27행짜리 목록에 과했고 위계만 흐렸다. */
 .sidebar {
   position: sticky;
-  /* 48px = .kit-header 고정 높이. globals.css 의 SYNC 계약과 같은 값 — 함께 바꿔야 한다 */
-  top: 48px;
-  height: calc(100vh - 48px);
-  height: calc(100dvh - 48px); /* iOS 주소창 대응 — 두 줄 패턴 유지 */
+  /* 높이 단일 소스 = globals.css :root --kit-header-h */
+  top: var(--kit-header-h);
+  height: calc(100vh - var(--kit-header-h));
+  height: calc(100dvh - var(--kit-header-h)); /* iOS 주소창 대응 — 두 줄 패턴 유지 */
   overflow-y: auto;
   /* ⚠️ padding-bottom 을 두지 않는다 — 스크롤러에 bottom padding 이 있으면 Chrome 이 sticky
      bottom:0 기준선을 그 패딩만큼 안쪽으로 당겨 페이드가 목록 중간에 떠 버린다(2026-08-24 실측).
      하단 여백은 ::after 페이드가 겸한다. */
-  padding: var(--spacing-md) var(--spacing-sm) 0 0;
-  border-right: 1px solid var(--color-line-neutral);
+  padding: var(--spacing-2xl) var(--spacing-sm) 0 0; /* 상단 20 → 40 (본문 64 와 같은 배) */
+  /* 우측 구분선 없음(2026-09-18) — 헤더에 하단선이 없는 것과 같은 결. 영역 구분은 여백(64)이 한다 */
   /* 스크롤바 완전 숨김 (2026-08-24 피드백 — hover 썸도 없앰). 스크롤 기능은 유지하고,
      "아래 더 있음"은 하단 sticky 페이드(::after)가 알린다. */
   scrollbar-width: none;
@@ -38,10 +40,8 @@
 /* 하단 페이드 = 하단 여백 — 넘친 항목이 이 아래를 지날 때만 보인다(배경색 위 그라데이션이라
    빈 공간에선 투명 동치). sticky bottom 이라 끝까지 내리면 자연 위치(마지막 항목 뒤)로 내려가
    순수한 여백이 된다.
-   ⚠️ z-index 필수 — `.item` 이 활성 pill 위로 뜨려고 `position:relative; z-index:1` 을 쓴다
-   (아래 .activePill 주석 참고). 이 ::after 도 sticky(포지션드)라 z-index:auto 로 두면
-   auto 는 명시적 z-index:1 보다 아래로 깔려 — 텍스트가 페이드를 그냥 뚫고 나와 하나도
-   흐려지지 않는 채로 렌더됐다(2026-08-25 실측: 스크린샷 확대 후에야 발견). 항목보다 위로. */
+   z-index 는 항목 텍스트보다 위에 깔리게 하는 안전장치(2026-08-25 실측: auto 면 텍스트가
+   페이드를 뚫고 나왔다). */
 .sidebar::after {
   content: '';
   display: block;
@@ -57,13 +57,15 @@
   margin-top: var(--spacing-lg);
 }
 
-/* 사이드바 콘텐츠의 첫 노드가 단독 링크(예: 메인 사이드바 '소개')가 아니라 그룹(section)이면
- * 이 24px 이 그대로 위에 얹혀 nav 상단 여백이 사이드바마다 달라 보였다(AI 미니 사이드바 실측:
- * 44px vs 메인 22px — 2026-08-25 "좌측 패널 위치가 다르다" 피드백의 실제 원인). activePill
- * (장식용, 항상 첫 DOM 자식) 바로 다음 형제가 section 인 경우만 0 으로 상쇄 — 두 번째 이후
- * section 간 24px 간격은 그대로 유지된다. */
-.activePill + .section {
+/* 사이드바 첫 노드가 단독 링크가 아니라 그룹(section)이면 이 24px 이 그대로 위에 얹혀 nav 상단
+ * 여백이 사이드바마다 달라 보였다(2026-08-25 "좌측 패널 위치가 다르다" 피드백). 첫 section 만 0 */
+.sidebar > .section:first-child {
   margin-top: 0;
+}
+
+/* 모바일 드로어의 섹션 아코디언 — 데스크톱은 헤더 GNB 가 있어 숨긴다(아래 미디어쿼리에서 켠다) */
+.drawer {
+  display: none;
 }
 
 /* 섹션 라벨 — 접이식 헤더가 아니라 시각적 구획. 항목보다 작고 흐리게 */
@@ -91,7 +93,7 @@
 
 /* 항목 — pill 형태. 행 높이 ~38px — 클릭 영역이 좁다는 피드백(2026-08-13)으로 상하 패딩을 키웠다.
    섹션 하위 항목(.list 안)만 왼쪽 들여쓰기로 라벨과 위계 차등(같은 날 피드백) — 단독
-   링크(소개·리소스)는 라벨과 같은 x 유지. pill 은 rect 실측이라 들여쓰기에 자동 적응. */
+   링크(소개·리소스)는 라벨과 같은 x 유지. */
 .item {
   display: block;
   padding: 9px 10px;
@@ -102,53 +104,30 @@
   line-height: 1.5;
   color: var(--color-label-neutral);
   text-decoration: none;
-  transition: background var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out);
+  /* 150ms 는 페이드가 눈에 안 띈다는 피드백(2026-09-18) — GNB 링크와 같은 normal(250ms)·ease-in-out */
+  transition: background var(--duration-normal) var(--ease-in-out), color var(--duration-normal) var(--ease-in-out);
 }
 
 .list .item {
   padding-left: 22px;
 }
 
-.item:hover {
-  background: var(--color-fill-neutral);
+/* hover 와 활성이 같은 박스 — 켜지고 꺼지는 건 위 .item 의 background transition 페이드
+   (2026-09-18: 슬라이딩 pill 제거). 활성은 굵기로만 구분 */
+.item:hover,
+.itemActive,
+.itemActive:hover {
+  background: var(--color-fill-normal);
   color: var(--color-label-normal);
 }
 
-/* 활성 항목의 배경은 항목 자신이 아니라 아래 .activePill 이 그린다 — 슬라이드를 위해 */
-.itemActive,
-.itemActive:hover {
-  background: none;
-  color: var(--color-label-normal);
+.itemActive {
   font-weight: 600;
 }
 
-.item {
-  position: relative;
-  z-index: 1;
-}
-
-/* nav 안에 하나뿐인 선택 pill — 경로가 바뀌면 활성 항목 자리로 옮겨간다.
-   위치·자가치유·전환 규칙은 전부 Sidebar 가 담당한다(그 파일 주석 참고).
-   여기엔 전환을 쓰지 않는다 — 첫 배치가 위에서 미끄러져 내려오지 않아야 하고,
-   이후 전환은 이동 거리에 따라 달라져 Sidebar 가 인라인으로 준다. */
-.activePill {
-  position: absolute;
-  left: 0;
-  /* nav 의 padding-right(--spacing-sm)만큼 항목 폭과 맞춘다 */
-  right: var(--spacing-sm);
-  top: 0;
-  height: 0;
-  border-radius: var(--radius-sm);
-  background: var(--color-fill-normal);
-  pointer-events: none;
-  will-change: transform;
-}
-
-/* 전환은 Sidebar.tsx 가 인라인으로 준다 — 가까우면 미끄러지고 멀면 갈아끼우는 규칙이라
-   phase 마다 전환 대상이 다르다(멀 때는 transform 을 빼서 자리를 즉시 옮긴다) */
 @media (prefers-reduced-motion: reduce) {
-  .activePill {
-    transition: none !important;
+  .item {
+    transition: none;
   }
 }
 
@@ -158,20 +137,22 @@
   flex-direction: column;
   min-width: 0;
   /* 푸터를 본문 길이와 무관하게 화면 하단에 고정(sticky footer, 2026-08-19 피드백) —
-     48px = .kit-header 고정 높이(SYNC), 두 줄 vh/dvh 패턴 유지 */
-  min-height: calc(100vh - 48px);
-  min-height: calc(100dvh - 48px);
-  padding: var(--spacing-xl) 0 var(--spacing-lg);
+     높이 단일 소스 = --kit-header-h, 두 줄 vh/dvh 패턴 유지 */
+  min-height: calc(100vh - var(--kit-header-h));
+  min-height: calc(100dvh - var(--kit-header-h));
+  /* GNB 와 콘텐츠 사이 숨 — 32 → 64 (2026-09-18, 사이드바·목차도 같은 배로) */
+  padding: var(--spacing-4xl) 0 var(--spacing-lg);
 }
 
 /* 문서 본문 기본 타이포 — 원본 VitePress `.vp-doc` 이 주던 것을 대체한다.
    헤딩(h2/h3/h4)은 Heading.module.css 가 담당하므로 여기서 건드리지 않는다. */
 .main h1 {
   margin: 0 0 var(--spacing-sm);
-  font-size: var(--font-size-4xl);
+  /* 36 — 폰트 스케일 최대(4xl=32)보다 한 단 위. 헤딩 사다리(Heading.module.css 주석)의 꼭대기 */
+  font-size: 36px;
   font-weight: 700;
   letter-spacing: -0.02em;
-  line-height: 1.3;
+  line-height: 1.25;
   color: var(--color-label-normal);
 }
 
@@ -181,8 +162,9 @@
  * 앵커 규칙(.main p a …)은 .meta a.download 등 기존 우선순위 조정과 맞물려 있어 제외. */
 :where(.main) p {
   margin: var(--spacing-xs) 0;
-  font-size: var(--font-size-md);
-  line-height: 1.75;
+  /* 본문 16 → 14 (2026-09-18). 리드(PageLead .desc)와 같은 값이어야 한다 */
+  font-size: var(--font-size-sm);
+  line-height: 1.7;
   color: var(--color-label-neutral);
 }
 
@@ -190,8 +172,8 @@
 :where(.main) ol {
   margin: var(--spacing-xs) 0;
   padding-left: 22px;
-  font-size: var(--font-size-md);
-  line-height: 1.75;
+  font-size: var(--font-size-sm);
+  line-height: 1.7;
   color: var(--color-label-neutral);
 }
 
@@ -225,12 +207,12 @@
 /* ── 우측 목차 ── */
 .toc {
   position: sticky;
-  top: 48px;
-  max-height: calc(100vh - 48px);
-  max-height: calc(100dvh - 48px);
+  top: var(--kit-header-h);
+  max-height: calc(100vh - var(--kit-header-h));
+  max-height: calc(100dvh - var(--kit-header-h));
   overflow-y: auto;
   /* 사이드바와 동일 — 스크롤바 숨김 + 하단 sticky 페이드가 bottom padding 겸직 (2026-08-24) */
-  padding: var(--spacing-xl) 0 0;
+  padding: var(--spacing-4xl) 0 0; /* 상단 32 → 64 (본문과 같은 선) */
   scrollbar-width: none;
 }
 
@@ -287,9 +269,8 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--spacing-sm);
-  margin-top: var(--spacing-4xl);
-  padding-top: var(--spacing-lg);
-  border-top: 1px solid var(--color-line-neutral);
+  /* 구분선 없음(2026-09-18, h2 와 같은 결) — 선이 있던 자리(위 64 + 아래 24)에 16 을 더해 104 */
+  margin-top: 104px;
 }
 
 .pnLink {
@@ -380,16 +361,12 @@
 @media (max-width: 960px) {
   .layout {
     grid-template-columns: minmax(0, 1fr);
-    padding: 0 var(--spacing-md);
   }
   .sidebar {
-    /* static 이 아니라 relative — static 이면 .activePill(absolute)의 기준이 body 로 튀어
-       pill 이 헤더 높이만큼 위 행에 앉는다(2026-08-19 모바일 실사고). 흐름 배치는 동일 */
     position: relative;
     height: auto;
     max-height: none;
     padding: var(--spacing-sm) 0;
-    border-right: none;
     border-bottom: 1px solid var(--color-line-neutral);
     /* 모바일은 기본 접힘 — 헤더 햄버거(KitHeader)가 html[data-nav-open] 로 연다.
        경로가 바뀌면 헤더가 닫는다 */
@@ -400,7 +377,7 @@
   :global(html[data-nav-open='true']) .sidebar {
     display: block;
     position: fixed;
-    top: 48px; /* = .kit-header 높이 (SYNC 계약) */
+    top: var(--kit-header-h); /* = .kit-header 높이 */
     left: 0;
     right: 0;
     bottom: 0;
@@ -411,10 +388,62 @@
     background: var(--color-background-base);
     border-bottom: none;
   }
-  /* 시트 안에서는 pill 도 좌우 패딩만큼 안쪽으로 — 항목 박스와 같은 x 범위 */
-  :global(html[data-nav-open='true']) .activePill {
-    left: var(--spacing-md);
-    right: var(--spacing-md);
+  /* 드로어 = 섹션 4개 아코디언만. 데스크톱용 현재 섹션 목록은 숨긴다 */
+  :global(html[data-nav-open='true']) .sidebar > :not(.drawer) {
+    display: none;
+  }
+  :global(html[data-nav-open='true']) .drawer {
+    display: block;
+  }
+  .acc {
+    border-bottom: 1px solid var(--color-line-neutral); /* 드로어 안에서만 선을 쓴다 */
+  }
+  .acc[open] {
+    padding-bottom: var(--spacing-sm);
+  }
+  .accSummary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 10px;
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-label-neutral);
+    list-style: none;
+    cursor: pointer;
+  }
+  .accSummary::-webkit-details-marker {
+    display: none;
+  }
+  .accSummary[aria-current='true'] {
+    color: var(--color-label-normal);
+  }
+  /* 펼침 방향 화살표 — 닫힘 ˅, 열림 ˄ */
+  .accSummary::after {
+    content: '';
+    width: 7px;
+    height: 7px;
+    margin-right: 4px;
+    border-right: 1.5px solid var(--color-label-assistive);
+    border-bottom: 1.5px solid var(--color-label-assistive);
+    transform: rotate(45deg) translate(-2px, -2px);
+    transition: transform var(--duration-fast) var(--ease-out);
+  }
+  .acc[open] > .accSummary::after {
+    transform: rotate(-135deg) translate(-2px, -2px);
+  }
+  /* 아코디언 안은 전부 한 단 들여쓰기(summary 가 부모) — 단독 링크·소제목·항목 같은 x */
+  .drawer .item,
+  .drawer .list .item,
+  .drawer .sectionLabel {
+    padding-left: 22px;
+  }
+  /* 그룹 사이 12px — summary 바로 아래 첫 그룹만 붙인다 */
+  .drawer .section {
+    margin-top: var(--spacing-sm);
+  }
+  .drawer .accSummary + .section {
+    margin-top: 0;
   }
   .main {
     padding-top: var(--spacing-lg);

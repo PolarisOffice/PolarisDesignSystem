@@ -42,13 +42,13 @@ export const TOGGLE_CASES: readonly { n: string; title: string; desc: string; sa
   {
     n: '02',
     title: 'Toggle + Label',
-    desc: '토글이 무엇을 켜고 끄는지 레이블로 밝혀요. 예) 알림 받기, 다크 모드',
+    desc: '무엇을 켜고 끄는지 레이블로 밝혀요.',
     sample: { checked: true, label: '알림 받기' },
   },
   {
     n: '03',
     title: 'Toggle + Label + Description',
-    desc: '레이블만으로 결과를 짐작하기 어려울 때 설명을 덧붙여요. 예) 레이블 「푸시 알림」, 설명 「앱 알림을 받을 수 있습니다」',
+    desc: '레이블만으로 결과를 짐작하기 어려울 때 설명을 덧붙여요.',
     sample: { label: '푸시 알림', description: '앱 알림을 받을 수 있습니다' },
   },
 ];
@@ -56,13 +56,13 @@ export const TOGGLE_CASES: readonly { n: string; title: string; desc: string; sa
 /** Anatomy — 2026-08-13 신설. 같은 페이지 Specification 값에서만 유도(창작 없음) */
 export const TOGGLE_ANATOMY = [
   { n: '01', title: 'Track', desc: '배경 트랙. ON 은 --color-accent-normal, OFF 는 #e5e7eb(팔레트 미등재, 디자인 확인 필요)' },
-  { n: '02', title: 'Thumb', desc: '흰색 원형 손잡이. 상태 전환 시 좌우로 이동해요(background 0.2s)' },
-  { n: '03', title: 'Label · Description (선택)', desc: '토글 오른쪽의 레이블과 보조 설명. Case 참고' },
+  { n: '02', title: 'Thumb', desc: '흰 원형 손잡이. 전환 시 좌우로 움직여요' },
+  { n: '03', title: 'Label · Description (선택)', desc: '토글 오른쪽 레이블과 설명' },
 ] as const;
 
 /** Guidelines — 2026-08-13 신설. 리드 문장·Case 설명·스펙 값의 재서술(창작 없음) */
 export const TOGGLE_GUIDELINES = [
-  '켜짐/꺼짐 전환 결과가 즉시 반영되는 설정에만 써요. 저장 버튼이 따로 필요한 폼에는 Checkbox 를 검토하세요.',
-  '맥락이 이미 분명하면 단독으로, 무엇을 켜고 끄는지 밝혀야 하면 Label 을, 결과를 짐작하기 어려우면 Description 을 덧붙여요.',
-  'Disabled 는 투명도 38% 예요. 컴포넌트마다 Disabled 방식이 다른 것은 의도된 차이예요.',
+  '전환 결과가 바로 반영되는 설정에만 써요. 저장 버튼이 따로 있는 폼은 Checkbox 예요.',
+  '맥락이 분명하면 단독, 아니면 Label, 결과를 짐작하기 어려우면 Description 까지 붙여요.',
+  'Disabled 는 투명도 38% 예요. 컴포넌트마다 다른 건 의도예요.',
 ] as const;

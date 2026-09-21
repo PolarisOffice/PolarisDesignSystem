@@ -5,9 +5,20 @@ import { forwardRef, useState } from 'react';
 import { font, motion } from '../../tokens.js';
 import { withSupported } from '../../supported.js';
 import { DISABLED, FACES, GAPS, SIZES } from './style.js';
+import { ProgressCircle } from '../progress-circle/index.js';
 
 import type { CSSProperties } from 'react';
-import type { ButtonProps } from './types.js';
+import type { ButtonProps, ButtonSize } from './types.js';
+import type { ProgressCircleSize } from '../progress-circle/types.js';
+
+/**
+ * loading 일 때 아이콘 자리에 들어가는 스피너 크기 —
+ * Loading 스펙 Case「버튼 안」이 40 버튼에 ProgressCircle 18 을 쓴다(= 아이콘 슬롯 크기).
+ * 큰 버튼은 아이콘이 24 라 24 를 쓴다.
+ */
+const SPINNER_SIZE: Record<ButtonSize, ProgressCircleSize> = {
+  64: 24, 54: 24, 48: 24, 40: 18, 32: 18, 24: 18,
+};
 
 const BASE: CSSProperties = {
   display: 'inline-flex',
@@ -63,6 +74,7 @@ const ButtonBase = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
   }
   const sizeStyle = SIZES[size] ?? SIZES[48];
   const gap = GAPS[size] ?? GAPS['48'];
+  /** 클릭이 막힌 상태 — 호버 반응도 죽인다 */
   const inactive = disabled || loading;
 
   return (
@@ -94,13 +106,15 @@ const ButtonBase = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
         gap,
         ...face.base,
         ...(hovered && !inactive ? face.hover : null),
-        ...(inactive ? DISABLED : null),
+        // 진행 중은 비활성이 아니다 — Loading 스펙 Case「버튼 안」은 버튼 얼굴을 그대로 두고
+        // 아이콘 자리만 스피너로 바꾼다. 회색으로 가라앉히는 것은 disabled 뿐이다.
+        ...(disabled ? DISABLED : null),
         ...(fullWidth ? { width: '100%' } : null),
         ...style,
       }}
       {...rest}
     >
-      {leftIcon}
+      {loading ? <ProgressCircle size={SPINNER_SIZE[size] ?? 18} color="currentColor" aria-hidden /> : leftIcon}
       {children}
       {rightIcon}
     </button>

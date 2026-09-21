@@ -1,10 +1,9 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import ComingSoonLink from '@/components/docs/ComingSoonLink';
 import { H2 } from '@/components/docs/Heading';
 import PageLead from '@/components/docs/PageLead';
 import { PAGES, pageMeta, SITE_TITLE } from '@/lib/docs/pages';
-import { AREAS, GOALS, INTRO, ROLE_ROWS } from './home.data';
+import { AREAS, GOALS, INTRO } from './home.data';
 import s from './home.module.css';
 import { withBase } from '@/lib/basePath';
 
@@ -35,16 +34,17 @@ export default function HomePage() {
     <div className={s.page}>
       <h1 className={s.title}>{SITE_TITLE}</h1>
       <PageLead>
-        Polaris Design System은 폴라리스 서비스 전반에 일관된 사용자 경험을 만들기 위한 통합된 디자인 언어 및
-        명세 문서예요.
+        폴라리스 서비스 전반에 일관된 경험을 만드는 디자인 언어이자 명세예요.
       </PageLead>
 
-      {/* 히어로 — 장식 그래픽이라 대체텍스트 없음. 실제 파일은 public/home-hero.svg */}
+      {/* 히어로 — 장식 그래픽이라 대체텍스트 없음. 실제 파일은 public/home-hero.svg
+          (2026-09-21 초기 그라디언트 SVG 로 복귀 — 9/18 에 넣었던 곡선 일러스트(jpg)는 그레인 질감이
+          사이트의 평면 언어와 안 맞아 뺐다. 새 그래픽은 디자이너가 별도 제작 예정) */}
       <div className={s.hero}>
         {/* eslint-disable-next-line @next/next/no-img-element -- 정적 SVG 배너: 최적화 대상 아님 */}
-        {/* 높이는 SVG 원본(620)이 아니라 축소된 표시 비율 — 아래 .hero img 의 aspect-ratio 와 같은 값.
+        {/* 높이는 SVG 원본(620)이 아니라 띠로 자른 표시 비율 — 아래 .hero img 의 aspect-ratio 와 같은 값.
             CSS 가 오기 전에도 같은 자리를 예약해 레이아웃이 튀지 않게 한다 */}
-        <img src={withBase('/home-hero.svg')} alt="" width={1600} height={300} />
+        <img src={withBase('/home-hero.svg')} alt="" width={1600} height={340} />
       </div>
 
       <H2>PDS란 무엇인가요?</H2>
@@ -83,31 +83,6 @@ export default function HomePage() {
             </Link>
           );
         })}
-      </div>
-
-      <H2>역할별로 읽는 법</H2>
-      <div className={s.grid}>
-        {ROLE_ROWS.map((r) => (
-          <div key={r.term} className={`${s.card} ${s.cardStatic}`}>
-            <span className={s.cardHead}>{r.term}</span>
-            <span className={s.cardDesc}>{r.desc}</span>
-            <span className={s.cardLinks}>
-              {r.links.map((l) =>
-                l.comingSoon ? (
-                  <ComingSoonLink key={l.href} label={l.label} />
-                ) : l.external ? (
-                  <a key={l.href} href={l.href} target="_blank" rel="noreferrer">
-                    {l.label} <span aria-hidden="true">↗</span>
-                  </a>
-                ) : (
-                  <Link key={l.href} href={l.href}>
-                    {l.label}
-                  </Link>
-                ),
-              )}
-            </span>
-          </div>
-        ))}
       </div>
     </div>
   );

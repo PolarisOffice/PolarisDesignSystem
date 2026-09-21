@@ -316,7 +316,7 @@ Status 는 prop 이 아니라 **상호작용과 값으로 결정**됩니다. 구
 
 부모를 덮습니다(`position: absolute`) — **구멍이 크기를 가져야** 보입니다. 화면 전체를 덮으려면 `fullscreen`.
 
-⚠️ 스피너는 디자인에서 Lottie 입니다. 패키지는 같은 크기(48px)의 회전 원호로 대신합니다 — 모양이 정확히 같지 않습니다.
+스피너는 Loading 스펙의 `ProgressCircle` 48 을 씁니다 — 딤 위에서는 색 규칙대로 `static/white` 입니다(18번).
 
 ---
 
@@ -335,16 +335,67 @@ Status 는 prop 이 아니라 **상호작용과 값으로 결정**됩니다. 구
 
 ---
 
+## 18. Progress Circle
+
+**Figma** `Feedback → Loading / ProgressCircle` · Size 18 / 24 / 32 / 48
+
+```
+구멍   progress-circle/{18|24|32|48}
+연결   <ProgressCircle size={24} />
+       <ProgressCircle size={48} color="var(--color-static-white)" />
+```
+
+박스 18/24/32/48 안에 링 12/16/22/32, 선 두께 1.5/2/3/4 입니다. 트랙(옅은 원)은 **없습니다** — 호 하나가 길어졌다 짧아지며 돕니다.
+
+색은 `color` 로 바꿉니다. 기본 `label/alternative`, 어두운 배경·Black 버튼 위는 `static/white`, 버튼 안은 라벨을 따르도록 `currentColor` 입니다. 버튼은 `loading` 을 켜면 아이콘 자리에 자동으로 들어갑니다.
+
+⚠️ 회전은 주기당 **356.4도**입니다(360 아님). 뒤끝이 99%→0 으로 되돌아가며 생기는 3.6도를 상쇄해 이음매를 감춥니다 — 360 으로 고치면 매 주기 튑니다.
+
+---
+
+## 19. Progress Bar
+
+**Figma** `Feedback → Loading / ProgressBar` · Type Indeterminate / Determinate
+
+```
+구멍   progress-bar/{indeterminate|determinate}
+연결   <ProgressBar />
+       <ProgressBar type="determinate" value={60} />
+```
+
+높이 4, 너비는 영역에 맞춥니다(기본 100%) — **구멍이 폭을 가져야** 보입니다. Indeterminate 는 전체 너비의 30% 구간이 1.5초 주기로 좌에서 우로 지나가고, Determinate 는 `value`(0~100)를 200ms ease-out 으로 채웁니다.
+
+4초 이상이며 진행률을 계산할 수 있는 작업에 씁니다. 10초를 넘으면 예상 소요 시간을 함께 보여 줍니다.
+
+---
+
+## 20. Skeleton
+
+**Figma** `Feedback → Loading / Skeleton` · Shape Rect / Circle / Text
+
+```
+구멍   skeleton/{rect|circle|text}
+연결   <Skeleton />
+       <Skeleton shape="circle" width={40} />
+       <Skeleton shape="text" width={200} height={12} />
+```
+
+실제 콘텐츠와 **같은 위치·같은 크기**로 둡니다. `Circle` 은 아바타, `Text` 는 문장 한 줄 — 여러 줄은 쌓고 마지막 줄을 짧게 만듭니다.
+
+움직임은 블록 전체의 투명도가 100%↔30% 를 오가는 것입니다. **쓸고 지나가는 빛(shimmer)이 아닙니다** — 그라데이션을 넣지 마세요.
+
+---
+
 ## 확인 방법
 
 ```bash
 npm run verify:figma     # 렌더 결과를 Figma 실측값과 대조 (111건)
-npm run verify:slots     # 이 문서의 짝 figma/slots.json 을 패키지와 대조 (35건)
+npm run verify:slots     # 이 문서의 짝 figma/slots.json 을 패키지와 대조 (41건)
 npm run dev              # /showcase 에서 전 변형 확인
 ```
 
 ## 아직 정리되지 않은 것
 
-- **아이콘** — 체크·화살표·스피너는 임시 글리프이고 `DownloadIcon`·`UserIcon` 둘만 예제용으로 있습니다. PDS 아이콘 라이브러리를 받으면 교체합니다
+- **아이콘** — 체크·화살표는 임시 글리프이고 `DownloadIcon`·`UserIcon` 둘만 예제용으로 있습니다. PDS 아이콘 라이브러리를 받으면 교체합니다
 - **Select `md`·`sm`** — Figma 에 없는 크기입니다(위 참조)
-- **Figma 에 없는 컴포넌트** — `avatar` · `status-dot` · `thumbnail-card` · `progress-bar` 는 md 스펙 맵에만 있고 디자인에 없습니다 (`icon-button` 은 문서가 요구해 md 스펙대로 만들었습니다 — 17번)
+- **Figma 에 없는 컴포넌트** — `avatar` · `status-dot` · `thumbnail-card` 는 md 스펙 맵에만 있고 디자인에 없습니다 (`icon-button` 은 문서가 요구해 md 스펙대로 만들었습니다 — 17번)

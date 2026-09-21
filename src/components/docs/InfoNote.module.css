@@ -21,7 +21,7 @@
 .body {
   font-size: var(--font-size-xs);
   line-height: 1.75;
-  color: var(--color-label-neutral);
+  color: var(--color-label-alternative);
 }
 
 .body a {

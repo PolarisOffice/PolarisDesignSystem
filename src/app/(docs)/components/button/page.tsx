@@ -20,8 +20,7 @@ export default function ButtonPage() {
     <>
       <h1>{meta.title}</h1>
       <PageLead>
-        사용자의 행동을 유도하거나 기능을 실행할 때 사용해요. 중요도와 맥락에 따라 적절한 Variant 와
-        Size 를 선택하세요.
+        행동을 유도하거나 기능을 실행할 때 써요. 중요도와 맥락에 맞는 Variant 와 Size 를 골라요.
       </PageLead>
       <DocTabs
         design={<ButtonDesign />}

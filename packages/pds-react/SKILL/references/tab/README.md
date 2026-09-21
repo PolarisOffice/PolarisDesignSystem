@@ -12,7 +12,7 @@
 
 ## 사용 규칙
 
-- **Variant** — Primary 는 페이지 최상단 메인 네비게이션, Secondary 는 섹션 내 서브 카테고리 전환에 써요.
+- **Variant** — Primary 는 최상단 메인 네비게이션, Secondary 는 섹션 안 서브 카테고리예요.
 - **Layout** — Fill 은 3–5개 균등 분할, Hug 는 6개 이상이거나 레이블 길이가 제각각일 때.
 - **Size** — Medium 44px · Small 40px.
 - **Controlled** — 선택 탭 하단 인디케이터는 150ms(duration-fast)로 슬라이드해요.
@@ -20,15 +20,15 @@
 
 **권장**
 
-- 페이지 최상단 메인 네비게이션에는 Primary 사용
-- 섹션 내 서브 카테고리 전환에는 Secondary 사용
-- 탭이 2개 이상일 경우 서로 다른 Variant 조합
+- 최상단 메인 네비게이션은 Primary
+- 섹션 안 서브 카테고리는 Secondary
+- 2 depth 면 Primary 아래 Secondary
 
 **피하기**
 
-- 같은 계층에 Primary와 Secondary 혼용 금지
-- 탭을 드롭다운·필터 대체재로 오용 금지
-- 페이지 간 라우팅에는 네비게이션 사용
+- 같은 계층에 Primary 와 Secondary 혼용
+- 드롭다운·필터 대신 탭 쓰기
+- 페이지 간 라우팅(네비게이션 몫)
 
 ## 예제
 

@@ -1,0 +1,20 @@
+/* Foundation Overview 카드의 메타포 그래픽 — 무대(140px) 가운데 120×72 */
+.glyph {
+  width: 120px;
+  height: 72px;
+}
+
+.logoTile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--color-accent-normal) 22%, transparent);
+}
+
+.logo {
+  width: 32px;
+  height: 32px;
+}

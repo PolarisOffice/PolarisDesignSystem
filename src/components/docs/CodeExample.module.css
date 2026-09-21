@@ -23,7 +23,7 @@
 .installLabel {
   font-size: var(--font-size-xs);
   font-weight: 600;
-  color: var(--color-label-neutral);
+  color: var(--color-label-alternative);
 }
 
 .shellNoticeTitle {
@@ -35,7 +35,7 @@
 .shellNoticeBody {
   font-size: var(--font-size-xs);
   line-height: 1.7;
-  color: var(--color-label-neutral);
+  color: var(--color-label-alternative);
 }
 
 .shellLinks {

@@ -1,0 +1,244 @@
+/* /kit — '내 디자인 시스템'(AI Integration 사이드바 항목). 문서 셸 안이라 폭·여백·H1·본문 글자는 셸이 정한다.
+ * 2026-09-18: 이 탭만 글자가 작고(13px) 카드·코드 상자 모양이 달라 다른 페이지와 따로 놀았다 —
+ * 순서는 본문 목록, 디자인 시스템 카드는 공통 DocCard, 안내는 InfoNote 로 바꾸고 여기엔
+ * 공통 부품이 없는 블록(업로드 영역·연결 방법 카드)만 남긴다. 값은 전부 토큰. */
+
+/* 디자인 시스템 카드 — 2열(≤760 1열). auto-fill 200px 은 카드가 좁아 태그·메타가 꺾였다 */
+.systemGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spacing-xs);
+  margin: 0 0 var(--spacing-2xl);
+}
+
+/* 이름 줄 — 제목 왼쪽, 태그 오른쪽 끝 */
+.nameRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2xs);
+  flex-wrap: wrap;
+}
+
+/* 디자인 시스템 카드 이름 옆 태그 */
+.badge {
+  display: inline-block;
+  white-space: nowrap;
+  margin-left: auto;
+  padding: 1px 8px;
+  border-radius: var(--radius-full);
+  background: var(--docs-accent-surface);
+  color: var(--color-accent-normal);
+  font-size: var(--font-size-xxs);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 40px 24px;
+  border: 1px dashed var(--color-line-normal, var(--color-line-neutral));
+  border-radius: var(--radius-lg);
+  background: var(--color-fill-neutral);
+  color: var(--color-label-neutral);
+  text-align: center;
+  cursor: pointer;
+  transition: background var(--duration-normal) var(--ease-in-out), border-color var(--duration-normal) var(--ease-in-out);
+}
+
+/* hover = 연한 파랑 면만(테두리·아이콘은 그대로 — 점선·아이콘까지 파랗게 하니 "너무 찐하다", 2026-09-21).
+   실제로 파일을 끌어다 놓는 중일 때만 accent 실선 + 아이콘 파랑 */
+/* 틴트는 공용 --docs-accent-surface(14%)보다 옅게 — 8% (14% 도 진하다는 피드백). 태그는 14% 그대로.
+   점선도 accent 를 절반만 섞어 한 단 살린다(순 accent 는 "너무 찐하다") */
+.dropzone:hover,
+.dropzone[data-over='true'] {
+  background: color-mix(in srgb, var(--color-accent-normal) 8%, var(--color-background-base));
+  border-color: color-mix(in srgb, var(--color-accent-normal) 55%, var(--color-line-normal, var(--color-line-neutral)));
+}
+
+.dropzone[data-over='true'] {
+  border-color: var(--color-accent-normal);
+  border-style: solid;
+}
+
+.dropIcon {
+  width: 28px;
+  height: 28px;
+  margin-bottom: 6px;
+  color: var(--color-label-alternative);
+  transition: color var(--duration-normal) var(--ease-in-out);
+}
+
+.dropzone[data-over='true'] .dropIcon {
+  color: var(--color-accent-normal);
+}
+
+.dropzone:focus-visible { outline: 2px solid var(--color-accent-normal); outline-offset: 2px; }
+.dropzone[data-busy='true'] { opacity: 0.6; cursor: progress; }
+
+.dropTitle {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-label-normal);
+}
+
+.dropHint {
+  font-size: var(--font-size-xxs);
+  line-height: 1.6;
+  color: var(--color-label-alternative);
+}
+
+.dropHint code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.92em;
+  background: var(--color-fill-strong);
+  padding: 1px 5px;
+  border-radius: 5px;
+}
+
+.tokenRow {
+  display: flex;
+  gap: 8px;
+  margin: 0 0 var(--spacing-xs);
+}
+
+.tokenRow input:focus-visible {
+  outline: 2px solid var(--color-accent-normal);
+  outline-offset: 2px;
+}
+
+.tokenRow input {
+  flex: 1;
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--color-line-neutral);
+  border-radius: var(--radius-sm);
+  background: var(--color-background-base);
+  color: var(--color-label-normal);
+  font-size: var(--font-size-xs);
+}
+
+/* 결과 카드 — 상태색은 문서 레이어 삽화 토큰(의미 고정) */
+.notice {
+  margin-top: var(--spacing-sm);
+  padding: 14px 18px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-line-neutral);
+  background: var(--color-fill-neutral);
+  font-size: var(--font-size-xs);
+  line-height: 1.7;
+  color: var(--color-label-neutral);
+}
+
+.notice ul { margin: 6px 0 0; padding-left: 18px; }
+.notice code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.92em; }
+.noticeError { border-color: color-mix(in srgb, var(--docs-illus-negative) 45%, transparent); }
+.noticeError strong { color: var(--docs-illus-negative); }
+.noticeSuccess { border-color: color-mix(in srgb, var(--docs-illus-positive) 45%, transparent); }
+.noticeSuccess strong { color: var(--docs-illus-positive); }
+.noticeWarn { border-color: color-mix(in srgb, var(--docs-illus-caution) 45%, transparent); }
+.noticeWarn strong { color: var(--docs-illus-caution); }
+
+/* 연결 방법 카드 — 공통 카드(CardGrid .card)와 같은 면·테두리·글자 체계, 안에 코드 패널 */
+.howGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--spacing-xs);
+  margin: var(--spacing-sm) 0 var(--spacing-lg);
+}
+
+.how {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-md);
+  border: 1px solid var(--color-line-neutral);
+  border-radius: var(--radius-md);
+  background: var(--color-layer-surface);
+}
+
+.howHead {
+  display: flex;
+  align-items: baseline;
+  gap: var(--spacing-2xs);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-label-normal);
+}
+
+.howHead small {
+  font-size: var(--font-size-xxs);
+  font-weight: 500;
+  color: var(--color-label-alternative);
+}
+
+.howDesc {
+  margin: 0;
+  font-size: var(--font-size-xxs);
+  line-height: 1.5;
+  color: var(--color-label-alternative);
+}
+
+/* 코드 패널 — 컴포넌트 페이지 코드 패널(CodeExample .pre)과 같은 글꼴·크기·줄간격.
+   구 반전 상자(action-normal 배경)는 다크 모드에서 흰 판으로 떠 이 탭만 튀었다 */
+.codeWrap {
+  position: relative;
+  margin-top: auto;
+}
+
+.code {
+  margin: 0;
+  padding: var(--spacing-sm) 64px var(--spacing-sm) var(--spacing-sm);
+  border: 1px solid var(--color-line-neutral);
+  border-radius: var(--radius-sm);
+  background: var(--color-background-base);
+  color: var(--color-label-normal);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: var(--font-size-xxs);
+  line-height: 1.75;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* 복사 버튼 — 코드 패널 도구 버튼(CodeExample .toolButton)과 같은 알약 */
+.copyBtn {
+  position: absolute;
+  top: var(--spacing-2xs);
+  right: var(--spacing-2xs);
+  padding: 4px 10px;
+  border: 1px solid var(--color-line-neutral);
+  border-radius: var(--radius-full);
+  background: var(--color-layer-surface);
+  color: var(--color-label-neutral);
+  font: inherit;
+  font-size: var(--font-size-xxs);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out);
+}
+
+.copyBtn:hover {
+  background: var(--color-interaction-hover);
+  color: var(--color-label-normal);
+}
+
+.copyBtn:focus-visible {
+  outline: 2px solid var(--color-accent-normal);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dropzone,
+  .copyBtn {
+    transition: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .howGrid,
+  .systemGrid {
+    grid-template-columns: 1fr;
+  }
+}

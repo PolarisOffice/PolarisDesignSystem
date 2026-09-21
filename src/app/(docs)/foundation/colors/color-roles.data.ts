@@ -67,8 +67,8 @@ export interface RoleSection {
 
 export const ROLE_SECTIONS: RoleSection[] = [
   {
-    heading: 'Label — 텍스트·아이콘 전경색',
-    intro: '텍스트와 아이콘에 사용하는 전경 색상이에요. 강조도에 따라 5단계로 나뉘어요.',
+    heading: 'Label',
+    intro: '텍스트와 아이콘의 전경색이에요. 강조도 5단계.',
     groups: [
       {
         name: 'label',
@@ -119,9 +119,8 @@ export const ROLE_SECTIONS: RoleSection[] = [
     ],
   },
   {
-    heading: 'Accent — 브랜드·강조',
-    intro:
-      '브랜드 아이덴티티와 핵심 액션을 강조하는 색상이에요. Brand, Action, Format, Plan, AI, Link 6가지 역할로 나뉘어요.',
+    heading: 'Accent',
+    intro: '브랜드와 핵심 액션을 강조하는 색이에요. Brand·Action·Format·Plan·AI·Link 6역할.',
     groups: [
       {
         name: 'accent/brand',
@@ -140,7 +139,7 @@ export const ROLE_SECTIONS: RoleSection[] = [
             css: '--color-accent-normal',
             hex: '#1d7ff9',
             swatch: '#1d7ff9',
-            desc: '기본 브랜드 색상. 아이콘, 버튼 등에 쓰고, 링크는 accent/link 전용 토큰을 써요',
+            desc: '기본 브랜드 색. 아이콘·버튼에 써요. 링크는 accent/link',
             prop: 'fg',
           },
           {
@@ -246,7 +245,7 @@ export const ROLE_SECTIONS: RoleSection[] = [
     ],
   },
   {
-    heading: 'State — 시스템 상태',
+    heading: 'State',
     intro: '신규 알림이나 오류 등 시스템 상태를 전달하는 색상이에요.',
     groups: [
       {
@@ -273,8 +272,8 @@ export const ROLE_SECTIONS: RoleSection[] = [
     ],
   },
   {
-    heading: 'Fill — 배경 채움',
-    intro: 'UI 요소의 배경을 채우는 색상이에요. neutral(가장 연함) → normal → strong(가장 진함) 순이에요.',
+    heading: 'Fill',
+    intro: '요소 배경을 채우는 색이에요. neutral → normal → strong 순으로 진해져요.',
     groups: [
       {
         name: 'fill',
@@ -309,7 +308,7 @@ export const ROLE_SECTIONS: RoleSection[] = [
     ],
   },
   {
-    heading: 'Line — 선·테두리',
+    heading: 'Line',
     intro: '구분선과 컴포넌트 테두리에 사용하는 색상이에요.',
     groups: [
       {
@@ -345,8 +344,8 @@ export const ROLE_SECTIONS: RoleSection[] = [
     ],
   },
   {
-    heading: 'Interaction — 인터랙션 오버레이',
-    intro: '마우스 오버나 클릭 시 요소 위에 덧씌우는 반투명 오버레이예요. 컴포넌트 자체 배경색과 합성돼요.',
+    heading: 'Interaction',
+    intro: 'hover·pressed 때 요소 위에 덧씌우는 반투명 오버레이예요.',
     groups: [
       {
         name: 'interaction',
@@ -372,7 +371,7 @@ export const ROLE_SECTIONS: RoleSection[] = [
     ],
   },
   {
-    heading: 'Background & Layer — 화면 배경',
+    heading: 'Background & Layer',
     intro: '앱 전체의 배경 레이어를 구성하는 색상이에요.',
     groups: [
       {
@@ -407,7 +406,7 @@ export const ROLE_SECTIONS: RoleSection[] = [
     ],
   },
   {
-    heading: 'Static — 고정 색상',
+    heading: 'Static',
     intro: '라이트·다크 모드에 관계없이 항상 고정된 색상이에요.',
     groups: [
       {

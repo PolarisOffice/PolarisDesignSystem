@@ -14,7 +14,7 @@ export function RolesSection() {
   return (
     <>
       <H2>Property</H2>
-      <p>토큰명에 속성이 명시되어 있지 않지만, 각 카테고리는 아래 세 가지 속성 중 하나에 대응해요.</p>
+      <p>카테고리마다 아래 세 속성 중 하나에 대응해요.</p>
       <ul className={s.propLegend}>
         {PROP_BADGES.map((b) => (
           <li key={b.kind}>{b.label}</li>
@@ -137,8 +137,7 @@ export function PaletteSection() {
 
       <H3>Tokens</H3>
       <p>
-        Primitive 변수명과 값, 그리고 그 값을 참조하는 Semantic 토큰이에요. 참조가 없는 원시값은
-        아직 Semantic 계층에 배선되지 않은 예비 색상이에요.
+        Primitive 값과 그것을 참조하는 Semantic 토큰이에요. 참조가 없으면 아직 안 쓰는 예비 색이에요.
       </p>
       <SpecTable
         caption="Primitive 팔레트 토큰"
@@ -168,7 +167,7 @@ export function PaletteSection() {
                 </Fragment>
               ))
             ) : (
-              <span className={s.palNoRef}>—</span>
+              <span className={s.palNoRef}>없음</span>
             ),
           })),
         )}

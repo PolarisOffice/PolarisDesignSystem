@@ -1,13 +1,15 @@
 /* 문서 헤딩 — 원본 custom.css 의 `.vp-doc h2 { margin-top:48px; padding-top:24px }` 를 따른다.
-   앵커 링크는 hover 시에만 노출 (VitePress .header-anchor 동작). */
+   앵커 링크는 hover 시에만 노출 (VitePress .header-anchor 동작).
+
+   위계 사다리(2026-09-18, 본문 14 기준): h1 36/700 · h2 24/700 · h3 18/600 · h4 14/600.
+   이전(32/24/20/18, 전부 700·같은 색)은 크기 2~4px 차이뿐이라 층이 안 보였다. 단계마다 6px 이상
+   벌리고 h3 부터는 굵기를 한 단 낮춰 h2(섹션 경계)와 갈라지게 했다. h1 은 DocsShell .main h1. */
 
 .h2 {
   position: relative;
-  margin: var(--spacing-3xl) 0 var(--spacing-sm);
-  /* 구분선 아래 간격 — 원본 24px 는 위(48px)와 차이가 커 보였다. 위아래를 비슷하게
-     맞춰달라는 검토(2026-08-28)로 40px 로 넓힌다. */
-  padding-top: var(--spacing-2xl);
-  border-top: 1px solid var(--color-line-neutral);
+  /* 섹션 사이 구분선 제거(2026-09-18) — 헤더·좌측 패널과 같은 결. 선이 있던 자리(위 48 + 선 아래 40)를
+     여백으로 두고 16 을 더해 104. 섹션 경계는 이 여백과 h2 크기가 만든다 */
+  margin: 104px 0 var(--spacing-md);
   font-size: var(--font-size-2xl);
   font-weight: 700;
   letter-spacing: -0.01em;
@@ -18,9 +20,9 @@
 
 .h3 {
   position: relative;
-  margin: var(--spacing-xl) 0 var(--spacing-2xs);
-  font-size: var(--font-size-xl);
-  font-weight: 700;
+  margin: var(--spacing-2xl) 0 var(--spacing-2xs);
+  font-size: var(--font-size-lg);
+  font-weight: 600;
   letter-spacing: -0.01em;
   line-height: 1.4;
   color: var(--color-label-normal);
@@ -28,9 +30,11 @@
 }
 
 .h4 {
-  margin: var(--spacing-md) 0 var(--spacing-3xs);
-  font-size: var(--font-size-lg);
+  margin: var(--spacing-lg) 0 var(--spacing-3xs);
+  /* 본문과 같은 14 — 굵기·색만으로 '굵은 소제목' */
+  font-size: var(--font-size-sm);
   font-weight: 600;
+  line-height: 1.5;
   color: var(--color-label-normal);
   scroll-margin-top: var(--docs-anchor-offset, 64px);
 }

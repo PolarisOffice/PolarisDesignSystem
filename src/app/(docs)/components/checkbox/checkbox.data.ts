@@ -16,7 +16,7 @@ export const CHECKBOX_ANATOMY = [
   {
     n: '03',
     title: 'Label',
-    desc: '옵션을 설명하는 텍스트. 컨트롤 오른쪽에 위치, gap 0 (히트 영역 32 가 간격을 만든다)',
+    desc: '옵션 설명 텍스트. 컨트롤 오른쪽, gap 0(히트 영역 32 가 간격을 만들어요)',
   },
 ] as const;
 
@@ -114,7 +114,7 @@ export const RADIO_SPEC = [
 /** Guidelines — 2026-08-13 신설. 리드 문장·Case 설명·스펙 값의 재서술(창작 없음) */
 export const CHECKBOX_GUIDELINES = [
   '다중 선택에는 Checkbox, 단일 선택에는 Radio 를 써요.',
-  'Radio 에는 부분 선택(indeterminate)이 없어요. 「전체 선택」 제어가 필요하면 Checkbox 그룹을 써요.',
-  '레이블은 컨트롤 오른쪽에 붙여요. 히트 영역이 박스보다 넓어 gap 없이도 간격이 생겨요.',
-  'Disabled 는 투명도 60% 예요. 컴포넌트마다 Disabled 방식이 다른 것은 의도된 차이예요.',
+  'Radio 엔 부분 선택이 없어요. 전체 선택 제어는 Checkbox 그룹으로 해요.',
+  '레이블은 컨트롤 오른쪽에 붙여요. 히트 영역이 넓어 gap 없이도 간격이 생겨요.',
+  'Disabled 는 투명도 60% 예요. 컴포넌트마다 다른 건 의도예요.',
 ] as const;

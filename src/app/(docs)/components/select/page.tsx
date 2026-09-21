@@ -15,8 +15,7 @@ export default function SelectPage() {
     <>
       <h1>{meta.title}</h1>
       <PageLead>
-        사용자가 미리 정의된 옵션 목록에서 하나를 선택할 수 있는 컴포넌트예요. 클릭 시 Context &amp; Menu
-        Item 리스트가 노출돼요.
+        정해진 옵션 중 하나를 고르는 컴포넌트예요. 누르면 Context &amp; Menu Item 목록이 열려요.
       </PageLead>
       <DocTabs
         design={<SelectDesign />}

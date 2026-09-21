@@ -2,16 +2,16 @@
 
 export const TOOLTIP_USAGE = {
   do: [
-    '아이콘 버튼처럼 레이블이 없는 요소에 사용',
-    '텍스트는 1–2줄 이내로 간결하게 작성',
-    '툴팁은 보조 정보. 핵심 정보는 항상 화면에 노출',
-    '연속 호버 시 Cascade 모드로 즉시 표시',
+    '아이콘 버튼처럼 레이블 없는 요소에',
+    '텍스트는 1~2줄로 짧게',
+    '보조 정보만. 핵심 정보는 화면에 항상 노출',
+    '연속 호버는 Cascade 로 바로 표시',
   ],
   dont: [
-    '인터랙션이 필요한 콘텐츠(링크, 버튼 등) 내부에 배치 금지',
-    '모바일 전용 UI에 사용 금지 (호버 없음)',
-    '에러 메시지·경고 전달 용도로 사용 금지 → Toast 사용',
-    '긴 설명 텍스트 삽입 금지 → Popup 사용',
+    '링크·버튼 같은 인터랙션 콘텐츠를 안에 넣기',
+    '모바일 전용 UI(호버 없음)',
+    '에러·경고 전달(Toast 몫)',
+    '긴 설명(Popup 몫)',
   ],
 } as const;
 
@@ -70,5 +70,5 @@ export const TOOLTIP_ARROW_CASES = [
 export const TOOLTIP_ANATOMY = [
   { n: '01', title: 'Container', desc: '블러 반투명 말풍선. radius 6px, padding 6px 10px, 트리거에서 8px 간격' },
   { n: '02', title: 'Text', desc: '12px / white 보조 설명. max-width 200px 초과 시 줄바꿈' },
-  { n: '03', title: 'Arrow (선택)', desc: '5px 삼각형, 컨테이너와 같은 배경색. 트리거와의 관계가 맥락상 불분명할 때만 포함' },
+  { n: '03', title: 'Arrow (선택)', desc: '5px 삼각형, 컨테이너와 같은 색. 트리거와의 관계가 불분명할 때만' },
 ] as const;

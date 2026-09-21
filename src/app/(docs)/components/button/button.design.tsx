@@ -68,11 +68,19 @@ export default function ButtonDesign() {
 
       <H2>Properties</H2>
       <p>
-        중요도와 맥락에 따라 Variant 와 Size 를 골라요.{' '}
         <TabSwitchLink to="code">전체 variant 를 코드와 함께 보기</TabSwitchLink>
       </p>
 
       <H3>Size</H3>
+      {/* 사이즈별 실물 — 아이콘 간격(전 사이즈 4px, Figma 2026-09-18)을 작은 사이즈에서도 눈으로
+          확인할 수 있게 leftIcon 을 단다. Variant 절과 같은 순서로 실물이 먼저, 표가 뒤. 아이콘 크기는 Figma 슬롯(64·54·48 = 24, 40·32·24 = 18) */}
+      <div className={s.sizeBand}>
+        {BUTTON_SIZES.map((b) => (
+          <Button key={b.size} variant="primary" size={b.size} leftIcon={<DownloadIcon size={b.size >= 48 ? 24 : 18} />}>
+            버튼
+          </Button>
+        ))}
+      </div>
       <SpecTable
         caption="Button 사이즈별 치수"
         columns={[
@@ -82,6 +90,7 @@ export default function ButtonDesign() {
           { key: 'font', header: 'Font', width: '12%' },
           { key: 'weight', header: 'Weight', width: '12%' },
           { key: 'radius', header: 'Radius', width: '12%' },
+          { key: 'gap', header: 'Icon gap', width: '12%' },
         ]}
         rows={BUTTON_SIZES.map((b) => ({
           size: <strong>{b.size}</strong>,
@@ -90,6 +99,7 @@ export default function ButtonDesign() {
           font: <SpecVal>{`${b.fontSize}px`}</SpecVal>,
           weight: <SpecVal>{String(b.weight)}</SpecVal>,
           radius: <SpecVal>{`${b.radius}px`}</SpecVal>,
+          gap: <SpecVal>{`${b.gap}px`}</SpecVal>,
         }))}
       />
 
@@ -153,9 +163,8 @@ export default function ButtonDesign() {
 
       <H3>State</H3>
       <p>
-        Button 의 Disabled 는 <strong>투명도가 아니라 색상 자체를 교체</strong>해요. 배경은{' '}
-        <SpecToken>--color-fill-strong</SpecToken>, 텍스트는 <SpecToken>--color-label-assistive</SpecToken>
-        를 써요. 컴포넌트마다 Disabled 처리 방식이 다른 것은 의도된 차이라 임의로 통일하지 않아요.
+        Disabled 는 투명도가 아니라 색을 바꿔요. 배경 <SpecToken>--color-fill-strong</SpecToken>, 텍스트{' '}
+        <SpecToken>--color-label-assistive</SpecToken>. 컴포넌트마다 Disabled 방식이 다른 건 의도예요.
       </p>
       {/* 상태 프리뷰 그리드(검토 반영 2026-08-28) — 대표 3형태(채움·중립 채움·아웃라인).
           Hovered·Pressed 는 실제 인터랙션으로만 나타나므로 **표시용 상태 고정**:
@@ -192,8 +201,7 @@ export default function ButtonDesign() {
         </div>
       </div>
       <p className={s.previewNote}>
-        Hovered·Pressed 열은 상태 색을 고정해 둔 표시용 렌더예요. 현재 Button 은 Pressed 전용
-        색을 두지 않아 눌린 동안에도 Hovered 색이 유지돼요.
+        Hovered·Pressed 열은 색을 고정한 표시용이에요. Pressed 전용 색은 없어 Hovered 색이 유지돼요.
       </p>
 
       <H2>Guidelines</H2>
@@ -215,7 +223,7 @@ export default function ButtonDesign() {
       </CaseList>
 
       <H3>버튼 조합</H3>
-      <p>짝을 이루는 조합은 아래 네 가지를 기본으로 써요.</p>
+      <p>기본 조합 네 가지예요.</p>
       {/* Hierarchy 와 같은 케이스 블록 + 실물 견본 (2026-08-28 피드백).
           견본 순서는 배치 규칙 그대로 보조 왼쪽, 주요 오른쪽 */}
       <CaseList>

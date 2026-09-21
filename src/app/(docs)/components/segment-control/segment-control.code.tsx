@@ -101,7 +101,7 @@ ${SEG_VARIANTS.map((v) => `<SegmentControl variant="${v}" items={items} defaultV
   {
     id: 'controlled',
     title: 'Controlled',
-    desc: '항상 하나만 선택돼요. 복수 선택이 필요하면 Checkbox 나 Filter Chip 을 쓰세요.',
+    desc: '항상 하나만 선택돼요. 복수 선택은 Checkbox 나 Filter Chip 이에요.',
     previewName: 'SegmentControl',
     preview: (
       <DemoRow>

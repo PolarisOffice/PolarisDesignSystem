@@ -52,7 +52,7 @@ ${TOGGLE_SIZES.map((t) => `<Toggle size="${t.size}" checked />`).join('\n')}`,
   {
     id: 'with-label',
     title: 'Label · Description',
-    desc: '토글이 무엇을 켜고 끄는지 밝혀야 할 때 레이블을, 결과를 짐작하기 어려우면 설명을 덧붙여요.',
+    desc: '무엇을 켜고 끄는지 밝혀야 하면 레이블을, 결과를 짐작하기 어려우면 설명을 붙여요.',
     previewName: 'Toggle',
     code: `${IMPORT}
 

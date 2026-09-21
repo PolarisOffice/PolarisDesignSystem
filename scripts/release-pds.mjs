@@ -11,7 +11,9 @@
  *      이 스크립트는 발행하지 않고 PR 을 만들 뿐이라 리뷰는 PR 에서 받는다("코드 + bump 를 한 PR 에" 가 기본 흐름)
  *      (2026-09-04 1.0.5 사고 재발 차단 — 옛 피처 브랜치 체크아웃에서 발행돼 develop 에
  *      이미 있던 Sub 버튼 다크 수정 2건이 tarball 에 빠졌다. docs/pds-release.md)
- *   2. package.json version 기록
+ *   2. package.json version 기록 + 변경 이력(src/lib/docs/changelog.ts) 맨 위 항목 날짜를 오늘로
+ *      (맨 위 항목 version 이 새 버전과 다르면 중단 — 이력 없이 발행되지 않게. 푸터 '업데이트' 와
+ *      컴포넌트 'New' 배지가 이 파일을 읽는다)
  *   3. pds:build → tokens:sync → md:gen → skill:gen → skill:zip (pds.md·SKILL 이 새 버전으로 재생성)
  *   4. 검증: dist·tokens.css 헤더·pds.md·SKILL.md 버전 일치, tarball 구성
  *   5. 커밋
@@ -116,6 +118,18 @@ if (mainLag) {
 console.log('  ok — develop 최신 포함');
 
 /* 2) bump */
+/* 변경 이력 — 맨 위 항목이 새 버전이어야 하고, 날짜는 오늘(KST)로 채운다 */
+const CHANGELOG = join(PDS, 'src/lib/docs/changelog.ts');
+const changelogRaw = readFileSync(CHANGELOG, 'utf8');
+const firstEntry = changelogRaw.match(/^\s*\{\s*version:\s*'([^']+)',\s*date:\s*(null|'[^']*'),/m);
+if (!firstEntry) fail('src/lib/docs/changelog.ts 에서 첫 항목(`{ version: …, date: … ,`)을 못 읽었어요');
+if (firstEntry[1] !== version) {
+  fail(`변경 이력 맨 위 항목이 ${firstEntry[1]} 이에요 — ${version} 항목을 src/lib/docs/changelog.ts 맨 위에 먼저 적어 주세요(date: null)`);
+}
+const today = new Date().toLocaleDateString('sv-SE', { timeZone: 'Asia/Seoul' }).replace(/-/g, '.');
+step(`변경 이력 ${version} 발행일 → ${today}`);
+writeFileSync(CHANGELOG, changelogRaw.replace(firstEntry[0], firstEntry[0].replace(/date:\s*(null|'[^']*')/, `date: '${today}'`)));
+
 step(`package.json version → ${version}`);
 const raw = readFileSync(PKG_JSON, 'utf8');
 const bumped = raw.replace(/"version":\s*"[^"]+"/, `"version": "${version}"`);
@@ -134,6 +148,7 @@ const checks = [
   [readFileSync(join(PKG_DIR, 'dist/tokens.css'), 'utf8').split('\n')[0].includes(` ${version} `), `dist/tokens.css 헤더 = ${version}`],
   [new RegExp(`^version: ${version.replace(/\./g, '\\.')}$`, 'm').test(readFileSync(MD, 'utf8')), `pds.md frontmatter version = ${version}`],
   [readFileSync(SKILL_MD, 'utf8').includes(`pds@${version}`), `SKILL.md 헤더 = ${version}`],
+  [new RegExp(`version:\\s*'${version.replace(/\./g, '\\.')}',\\s*date:\\s*'${today.replace(/\./g, '\\.')}'`).test(readFileSync(CHANGELOG, 'utf8')), `changelog.ts ${version} 발행일 = ${today}`],
 ];
 const pack = run('npm', ['pack', '--dry-run', '--json'], { cwd: PKG_DIR });
 let files = [];
@@ -170,7 +185,7 @@ must(git(['add', '--', 'PDS']), 'git add 실패');
 const staged = must(git(['diff', '--cached', '--name-only']), 'git diff 실패').stdout.trim();
 console.log(staged.split('\n').map((l) => `  + ${l}`).join('\n'));
 const msg = [
-  `chore(pds-react): ${version} 발행 준비 — package.json bump + pds.md·SKILL 재생성`,
+  `chore(pds-react): ${version} 발행 준비 — package.json bump + 변경 이력 발행일 + pds.md·SKILL 재생성`,
   '',
   '릴리스 스크립트(PDS/scripts/release-pds.mjs)가 develop 최신 포함·미머지 소스 없음을 검사하고 생성했다.',
   `PAX 재업로드 ${reupload}.`,

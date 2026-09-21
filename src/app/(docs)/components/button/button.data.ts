@@ -11,12 +11,12 @@
  */
 
 export const BUTTON_SIZES = [
-  { size: 64, height: 64, padX: 32, fontSize: 18, weight: 700, radius: 12, usage: '마케팅·프로모션 전용' },
-  { size: 54, height: 54, padX: 20, fontSize: 16, weight: 700, radius: 12, usage: '히어로 영역 주요 CTA, 대형 액션' },
-  { size: 48, height: 48, padX: 16, fontSize: 16, weight: 700, radius: 12, usage: '기본 UI 액션 (권장)' },
-  { size: 40, height: 40, padX: 12, fontSize: 14, weight: 500, radius: 8, usage: '컴팩트 레이아웃, 필터, 검색' },
-  { size: 32, height: 32, padX: 10, fontSize: 14, weight: 500, radius: 8, usage: '인라인 액션, 태그 영역' },
-  { size: 24, height: 24, padX: 8, fontSize: 13, weight: 500, radius: 4, usage: '테이블, 뱃지 내부 등 초소형' },
+  { size: 64, height: 64, padX: 32, gap: 4, fontSize: 18, weight: 700, radius: 12, usage: '마케팅·프로모션 전용' },
+  { size: 54, height: 54, padX: 20, gap: 4, fontSize: 16, weight: 700, radius: 12, usage: '히어로 영역 주요 CTA, 대형 액션' },
+  { size: 48, height: 48, padX: 16, gap: 4, fontSize: 16, weight: 700, radius: 12, usage: '기본 UI 액션 (권장)' },
+  { size: 40, height: 40, padX: 12, gap: 4, fontSize: 14, weight: 500, radius: 8, usage: '컴팩트 레이아웃, 필터, 검색' },
+  { size: 32, height: 32, padX: 10, gap: 4, fontSize: 14, weight: 500, radius: 8, usage: '인라인 액션, 태그 영역' },
+  { size: 24, height: 24, padX: 8, gap: 4, fontSize: 13, weight: 500, radius: 6, usage: '테이블, 뱃지 내부 등 초소형' },
 ] as const;
 
 /** 배경이 채워진 형태 — 색은 semantic 토큰 1급 표기(2026-08-13). Sub 배경만 semantic 미정의라 primitive 직접 참조(정본 표기 그대로) */
@@ -59,7 +59,7 @@ export const BUTTON_HIERARCHY = [
   {
     n: '01',
     title: 'Primary',
-    desc: 'Primary는 페이지의 핵심 CTA 하나에만 써요. 한 화면에 하나를 넘으면 안 돼요. AI는 AI 기능 진입·실행 전용이에요. Black은 다크 배경이나 강렬한 톤이 필요할 때 써요.',
+    desc: '핵심 CTA 하나에만 써요. 한 화면에 하나예요. AI 는 AI 기능 전용, Black 은 다크 배경이나 강렬한 톤에 써요.',
     examples: [
       { variant: 'primary', label: '확인' },
       { variant: 'ai', label: 'AI로 작성' },
@@ -69,7 +69,7 @@ export const BUTTON_HIERARCHY = [
   {
     n: '02',
     title: 'Secondary',
-    desc: "Sub는 Primary와 쌍을 이루는 보조 액션에 써요. '더 알아보기', '미리보기'처럼 핵심 CTA 옆에서 추가 선택지를 제공할 때 써요. Primary 없이 단독으로 배치하지 않아요.",
+    desc: "Primary 와 짝을 이루는 보조 액션이에요. '더 알아보기'처럼 추가 선택지를 줄 때 쓰고, 단독으론 안 써요.",
     examples: [
       { variant: 'primary', label: '확인' },
       { variant: 'sub', label: '더 알아보기' },
@@ -78,16 +78,17 @@ export const BUTTON_HIERARCHY = [
   {
     n: '03',
     title: 'Tertiary',
-    desc: 'Primary보다 낮은 위계의 보조 버튼이에요. 취소, 이전, 목록 더보기처럼 필수는 아니지만 필요한 액션에 써요. Gray는 중립적인 보조 액션에, Ghost 스타일(아웃라인)은 UI 밀도를 낮추고 싶을 때 써요.',
+    // Figma 계층 절의 Tertiary 행 = Gray + Default(2026-09-18 대조 — 구 예시는 ghost 였음)
+    desc: 'Primary 아래 위계의 보조 버튼이에요. 취소·이전·더보기처럼 필수는 아닌 액션에 써요. Gray 는 중립, Default 는 흰 배경 테두리예요.',
     examples: [
       { variant: 'gray', label: '취소' },
-      { variant: 'ghost', label: '목록 더보기' },
+      { variant: 'default', label: '목록 더보기' },
     ],
   },
   {
     n: '04',
     title: 'Ghost',
-    desc: '배경 없이 아웃라인만 있는 버튼이에요. 시선을 콘텐츠에 집중시키고 싶을 때 써요. Delete / Delete Ghost는 되돌릴 수 없는 삭제 액션에만 사용하고, 반드시 확인 팝업과 함께 배치해요.',
+    desc: '배경 없이 아웃라인만이에요. 무게를 낮춰 주요 액션에 시선을 모아요. Delete 계열은 삭제에만, 확인 팝업과 함께 써요.',
     examples: [
       { variant: 'ghost', label: '동의하기' },
       { variant: 'deleteGhost', label: '삭제' },
@@ -139,12 +140,13 @@ export const BUTTON_PAIRS = [
 
 /** 원본 `### Token` — 스펙 표 */
 export const BUTTON_TOKENS = [
-  { token: '--color-accent-normal', value: '#1d7ff9', usage: 'Primary 배경, Ghost·Sub 텍스트' },
-  { token: '--color-accent-strong', value: '#1458ad', usage: 'Primary hover' },
+  { token: '--color-accent-normal', value: '#1d7ff9', usage: 'Primary 배경, Ghost 텍스트' },
+  { token: '--color-accent-strong', value: '#1458ad', usage: 'Primary hover, Sub 텍스트' },
+  { token: '--color-label-neutral', value: '#454c53', usage: 'Default·Gray hover 텍스트' },
   { token: '--color-ai-normal', value: '#6f3ad0', usage: 'AI 배경' },
   { token: '--color-fill-normal', value: '#f2f4f6', usage: 'Gray 배경' },
   { token: '--color-fill-strong', value: '#e8ebed', usage: 'Disabled 배경' },
   { token: '--color-label-assistive', value: '#9ea4aa', usage: 'Disabled 텍스트' },
   { token: '--color-state-error', value: '#f95c5c', usage: 'Delete 배경' },
-  { token: '--color-line-neutral', value: '#e8ebed', usage: 'Ghost 계열 테두리' },
+  { token: '--color-line-neutral', value: '#e8ebed', usage: 'Ghost 계열·Disabled 테두리' },
 ] as const;

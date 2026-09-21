@@ -7,6 +7,9 @@
  * 페이지 <style> 을 전역으로 뿌리는 탓에 마지막 로드가 이겨서 실제로는 한 번도 다르게 렌더된 적이
  * 없다.** 죽은 설정이므로 다수결인 14px 24px 하나로 고정하고 density prop 을 만들지 않는다.
  *
+ * 글자 위계(2026-09-18): 헤더 13/alternative < 셀 13/neutral(=본문 14 와 같은 색) — 셀이 normal 로
+ * 본문보다 밝던 역전을 풀었다. 토큰 코드(.token)는 한 단 더 아래(alternative).
+ *
  * `!important` 는 필요 없다 — 원본의 그것들은 VitePress 기본 테마의 표 스타일을 이기기 위한
  * 것이었고, 여기서는 경쟁 상대가 없다. */
 
@@ -31,9 +34,9 @@
 .table thead th {
   text-align: left;
   padding: 14px 24px;
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs);
   font-weight: 500;
-  color: var(--color-label-neutral);
+  color: var(--color-label-alternative);
   background: var(--color-fill-neutral);
   border-bottom: 1px solid var(--color-line-neutral);
 }
@@ -51,7 +54,7 @@
   vertical-align: middle;
   font-size: var(--font-size-xs);
   line-height: 1.6;
-  color: var(--color-label-normal);
+  color: var(--color-label-neutral);
   /* layer-surface — 테두리를 가진 컨테이너 안쪽 면. 다크에서 background-base(#232323)와
      한 단계 밝기 차이를 만들어 깊이 단서가 된다 */
   background: var(--color-layer-surface);
@@ -88,7 +91,7 @@
   line-height: 1.5;
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: var(--font-size-xxxs);
-  color: var(--color-label-neutral);
+  color: var(--color-label-alternative);
 }
 
 /* 값(hex·px) — 모노스페이스 브랜드색. 원본에서 가장 많이 쓰인 인라인 요소 */

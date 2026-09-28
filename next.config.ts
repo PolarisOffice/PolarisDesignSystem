@@ -8,6 +8,9 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: process.cwd(),
   },
+  // 킷은 `npm run dev` 로 띄워 보는 게 기본 사용법이라 좌하단 Next.js 개발 도구 버튼이
+  // 모든 사용자 화면에 뜬다 — 숨긴다. 에러 오버레이는 이 설정과 무관하게 그대로 뜬다.
+  devIndicators: false,
 
   /**
    * 기존 PDS(VitePress) 사이트 URL 호환.

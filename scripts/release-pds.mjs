@@ -17,7 +17,7 @@
  *   3. pds:build → tokens:sync → md:gen → skill:gen → skill:zip (pds.md·SKILL 이 새 버전으로 재생성)
  *   4. 검증: dist·tokens.css 헤더·pds.md·SKILL.md 버전 일치, tarball 구성
  *   5. 커밋
- *   6. 다음 할 일 출력 — push · PR · PAX 재업로드 필요 여부
+ *   6. 다음 할 일 출력 — push · PR (PAX 의 pds.md 는 발행 후 자동 반영 — src/lib/design/officialSync.ts)
  *
  * publish 는 하지 않는다: PR 이 develop 에 머지되면 미러 동기화 → 미러의 npm-publish 워크플로
  * (PDS/.github/workflows/npm-publish.yml, npm Trusted Publishing)가 발행하고 그 미러 커밋에 태그 `pds-react@X.Y.Z`
@@ -167,15 +167,17 @@ for (const [ok, label] of checks) {
 }
 if (bad) fail(`검증 ${bad}건 실패 — 커밋하지 않았어요(package.json·재생성 파일은 워킹트리에 남아 있어요)`);
 
-// PAX 재업로드 필요 판정 — pds.md 가 version 줄 밖에서도 바뀌었나(컴포넌트 예제·토큰)
-const mdChanged = diffLines(must(git(['diff', '--', 'PDS/designs/pds.md']), 'git diff 실패').stdout).filter((l) => !/^[-+]version:/.test(l));
-const reupload = mdChanged.length > 0 ? '필요 — 컴포넌트 예제·토큰이 바뀌었어요' : '불필요 — 버전 줄만 바뀌었어요(npm 버전은 화면에 자동 반영)';
+// PAX 반영 안내 — 관리자 재업로드는 없다. 발행 후 PAX 가 npm latest 를 보고 미러 태그의 pds.md 를
+// 공식 pds 발행본에 반영한다(src/lib/design/officialSync.ts).
+// (예전엔 "재업로드 필요/불필요" 를 여기서 판정했는데, 이 릴리스 단계의 diff 만 봐서 앞선 커밋에 이미 들어간
+//  문서 변경을 놓쳤다 — 1.1.0 Loading 이 "불필요" 로 안내된 사고. 판정 자체를 없앴다.)
+const paxSync = '발행 후 자동 반영(관리자 재업로드 불필요)';
 
 if (dryRun) {
   step('dry-run — 변경 되돌림');
   must(git(['checkout', '--', 'PDS']), 'git checkout 실패');
   must(run('npm', ['run', 'pds:build'], { cwd: PDS }), 'dist 복원 빌드 실패');
-  console.log(`  ok — 실제 실행이면 커밋. PAX 재업로드 ${reupload}`);
+  console.log(`  ok — 실제 실행이면 커밋. PAX pds.md: ${paxSync}`);
   process.exit(0);
 }
 
@@ -188,7 +190,7 @@ const msg = [
   `chore(pds-react): ${version} 발행 준비 — package.json bump + 변경 이력 발행일 + pds.md·SKILL 재생성`,
   '',
   '릴리스 스크립트(PDS/scripts/release-pds.mjs)가 develop 최신 포함·미머지 소스 없음을 검사하고 생성했다.',
-  `PAX 재업로드 ${reupload}.`,
+  `PAX pds.md: ${paxSync}.`,
 ].join('\n');
 must(git(['commit', '-q', '-m', msg]), 'git commit 실패');
 
@@ -196,4 +198,5 @@ step('다음 할 일');
 console.log(`  1. 푸시:  git push   → develop 대상 PR → 리뷰·머지
   2. 발행:  자동 — 머지 후 미러 동기화(수 분) → 미러 Actions 'npm publish' 가 ${version} 발행 + 태그
             확인: https://github.com/PolarisOffice/PolarisDesignSystem/actions · npm view ${PKG_NAME} version
-  3. PAX 관리자 > 디자인 탭 pds.md 재업로드: ${reupload}`);
+  3. PAX 반영: ${paxSync}
+            (공식 pds 를 발행해 둔 회사만 — 다음 디자인 조회 때, npm 조회 캐시로 최대 약 10분)`);

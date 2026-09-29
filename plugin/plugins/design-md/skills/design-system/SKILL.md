@@ -72,6 +72,7 @@ UI 를 만들기 전에 `list_design_components` 를 1회 호출한다.
 이 컴포넌트의 구현은 npm 패키지에 있다. `code` 는 **저장할 파일이 아니라 사용 예제**다.
 
 1. `installPackages` 의 패키지를 `package.json` 에 추가한다 (이미 있으면 생략).
+   **단 응답에 `requiredVersion`(버전 안내)이 있으면 이미 있어도 생략하지 않는다** — 설치된 버전이 그보다 낮으면 `npm install <requiredVersion>` 으로 먼저 올린다. 예전 버전엔 이 컴포넌트가 없어 import 가 실패한다.
 2. 예제처럼 **패키지에서 import** 해서 쓴다. `components/design/` 에 저장하지 않는다.
 3. 구현을 복사하거나 비슷하게 다시 만들지 않는다 — 패키지 버전이 올라가면 그대로 반영된다.
 4. 설치 후 **`node_modules/<패키지>/dist/**/*.d.ts` 를 읽어** prop 이름·타입·허용값을 확인하고 그것만 쓴다 —

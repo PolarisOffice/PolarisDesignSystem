@@ -35,6 +35,7 @@
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.30.0",
     "@polarisoffice/pds-react": "*",
+    "@vercel/analytics": "^2.0.1",
     "jszip": "^3.10.1",
     "next": "^16.2.7",
     "react": "^19.0.0",

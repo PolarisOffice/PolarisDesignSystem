@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import { Analytics } from '@vercel/analytics/next';
+import { IS_EMBED } from '@/lib/basePath';
 import KitHeader from './KitHeader';
 import './globals.css';
 
@@ -41,6 +43,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <KitHeader />
         {children}
+        {/* 방문 집계는 pds.polarisoffice.com 만 — PAX 동봉 빌드(/guide/design/pds)는 제외해 PAX 통계를 바꾸지 않는다.
+            Vercel 밖에 직접 올린 킷에선 집계가 안 되고 스크립트 404 + 콘솔 안내 한 줄만 남는다(화면 영향 없음). */}
+        {!IS_EMBED && <Analytics />}
       </body>
     </html>
   );

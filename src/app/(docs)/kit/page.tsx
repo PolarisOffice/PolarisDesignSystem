@@ -158,7 +158,7 @@ function HostedMcpGuide({ mcpUrl }: { mcpUrl: string }) {
         <div className={s.how}>
           <div className={s.howHead}>Claude Code, MCP 만 <small>도구만</small></div>
           <p className={s.howDesc}>플러그인 없이 조회 도구 3개만 붙입니다. 터미널에서 한 번 실행하면 끝.</p>
-          <CopyCode code={`claude mcp add --transport http design-md ${mcpUrl}`} />
+          <CopyCode label="claude-mcp" code={`claude mcp add --transport http design-md ${mcpUrl}`} />
         </div>
         <div className={s.how}>
           <div className={s.howHead}>Claude Code 플러그인 <small>도구 + 규칙</small></div>
@@ -167,7 +167,7 @@ function HostedMcpGuide({ mcpUrl }: { mcpUrl: string }) {
             주소를 <code>{mcpUrl}</code> 로 바꾸고, Claude Code 안에서 두 줄을 차례로 입력합니다. <code>&lt;받은 폴더 경로&gt;</code> 는
             저장소를 받은 위치예요. 설치 후 재시작하면 바로 동작합니다.
           </p>
-          <CopyCode code={'/plugin marketplace add <받은 폴더 경로>/plugin\n/plugin install design-md@PDS'} />
+          <CopyCode label="claude-plugin" code={'/plugin marketplace add <받은 폴더 경로>/plugin\n/plugin install design-md@PDS'} />
         </div>
         <div className={s.how}>
           <div className={s.howHead}>Codex 플러그인 <small>도구 + 규칙</small></div>
@@ -177,7 +177,7 @@ function HostedMcpGuide({ mcpUrl }: { mcpUrl: string }) {
             칸에 아래 경로를 넣고 추가하고 <strong>personal 탭 → design-md</strong> 를 추가합니다. 설치 후 Codex 를 완전히 종료했다가 다시
             실행하세요.
           </p>
-          <CopyCode code={'<받은 폴더 경로>/plugin'} />
+          <CopyCode label="codex-plugin" code={'<받은 폴더 경로>/plugin'} />
         </div>
       </div>
 

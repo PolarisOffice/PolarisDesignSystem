@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { listStoredDesigns } from '@/lib/store';
+import { IS_HOSTED } from '@/lib/hosting';
 import { PDS_SYSTEM_NAME } from '@/live-components';
 
 export const dynamic = 'force-dynamic';
@@ -25,8 +26,12 @@ export default function DesignGuideListPage() {
         {designs.length === 0 ? (
           <p className="kit-empty">
             아직 발행된 디자인 시스템이 없습니다.
-            <br />
-            <Link href="/kit">내 디자인 시스템</Link>에서 DESIGN.md 를 업로드하면 여기에 표시돼요.
+            {!IS_HOSTED && (
+              <>
+                <br />
+                <Link href="/kit">내 디자인 시스템</Link>에서 DESIGN.md 를 업로드하면 여기에 표시돼요.
+              </>
+            )}
           </p>
         ) : (
           <div className="kit-card-grid">

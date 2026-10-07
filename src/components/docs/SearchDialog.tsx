@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
+import { track } from '@vercel/analytics';
 import { PAGES, pageMeta } from '@/lib/docs/pages';
 import fixture from '@/lib/docs/__fixtures__/headings.json';
 import s from './SearchDialog.module.css';
@@ -72,10 +73,30 @@ export default function SearchDialog() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [query, setQuery] = useState('');
   const [cursor, setCursor] = useState(0);
+  /** 이번 열림의 검색 집계를 이미 보냈는지 — 닫는 경로가 여럿이라 열림당 1건으로 막는다 */
+  const reportedRef = useRef(false);
 
   const results = useMemo(() => search(query), [query]);
 
+  /**
+   * 검색 집계 — 타이핑마다가 아니라 닫힐 때 마지막 검색어로 1건만 보낸다.
+   * outcome: select(골라서 이동) / no_result(결과 없음 — 문서에 없는 걸 찾는 신호) / close(보기만 하고 닫음).
+   *
+   * 닫는 경로(이동·바깥 클릭·⌘K·Esc)마다 직접 부른다. dialog 의 close 이벤트에만 기대면 탭이 숨겨진
+   * 상태에서 이벤트가 오지 않아 집계가 빠졌다(2026-10-07 실측) — onClose 는 남은 경로용 보조다.
+   * 검색어는 state 가 아니라 input 에서 읽는다 — close 는 deps 없는 콜백이라 state 가 낡아 있다.
+   */
+  const report = useCallback((picked: boolean) => {
+    if (reportedRef.current) return;
+    reportedRef.current = true;
+    const q = (inputRef.current?.value ?? '').trim();
+    if (!q) return;
+    const outcome = picked ? 'select' : search(q).length === 0 ? 'no_result' : 'close';
+    track('search', { query: q.slice(0, 50), outcome });
+  }, []);
+
   const open = useCallback(() => {
+    reportedRef.current = false;
     setQuery('');
     setCursor(0);
     dialogRef.current?.showModal();
@@ -83,7 +104,10 @@ export default function SearchDialog() {
     requestAnimationFrame(() => inputRef.current?.focus());
   }, []);
 
-  const close = useCallback(() => dialogRef.current?.close(), []);
+  const close = useCallback(() => {
+    report(false);
+    dialogRef.current?.close();
+  }, [report]);
 
   // 전역 단축키 — ⌘K / Ctrl+K
   useEffect(() => {
@@ -99,6 +123,7 @@ export default function SearchDialog() {
   }, [open, close]);
 
   const go = (entry: Entry) => {
+    report(true);
     close();
     const hash = entry.id ? `#${encodeURIComponent(entry.id)}` : '';
     if (entry.id && entry.route === pathname) {
@@ -139,6 +164,11 @@ export default function SearchDialog() {
         ref={dialogRef}
         className={s.dialog}
         aria-label="문서 검색"
+        onClose={() => report(false)}
+        onKeyDown={(e) => {
+          // Esc 는 브라우저가 직접 닫는다 — 우리 close() 를 거치지 않으므로 여기서 집계한다
+          if (e.key === 'Escape' && !e.nativeEvent.isComposing) report(false);
+        }}
         onClick={(e) => {
           // 패널 밖(backdrop) 클릭으로 닫기 — dialog 자신이 target 일 때만
           if (e.target === dialogRef.current) close();

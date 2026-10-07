@@ -9,6 +9,7 @@
 import { COMPONENT_GROUPS } from './components-catalog';
 import { isNew } from './changelog';
 import { IS_EMBED } from '@/lib/basePath';
+import { IS_HOSTED, HOSTED_KIT_TITLE } from '@/lib/hosting';
 
 export interface NavNode {
   text: string;
@@ -130,8 +131,9 @@ const AI_SIDEBAR: NavNode[] = [
       // 2026-08-25: 스킬 다운로드만 남기기로 해서 소개 페이지·llms.txt 카드가 사라졌다
       { text: 'Skill 파일', link: '/ai' },
       // 내 디자인 시스템 — 업로드 도구는 PAX 동봉본에 실리지 않으므로(build-pds-docs STRIP_DIRS)
-      // 거기선 항목도 뺀다. 죽은 링크를 남기지 않기 위한 유일한 분기
-      ...(IS_EMBED ? [] : [{ text: '내 디자인 시스템', link: '/kit' }]),
+      // 거기선 항목도 뺀다. 죽은 링크를 남기지 않기 위한 유일한 분기.
+      // 공개 서버(IS_HOSTED)에선 같은 경로가 업로드 없는 "MCP 연결" 안내라 이름만 바뀐다(hosting.ts)
+      ...(IS_EMBED ? [] : [{ text: IS_HOSTED ? HOSTED_KIT_TITLE : '내 디자인 시스템', link: '/kit' }]),
     ],
   },
 ];

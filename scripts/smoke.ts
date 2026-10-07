@@ -1,5 +1,5 @@
 /**
- * 자가 점검 — 코어 사본이 designs/aurora.md 를 파싱·검증·resolve·생성까지 통과하는지 확인.
+ * 자가 점검 — 코어 사본이 examples/DESIGN.md(aurora 샘플)를 파싱·검증·resolve·생성까지 통과하는지 확인.
  * 실행: npm run smoke (tsx). 실패 시 exit 1.
  */
 
@@ -29,9 +29,9 @@ function check(name: string, ok: boolean, detail?: string) {
 
 console.log('[PDS smoke]');
 
-const raw = readFileSync(join(process.cwd(), 'designs', 'aurora.md'), 'utf8');
+const raw = readFileSync(join(process.cwd(), 'examples', 'DESIGN.md'), 'utf8');
 const prep = prepareDesignUpload(raw);
-check('designs/aurora.md 파싱·검증 통과', prep.ok, prep.ok ? undefined : JSON.stringify(prep.issues));
+check('examples/DESIGN.md 파싱·검증 통과', prep.ok, prep.ok ? undefined : JSON.stringify(prep.issues));
 
 if (prep.ok) {
   const meta = {
@@ -60,7 +60,8 @@ if (prep.ok) {
 
   const css = buildTokensCss(prep.parsed.tokens, prep.parsed.themes);
   check('토큰 CSS 에 --color-primary', css.includes('--color-primary:'));
-  check('토큰 CSS 에 .dark 오버라이드', css.includes('.dark {'));
+  // 다크 셀렉터는 data-theme 속성 — designGenerators buildTokensCss 주석 참조(구 .dark 클래스 단언이 develop 에서 계속 실패하고 있었다)
+  check('토큰 CSS 에 [data-theme="dark"] 오버라이드', css.includes('[data-theme="dark"] {'));
 
   const items = parsedToItems(prep.parsed);
   const guide = buildGuideMarkdown(meta, { tokens: prep.parsed.tokens, themes: prep.parsed.themes, overviewMd: prep.parsed.overviewMd }, items);

@@ -16,21 +16,21 @@ tokens:
     danger: "#EF4444"
   typography:
     font-family-base: "'Pretendard', 'Apple SD Gothic Neo', sans-serif"
-    font-size-base: 15px
-    font-size-sm: 13px
+    font-size-base: "15px"
+    font-size-sm: "13px"
   spacing:
-    xs: 4px
-    sm: 8px
-    md: 16px
-    lg: 24px
-    xl: 40px
+    xs: "4px"
+    sm: "8px"
+    md: "16px"
+    lg: "24px"
+    xl: "40px"
   radius:
-    sm: 6px
-    md: 10px
-    lg: 16px
+    sm: "6px"
+    md: "10px"
+    lg: "16px"
   shadow:
-    card: 0 1px 3px rgba(24, 24, 27, 0.08)
-    pop: 0 8px 24px rgba(24, 24, 27, 0.16)
+    card: "0 1px 3px rgba(24, 24, 27, 0.08)"
+    pop: "0 8px 24px rgba(24, 24, 27, 0.16)"
 themes:
   dark:
     color:
@@ -48,8 +48,8 @@ themes:
 라이트·다크를 모두 지원하는 샘플 디자인 시스템입니다. 색·간격·라운드·그림자는 하드코딩하지 않고
 반드시 CSS 변수(`var(--카테고리-키)`)로만 사용합니다.
 
-## Components
 
+## Components
 ### Button
 
 기본 액션 버튼 — variant 로 primary/ghost 를 지원합니다.

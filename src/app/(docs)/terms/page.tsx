@@ -4,6 +4,7 @@ import PageLead from '@/components/docs/PageLead';
 import { pageMeta } from '@/lib/docs/pages';
 import s from './terms.module.css';
 import { withBase } from '@/lib/basePath';
+import { IS_HOSTED } from '@/lib/hosting';
 
 const meta = pageMeta('/terms')!;
 export const metadata: Metadata = { title: meta.title, description: meta.description };
@@ -169,10 +170,13 @@ export default function TermsPage() {
         <ul>
           <li>이 문서 사이트는 방문자의 개인정보를 수집하지 않아요.</li>
           <li>분석·추적 도구도 쓰지 않아요.</li>
-          <li>
-            &quot;내 디자인 시스템&quot; 에 올린 파일은 사용자의 컴퓨터에만 저장돼요. 폴라리스오피스로
-            전송되지 않아요.
-          </li>
+          {/* 공개 서버(IS_HOSTED)엔 업로드가 없어 이 조항도 뺀다 — 없는 기능을 약관이 언급하지 않게 */}
+          {!IS_HOSTED && (
+            <li>
+              &quot;내 디자인 시스템&quot; 에 올린 파일은 사용자의 컴퓨터에만 저장돼요. 폴라리스오피스로
+              전송되지 않아요.
+            </li>
+          )}
           <li>npm, GitHub 같은 외부 플랫폼에서는 그 플랫폼의 개인정보 처리방침이 적용돼요.</li>
         </ul>
 

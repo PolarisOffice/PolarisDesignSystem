@@ -1,7 +1,7 @@
 /**
  * POST /api/upload — DESIGN.md 업로드 (검증 통과 = 즉시 발행).
- * 게이트 순서: Host 허용목록(403, DNS rebinding) → same-origin(403, CSRF) → 토큰 옵션(401) → Content-Length 사전 거절(413)
- *   → JSON → 본문 바이트 재검증(413 — chunked 등 Content-Length 부재 요청 커버)
+ * 게이트 순서: 공개 서버 모드(403, NEXT_PUBLIC_DESIGN_KIT_HOSTED) → Host 허용목록(403, DNS rebinding) → same-origin(403, CSRF)
+ *   → 토큰 옵션(401) → Content-Length 사전 거절(413) → JSON → 본문 바이트 재검증(413 — chunked 등 Content-Length 부재 요청 커버)
  *   → 개수 캡(400) → prepareDesignUpload(400 {issues}) → 저장.
  */
 
@@ -11,11 +11,14 @@ import { lintDesignSystem } from '@/lib/design/designLint';
 import { DESIGN_RAW_MAX_BYTES, DESIGN_SYSTEMS_PER_TENANT_MAX } from '@/lib/design/designConstants';
 import { saveDesign, getStoredDesign, listStoredDesigns } from '@/lib/store';
 import { checkKitAuth, unauthorized, checkSameOrigin, crossOriginForbidden, checkAllowedHost, hostForbidden } from '@/lib/auth';
+import { IS_HOSTED, uploadDisabled } from '@/lib/hosting';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 export async function POST(req: NextRequest) {
+  // 공개 서버 모드 — 어떤 요청이든 업로드 자체를 받지 않는다(화면엔 업로드가 없지만 API 가 권위 게이트)
+  if (IS_HOSTED) return uploadDisabled();
   // /api/mcp 와 같은 Host 허용목록 — same-origin 검사는 DNS rebinding 아래서 무력하므로 먼저 건다.
   if (!checkAllowedHost(req)) return hostForbidden();
   if (!checkSameOrigin(req)) return crossOriginForbidden();

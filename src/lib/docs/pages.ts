@@ -1,3 +1,5 @@
+import { IS_HOSTED, HOSTED_KIT_TITLE, HOSTED_KIT_DESCRIPTION } from '@/lib/hosting';
+
 /**
  * 문서 페이지 메타 — 라우트별 H1 제목과 설명.
  *
@@ -60,8 +62,10 @@ export const PAGES: PageMeta[] = [
   { path: '/components/table', title: 'Table', description: '표 형식 데이터' },
 
   { path: '/ai', title: 'Skill 파일', description: 'PDS 스킬 파일 다운로드와 AI 툴 설치 안내' },
-  // 킷 전용(PAX 동봉본엔 없음) — 사이드바 항목은 nav.ts 가 IS_EMBED 로 뺀다
-  { path: '/kit', title: '내 디자인 시스템', description: 'DESIGN.md 를 올려 가이드 페이지를 만들고 AI 에 MCP 로 연결' },
+  // 킷 전용(PAX 동봉본엔 없음) — 사이드바 항목은 nav.ts 가 IS_EMBED 로 뺀다. 공개 서버(IS_HOSTED)는 업로드 없는 MCP 연결 안내
+  IS_HOSTED
+    ? { path: '/kit', title: HOSTED_KIT_TITLE, description: HOSTED_KIT_DESCRIPTION }
+    : { path: '/kit', title: '내 디자인 시스템', description: 'DESIGN.md 를 올려 가이드 페이지를 만들고 AI 에 MCP 로 연결' },
   { path: '/terms', title: 'Terms of Use', description: 'PDS 이용 조건. 코드·문서는 Apache-2.0, 브랜드 자산은 별도 라이선스', standalone: true },
 ];
 

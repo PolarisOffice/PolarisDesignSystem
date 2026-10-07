@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { track } from '@vercel/analytics';
 import type { ReactNode } from 'react';
 import { useDocTabs } from './DocTabs';
 import { PDS_PREVIEW_ENABLED } from '@/lib/docs/package';
@@ -47,8 +48,22 @@ export function PreviewFrame({ name, children }: { name: string; children?: Reac
  *
  * `clamped` 는 **서버에서** 줄 수로 결정해 넘긴다(측정 없음 → 접혔다 펴지는 깜빡임 없음).
  * 코드 텍스트는 SSR 마크업에 그대로 들어가므로 view-source·Ctrl-F 로도 잡힌다.
+ *
+ * 복사 클릭은 Vercel Analytics 커스텀 이벤트 `code_copy` 로 센다(page·example 로 페이지별·예제별 집계).
+ * Analytics 를 그리지 않는 PAX 동봉 빌드에선 window.va 가 없어 track 이 아무것도 안 한다.
  */
-export function CodePanel({ code, clampable, children }: { code: string; clampable: boolean; children: ReactNode }) {
+export function CodePanel({
+  code,
+  label,
+  clampable,
+  children,
+}: {
+  code: string;
+  /** 집계용 예제 식별자 — 예제 id 또는 'install' */
+  label: string;
+  clampable: boolean;
+  children: ReactNode;
+}) {
   const [expanded, setExpanded] = useState(false);
   const [copied, setCopied] = useState(false);
 
@@ -59,6 +74,7 @@ export function CodePanel({ code, clampable, children }: { code: string; clampab
   }, [copied]);
 
   const copy = async () => {
+    track('code_copy', { page: window.location.pathname, example: label });
     setCopied(await copyText(code));
   };
 

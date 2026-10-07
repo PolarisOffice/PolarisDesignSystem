@@ -1,6 +1,7 @@
 'use client';
 
 import { createContext, useCallback, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { track } from '@vercel/analytics';
 import type { ReactNode } from 'react';
 import { usePathname } from 'next/navigation';
 import { Tabs } from '@polarisoffice/pds-react';
@@ -76,6 +77,11 @@ export default function DocTabs({ design, code, codeBadge }: DocTabsProps) {
   const rootRef = useRef<HTMLDivElement>(null);
   // 서버·클라이언트 첫 렌더가 일치해야 하므로 항상 design 으로 시작한다
   const [active, setActive] = useState<DocTabId>('design');
+  // select 는 deps 없는 콜백이라 지금 탭을 ref 로 본다 — 같은 탭 재클릭을 집계에서 거른다
+  const activeRef = useRef<DocTabId>(active);
+  useEffect(() => {
+    activeRef.current = active;
+  }, [active]);
 
   // 페인트 전에 커밋돼야 한다 — HashRescue 의 setTimeout(0) 보다 먼저 탭이 정해져야
   // 해시 대상이 보이는 패널 안에 있게 된다
@@ -112,6 +118,9 @@ export default function DocTabs({ design, code, codeBadge }: DocTabsProps) {
   }, [active, codeBadge]);
 
   const select = useCallback((next: DocTabId) => {
+    // 사용자가 탭을 바꾼 것만 센다(초기 탭 확정은 setActive 직접 호출이라 제외). PDS Tabs 는
+    // 이미 선택된 탭을 눌러도 onChange 를 부르므로 같은 탭은 거른다 — 페이지별 Design/Code 열람 비중
+    if (next !== activeRef.current) track('doc_tab', { page: window.location.pathname, tab: next });
     setActive(next);
     const url = new URL(window.location.href);
     // 기본값은 URL 에 남기지 않는다 — 정규 주소가 지금과 동일하게 유지된다

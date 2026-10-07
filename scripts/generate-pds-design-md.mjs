@@ -103,7 +103,7 @@ function readTokens() {
    * 그래서 tokens.css 의 접두어와 1:1 이어야 한다: `colors`(복수)로 쓰면
    * `--colors-accent-normal` 이 되어 컴포넌트의 `--color-accent-normal`
    * 조회가 전부 빗나가고, 폴백 hex 로 그려져 "토큰을 쓴다" 는 전제가 깨진다.
-   * (`{colors.x}` 참조 문법과 헷갈리기 쉬운 지점 — aurora.md 도 `color:` 다)
+   * (`{colors.x}` 참조 문법과 헷갈리기 쉬운 지점 — examples/DESIGN.md(aurora)도 `color:` 다)
    */
   const MAP = [
     ['color', 'color'],

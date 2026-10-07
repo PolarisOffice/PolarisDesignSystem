@@ -45,7 +45,7 @@ export function CodeExample({ id, title, desc, code, preview, previewName }: Cod
       </figcaption>
       <div className={s.card}>
         <PreviewFrame name={previewName ?? title.replace(/\s+/g, '')}>{preview}</PreviewFrame>
-        <CodePanel code={code} clampable={clampable}>
+        <CodePanel code={code} label={id} clampable={clampable}>
           {highlight(code)}
         </CodePanel>
       </div>
@@ -72,7 +72,7 @@ export function CodeTabShell({ live = false, children }: { live?: boolean; child
             {/* .card 로 감싼다 — CodePanel 의 툴바 구분선은 카드 안 divider 전제라,
                 맨몸으로 두면 선 하나가 허공에 떠 보인다(2026-08-28 피드백) */}
             <div className={s.card}>
-              <CodePanel code={PDS_INSTALL} clampable={false}>
+              <CodePanel code={PDS_INSTALL} label="install" clampable={false}>
                 {highlight(PDS_INSTALL)}
               </CodePanel>
             </div>

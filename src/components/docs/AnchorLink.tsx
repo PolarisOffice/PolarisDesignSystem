@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { toast } from '@polarisoffice/pds-react';
+import { track } from '@vercel/analytics';
 import { copyText } from '@/lib/docs/copyText';
 import s from './Heading.module.css';
 
@@ -48,6 +49,8 @@ export default function AnchorLink({ id }: { id: string }) {
 
   const copy = (e: React.MouseEvent) => {
     e.preventDefault(); // 스크롤 이동 없이 복사만
+    // 동료에게 많이 공유되는 섹션 — 페이지별·섹션별 집계
+    track('link_copy', { page: location.pathname, section: id });
     const url = `${location.origin}${location.pathname}#${encodeURIComponent(id)}`;
     void copyText(url).then((ok) => {
       setCopied(ok);

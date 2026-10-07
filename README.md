@@ -42,7 +42,7 @@ CSS 변수로만 사용합니다 — 디자인을 "보고 재해석"하며 생�
 
 - 업로드 UI: http://localhost:3000/kit
 - 자동 생성 가이드: http://localhost:3000/guide/design
-- 동봉 예시: `designs/pds.md`(PDS) · `designs/aurora.md`(저작 시작점 샘플 — 템플릿은 `examples/DESIGN.md`)
+- 동봉 예시: `designs/pds.md`(PDS). 저작 시작점 템플릿은 `examples/DESIGN.md`(aurora 샘플 — 서빙 목록엔 넣지 않는다, 2026-10-07)
 
 ## AI 연결 (MCP)
 
@@ -107,6 +107,21 @@ claude mcp add --transport http design-md http://localhost:3000/api/mcp \
 ```bash
 DESIGN_KIT_ALLOWED_HOSTS=localhost:4000,design.example.com npm run dev
 ```
+
+## 공개 서버로 띄우기 (업로드 없음)
+
+PDS 문서 사이트처럼 **모두가 보는 도메인**(예: `pds.polarisoffice.com`)에 올릴 때는 공개 서버 모드로 빌드합니다.
+킷의 저장소는 `designs/*.md` 파일이라 공개 서버가 업로드를 받으면 누가 올린 파일이든 모든 방문자에게
+보이고, Vercel 같은 서버리스에서는 파일 쓰기 자체가 실패합니다.
+
+```bash
+NEXT_PUBLIC_DESIGN_KIT_HOSTED=1               # /api/upload 403, /kit 은 업로드 없는 "MCP 연결" 안내로(사이드바·약관의 업로드 언급도 빠짐)
+DESIGN_KIT_ALLOWED_HOSTS=pds.polarisoffice.com   # 그 도메인으로 들어오는 /api/mcp 를 허용 (없으면 Invalid Host header 403)
+```
+
+`NEXT_PUBLIC_` 이라 **빌드 때** 박힙니다(사이드바 이름·페이지 제목이 정적 표라서 — PAX 동봉 빌드의 `NEXT_PUBLIC_PDS_EMBED` 와
+같은 방식). 값을 바꾸면 다시 빌드하세요. 가이드 페이지·DESIGN.md 다운로드·MCP(read-only)는 그대로 공개되고 동봉 디자인(`designs/`)만
+서빙됩니다. 방문자가 자기 디자인 시스템을 쓰려면 이 저장소를 받아 자기 PC 나 팀 서버에서 띄웁니다(기본값 = 업로드 켜짐).
 
 ## DESIGN.md 프로토콜
 

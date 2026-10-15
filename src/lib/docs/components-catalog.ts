@@ -40,8 +40,11 @@ export const COMPONENT_GROUPS: ComponentGroup[] = [
     items: [
       // 그룹 내 이름 오름차순 정렬 (2026-08-13) — 새 항목도 알파벳 자리에 넣는다
       { slug: 'button', name: 'Button', desc: '사용자의 액션을 유도하는 기본 인터랙션 컴포넌트예요.' },
-      { slug: 'checkbox', name: 'Checkbox & Radio', desc: '다중 선택 또는 단일 선택 옵션을 제공하는 컴포넌트예요.' },
+      { slug: 'checkbox', name: 'Checkbox', desc: '여러 항목을 고르는 다중 선택 컴포넌트예요.' },
+      { slug: 'chip', name: 'Chip', desc: '조건을 보여 주거나 여러 개를 고를 때 쓰는 알약 모양 칩이에요.', since: '1.2.0' },
+      { slug: 'date-picker', name: 'Date Picker', desc: '날짜 하나나 기간을 고르는 입력칸과 달력이에요. 직접 칠 수도 있어요.', since: '1.2.0' },
       { slug: 'input', name: 'Input Field', desc: '사용자로부터 텍스트를 입력받는 컴포넌트예요.' },
+      { slug: 'radio', name: 'Radio', desc: '여러 항목 중 하나만 고르는 단일 선택 컴포넌트예요.' },
       { slug: 'segment-control', name: 'Segment Control', desc: '상호 배타적인 옵션 중 하나를 선택하거나 콘텐츠를 필터링해요.' },
       { slug: 'tabs', name: 'Tabs', desc: '한 화면 내에서 콘텐츠를 탭 단위로 구분하여 전환하는 컴포넌트예요.' },
       { slug: 'toggle', name: 'Toggle', desc: '켜짐/꺼짐 두 가지 상태를 즉시 전환할 때 사용해요.' },

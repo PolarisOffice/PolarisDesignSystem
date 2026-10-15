@@ -1,7 +1,13 @@
 import type { ReactNode } from 'react';
 
-/** 높이가 곧 이름 — LG 52 / MD 38 / SM 26 (md 산문 Specification) */
-export type SelectSize = 'lg' | 'md' | 'sm';
+/**
+ * 높이 축 — InputField 와 같은 4단계. 같은 높이의 Button 과 한 줄에 선다.
+ * - `lg` 52: 폼(기본)
+ * - `md` 40: 검색
+ * - `sm` 32: 표 툴바·촘촘한 화면
+ * - `xs` 28: 표 셀 안 등 좁은 곳(글자 13)
+ */
+export type SelectSize = 'lg' | 'md' | 'sm' | 'xs';
 
 export interface SelectOption {
   value: string;

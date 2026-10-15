@@ -98,13 +98,12 @@ export const PO26_PACKAGE_ZIP = `${PO26}/polaris-office-logo-2026.zip`;
 /** 매체별 전체 zip — 해당 폴더(변형 PNG/SVG + 아이콘 + 전체로고 AI·PDF) 통째 */
 export const PO26_PRINT_ZIP = `${PO26}/polaris-office-logo-print.zip`;
 export const PO26_SCREEN_ZIP = `${PO26}/polaris-office-logo-screen.zip`;
-/** 가이드 PDF 가 놓일 경로. ⚠️ 2026-09-04 현재 파일은 없다 — 수정 중이라 public 에서 제거했고
- * 전체 패키지 zip(polaris-office-logo-2026.zip)에서도 뺐다. 수정본이 나오면 이 경로에 올리고 zip 에
- * 다시 넣은 뒤 아래 `comingSoon` 잠금을 푼다. */
-export const PO26_GUIDE_PDF = `${PO26}/Polaris Office Logo Usage Basics.pdf`;
-/** 가이드 PDF 다운로드 잠금 문구 — 버튼을 비활성으로 두고 마우스를 올리면 이 문구를 툴팁으로 띄운다.
- * 문서가 정리되면 page.tsx 의 `comingSoon` prop 과 이 상수를 함께 제거한다. */
-export const PO26_GUIDE_COMING_SOON = '가이드 문서는 곧 만나보실 수 있습니다.';
+/** 가이드 PDF — 「Polaris Office Brand Identity Guidelines」 (디자인팀, 2026.10. 8섹션 12쪽).
+ * 2026-09-04 수정 중이라 내렸던 구 「Logo Usage Basics」 를 대신한다(2026-10-14 공개, 잠금 해제).
+ * 개정본이 나오면 파일을 바꾸고 이 경로와 page.tsx 버튼의 용량 표기를 함께 고친다.
+ * 전체 패키지 zip(polaris-office-logo-2026.zip)의 최상위 폴더에도 같은 파일이 들어 있다 — 개정하면 zip 안의 것도 바꾼다
+ * (기존 항목을 건드리지 않게 `zip -g` 로 덧붙인다. 한글 폴더 이름이 깨지지 않는다). 인쇄용·화면용 zip 에는 없다. */
+export const PO26_GUIDE_PDF = `${PO26}/Polaris Office Brand Identity Guidelines (2026.10.).pdf`;
 
 /** 페이지 타이틀 옆 '전체 다운로드' 메뉴 — zip 3종 중 선택 (2026-08-25) */
 export const PO26_ALL_ITEMS: { label: string; href: string }[] = [

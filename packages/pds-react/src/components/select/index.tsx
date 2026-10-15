@@ -2,7 +2,7 @@
 
 import { useEffect, useId, useRef, useState } from 'react';
 
-import { color, font } from '../../tokens.js';
+import { color, font, radius } from '../../tokens.js';
 import { withSupported } from '../../supported.js';
 import { Menu, MenuItem } from '../menu/index.js';
 
@@ -12,16 +12,19 @@ import type { SelectProps, SelectSize } from './types.js';
 /**
  * PDS docs/components/select.md + Figma `Component/Overlay → DropdownList` 실측.
  *
- * Figma 견본에는 LG 만 있고 MD·SM 수치는 md 산문의 Specification 표에 있다.
  * LG 는 디자인으로 검증했다(py14 + 14px·lh1.5 + 보더 = 52px).
+ * MD·SM·XS 는 InputField 와 같은 4단계(2026-10 디자인 결정) — 같은 높이의 Button 과 한 줄에 선다.
+ * 왼쪽 여백은 InputField 와 같게 줄인다(sm 10·xs 8), 오른쪽은 화살표 상자가 여백을 품어 8 그대로다.
+ * 높이는 height 로 고정하고, padY 는 (높이 - 보더 2 - 줄 높이) / 2 로 맞춘 값이다.
  */
-const SIZES: Record<SelectSize, { height: number; padY: number; radius: number; font: string; chevron: number }> = {
-  lg: { height: 52, padY: 14, radius: 8, font: font.body2Size, chevron: 24 },
-  md: { height: 38, padY: 8, radius: 8, font: font.body3Size, chevron: 18 },
-  sm: { height: 26, padY: 3, radius: 6, font: font.body3Size, chevron: 14 },
+const SIZES: Record<SelectSize, { height: number; padY: number; padLeft: number; radius: string; font: string; chevron: number }> = {
+  lg: { height: 52, padY: 14, padLeft: 12, radius: radius.sm, font: font.body2Size, chevron: 24 },
+  md: { height: 40, padY: 8.5, padLeft: 12, radius: radius.sm, font: font.body2Size, chevron: 18 },
+  sm: { height: 32, padY: 4.5, padLeft: 10, radius: radius.sm, font: font.body2Size, chevron: 16 },
+  // 13px·lh1.5 ≈ 19.5 — 근사값이라도 height 가 28 을 지킨다
+  xs: { height: 28, padY: 3.25, padLeft: 8, radius: radius.xs, font: font.body3Size, chevron: 14 },
 };
 
-const PAD_LEFT = 12;
 const PAD_RIGHT = 8;
 const MENU_OFFSET = 4; // 트리거 하단에서 띄우는 거리
 
@@ -96,7 +99,7 @@ function SelectBase({
     gap: 4,
     width: '100%',
     height: s.height,
-    padding: `${s.padY}px ${PAD_RIGHT}px ${s.padY}px ${PAD_LEFT}px`,
+    padding: `${s.padY}px ${PAD_RIGHT}px ${s.padY}px ${s.padLeft}px`,
     borderRadius: s.radius,
     // 열린 동안은 accent 로 — Figma Variant2
     border: `1px solid ${open ? color.accentNormal : color.lineNeutral}`,

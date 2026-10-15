@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
 import s from './AnatomyFigure.module.css';
 
@@ -41,6 +41,10 @@ const TOP_SPACE = 48; // 콜아웃이 사는 위 여백
  * `<Anatomy items={…} />`(legend 전용)를 그대로 두면 번호·설명이 한 소스다.
  *
  * SSR 에선 콜아웃 없이 실물만 나온다(측정은 클라이언트) — hydration 불일치 없음.
+ *
+ * 좁은 화면(2026-10-12): 견본이 카드 안쪽 폭보다 넓으면 그만큼 줄여서(zoom) 넣는다. 예전엔 줄이지 않아
+ * 모바일에서 견본과 번호 배지가 카드 밖으로 밀려 잘렸다(Tabs·Loading·Popup·Table·Input·Toast).
+ * 줄이는 건 견본뿐이고 배지·리더선은 실측 좌표를 따라가므로 크기가 그대로다.
  */
 export default function AnatomyFigure({
   parts,
@@ -55,21 +59,46 @@ export default function AnatomyFigure({
   scale?: number;
   children: ReactNode;
 }) {
+  const figureRef = useRef<HTMLElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const boxRef = useRef<HTMLDivElement>(null);
   const [markers, setMarkers] = useState<Marker[]>([]);
+  // 카드 폭에 맞추는 축소 배율(1 = 줄이지 않음). scale 과 곱해서 zoom 에 쓴다
+  const [fit, setFit] = useState(1);
 
   const measure = useCallback(() => {
+    const figure = figureRef.current;
     const stage = stageRef.current;
     const box = boxRef.current;
-    if (!stage || !box) return;
-    // 좌표 기준 = SVG 가 사는 stage 프레임 그대로 — 마진·zoom 배율 산수가 끼어들 틈이 없다
+    if (!figure || !stage || !box) return;
+
+    // 카드 안쪽 폭에 맞춘다 — 지금 배율로 나눠 줄이기 전 폭을 되찾고, 넘치는 만큼만 줄인다.
+    // 배율이 바뀌면 견본 크기가 바뀌어 ResizeObserver 가 이 함수를 다시 부른다(그때 좌표를 다시 잰다).
+    const cs = getComputedStyle(figure);
+    const available = figure.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+    // 좌표 기준 = SVG 가 사는 stage 프레임. stage 는 zoom 이 걸리지 않아 어느 엔진에서나 실제 화면 px 다.
+    // zoom 이 걸린 box 의 rect 는 엔진마다 다르다(구 WebKit·iOS 18 은 zoom 으로 나눈 값을 준다) —
+    // 그걸로 폭을 재면 배율을 걸 때마다 다시 줄여서 견본이 점처럼 작아진다.
     const base = stage.getBoundingClientRect();
+    const natural = base.width / fit;
+    // 가려진 탭(display:none)에선 잴 수 없다 — 마지막 배율·좌표를 그대로 둔다(다시 보일 때 깜빡이지 않게)
+    if (!(available > 0 && natural > 0)) return;
+    // zoom 을 모르는 브라우저에선 줄일 수 없으니 그대로 둔다(배율만 계속 내려가는 걸 막는다)
+    const canZoom = typeof CSS !== 'undefined' && CSS.supports('zoom', '1');
+    const nextFit = canZoom ? Math.min(1, Math.floor((available / natural) * 1000) / 1000) : 1;
+    if (Math.abs(nextFit - fit) > 0.004) {
+      setFit(nextFit);
+      return;
+    }
+    // 파트 rect 보정 — 표준 엔진은 1, zoom 으로 나눈 값을 주는 구 엔진은 그 배율
+    const boxW = box.getBoundingClientRect().width;
+    const k = boxW > 0 ? base.width / boxW : 1;
     const found: Marker[] = [];
     for (const p of parts) {
       const el = box.querySelector(p.selector);
       if (!el) continue; // 셀렉터 드리프트 — 콜아웃만 생략, 실물은 계속 보인다
-      const r = el.getBoundingClientRect();
+      const raw = el.getBoundingClientRect();
+      const r = { left: raw.left * k, right: raw.right * k, top: raw.top * k, bottom: raw.bottom * k, width: raw.width * k, height: raw.height * k };
       const cx = r.left - base.left + r.width / 2;
       const cy = r.top - base.top + r.height / 2;
       const a = p.anchor ?? 'top';
@@ -84,6 +113,15 @@ export default function AnatomyFigure({
       const cur = found[i];
       if (prev && cur && cur.bx - prev.bx < BADGE_GAP) cur.bx = prev.bx + BADGE_GAP;
     }
+    // 오른쪽으로 밀린 배지가 견본 밖(카드 밖)으로 나가지 않게 오른쪽 끝에서부터 되민다.
+    // 배지가 폭보다 많아 다 못 넣으면 왼쪽 끝(0)에서 멈춘다 — 그때는 배지끼리 조금 겹친다
+    let limit = base.width;
+    for (let i = found.length - 1; i >= 0; i--) {
+      const cur = found[i];
+      if (!cur) continue;
+      cur.bx = Math.max(0, Math.min(cur.bx, limit));
+      limit = cur.bx - BADGE_GAP;
+    }
     setMarkers((old) =>
       old.length === found.length &&
       old.every((m, i) => {
@@ -93,15 +131,18 @@ export default function AnatomyFigure({
         ? old
         : found,
     );
-  }, [parts]);
+  }, [parts, fit]);
 
-  useEffect(() => {
+  // 첫 측정을 페인트 전에 — 좁은 화면에서 넘친 견본이 한 프레임 보였다가 줄어드는 깜빡임을 막는다
+  useLayoutEffect(() => {
     measure();
     // 웹폰트 로드·테마 전환·리사이즈 후 좌표가 밀리는 것 자가치유
     document.fonts?.ready.then(measure).catch(() => {});
     const box = boxRef.current;
     if (!box) return;
     const ro = new ResizeObserver(measure);
+    // 카드 폭이 바뀌면(창 크기·화면 회전) 맞춤 배율을 다시 잰다
+    if (figureRef.current) ro.observe(figureRef.current);
     ro.observe(box);
     for (const child of Array.from(box.children)) ro.observe(child);
     // absolute 파트(툴팁 말풍선 등)는 늦게 마운트돼도 크기 변화가 없어 RO 가 못 본다 —
@@ -115,7 +156,7 @@ export default function AnatomyFigure({
   }, [measure]);
 
   return (
-    <figure className={s.figure}>
+    <figure className={s.figure} ref={figureRef}>
       {/* 아래 여백을 위와 같게 줘 **견본이 회색 박스 정중앙**에 온다 — 위쪽 콜아웃 자리만
           있으면 견본이 아래로 쏠린다(실측 위 73 / 아래 25). 상수는 한 곳에서 온다 */}
       <div
@@ -129,7 +170,7 @@ export default function AnatomyFigure({
         <div
           className={s.box}
           ref={boxRef}
-          style={{ zoom: scale }}
+          style={{ zoom: scale * fit }}
           inert
           aria-hidden="true"
           data-anatomy-sample=""

@@ -1,7 +1,7 @@
 ---
 name: pds
 title: "Polaris Design System"
-version: 1.1.0
+version: 1.2.0
 description: "폴라리스오피스 제품군의 단일 디자인 기준. 컴포넌트 구현은 npm 패키지로 제공됩니다."
 tokens:
   color:
@@ -55,6 +55,7 @@ tokens:
     label-inverse: "#ffffff"
     label-neutral: "#454c53"
     label-normal: "#26282b"
+    layer-inverse: "#26282b"
     layer-overlay: "#00000080"
     layer-surface: "#ffffff"
     line-neutral: "#e8ebed"
@@ -204,6 +205,7 @@ themes:
       label-inverse: "#232323"
       label-neutral: "#9e9e9e"
       label-normal: "#d8d8d8"
+      layer-inverse: "#d8d8d8"
       layer-surface: "#282828"
       line-neutral: "#3b3b3b"
       line-normal: "#595959"
@@ -283,39 +285,96 @@ import { Button } from '@polarisoffice/pds-react';
 
 ### checkbox
 
-**Checkbox & Radio**
-
-다중 선택과 단일 선택
+여러 항목을 고르는 다중 선택
 
 #### Usage
 
 - **Checkbox** — 미선택 · 선택됨 · 부분 선택(indeterminate) · 비활성화.
-- **Radio** — 그룹 안에서 하나만 선택돼요. 라디오에는 부분 선택이 없어요.
+- **Variant** — Checkbox 모양 두 가지. box(기본) · check(면 없이 체크 표시만). 상태와 동작은 같아요.
+- **Size** — md · sm 두 단계. md(21×21px) · sm(16×16px). sm 은 표처럼 14px 글자 옆에 써요. 두 모양 모두 같은 크기 체계예요.
 - **Checkbox 그룹** — 「전체 선택」이 하위 항목을 제어하고, 일부만 선택되면 부분 선택 상태가 돼요.
 
 **구성**
 
-- **Checkbox 단독** — 미선택 · 선택됨 · 부분 선택(indeterminate) · 비활성화 네 상태를 가져요.
-- **Radio 단독** — 미선택 · 선택됨 · 비활성화. 라디오에는 부분 선택이 없어요.
+- **Checkbox 단독** — 미선택 · 선택됨 · 부분 선택 · 비활성화 네 상태를 가져요.
 - **Checkbox 그룹** — 「전체 선택」이 하위 항목을 모두 제어해요. 일부만 선택되면 전체 선택은 부분 선택 상태가 돼요.
-- **Radio 그룹** — 그룹 안에서 하나만 선택돼요.
+- **체크형 · 메뉴에서 켜진 항목 표시** — 메뉴·드롭다운 안에서 켜진 옵션을 표시할 때 써요. 면이 없어 글자가 주인공인 자리에 가볍게 붙어요. 꺼진 항목은 회색 체크로 남아요.
 
 **가이드라인**
 
-- 다중 선택에는 Checkbox, 단일 선택에는 Radio 를 써요.
-- Radio 엔 부분 선택이 없어요. 전체 선택 제어는 Checkbox 그룹으로 해요.
-- 레이블은 컨트롤 오른쪽에 붙여요. 히트 영역이 넓어 gap 없이도 간격이 생겨요.
-- Disabled 는 투명도 60% 예요. 컴포넌트마다 다른 건 의도예요.
+- 여러 항목을 고르는 자리에 써요. 하나만 고를 땐 Radio 를 써요.
+- Checkbox 는 네모와 체크형 두 모양이 있어요. 모양만 다르고 상태와 동작은 같아요. 어디에 놓이는지로 골라요.
+- 네모(기본): 폼·설정·필터처럼 항목 옆에서 여러 개를 고를 때. 약관 동의처럼 하나만 있을 때도 네모예요.
+- 체크형: 메뉴·드롭다운 안에서 켜진 옵션을 표시할 때. 면이 없어 글자 흐름을 끊지 않아요.
+- 한 목록 안에서는 한 모양만 써요.
+- 「전체 선택」은 Checkbox 그룹으로 해요. 일부만 선택되면 전체 선택은 부분 선택 상태가 돼요.
+- 레이블은 박스 오른쪽에 둬요.
+- Disabled 는 흐리게 보여요.
 
 #### Code
 
 ```tsx
-import { Checkbox, Radio, RadioGroup } from '@polarisoffice/pds-react';
+import { Checkbox } from '@polarisoffice/pds-react';
 
 <Checkbox label="항목 1" />
 <Checkbox label="항목 2" checked />
 <Checkbox label="전체 선택" indeterminate />
 <Checkbox label="비활성화" disabled />
+```
+
+### chip
+
+조건을 보여 주거나 여러 개를 고르는 칩
+
+#### Usage
+
+- **Chip** — type 을 안 주면 조건 칩(default)이에요. 걸린 조건이나 값을 보여 주는 회색 칩이고, 눌러도 선택되지 않아요. 눌러서 켜고 끄는 칩은 type="select" 예요. 글자만 있는 굵은 태그는 Badge 예요.
+- **Icon** — leftIcon 으로 라벨 앞에 아이콘을 붙여요. 아이콘 크기는 md 16 · sm 14 로 넘겨요.
+- **Remove** — 조건 칩에 onRemove 를 주면 오른쪽에 × 가 생겨요(선택 칩에서는 그리지 않아요). 걸린 조건은 「팀: 디자인」처럼 무엇의 어떤 값인지 함께 쓰고, 표 툴바(TableToolbar)의 below 줄에 놓아요. × 의 접근성 이름은 라벨에서 만들어져요(「팀: 디자인 해제」). 바꾸려면 removeLabel 을 줘요. × 를 누르면 그 버튼이 사라지니 키보드 포커스는 남아 있는 곳으로 옮겨요.
+- **Select** — type="select" 는 눌러서 켜고 끄는 선택 칩이에요. 흰 면에 테두리로 그려지고, selected 가 true 면 파란 면에 체크 표시가 붙어요. onClick 에서 selected 를 바꿔요. 여러 개가 함께 켜질 수 있어요. 하나만 고르는 전환은 SegmentControl 을 써요.
+- **Check** — 켜진 선택 칩의 체크 표시는 checkIcon={false} 로 뺄 수 있어요. 기본은 붙여요(색만으로는 켜진 걸 알기 어려운 사람을 위해서예요). 체크가 붙으면 칩이 그만큼 넓어져요.
+- **Size** — md · sm 두 단계. md(28px) · sm(24px). sm 은 표 셀 안처럼 좁은 곳에 써요. 두 종류 모두 같은 크기 체계예요. 한 줄 안에서는 크기를 하나로 맞춰요.
+
+**구성**
+
+- **걸린 조건 보여 주기** — 필터를 버튼 안에 모아 두었을 때, 지금 걸린 조건을 조건 칩으로 보여 줘요. × 로 그 조건만 바로 풀어요.
+- **여러 개 고르기** — 카테고리나 태그를 여러 개 켜고 끌 때 선택 칩을 써요. 켜진 칩은 파란색에 체크 표시가 붙어요.
+
+**권장**
+
+- 걸린 조건은 「팀: 디자인」처럼 무엇의 어떤 값인지 함께 써요
+- 같은 종류의 조건은 칩 하나로 묶어요
+- 한 줄에는 한 종류의 칩만 둬요
+- 한 줄 안에서는 크기를 하나로 맞춰요
+
+**피하기**
+
+- 조건 칩을 눌러서 선택되게 쓰지 않아요(선택 칩 몫)
+- 긴 문장을 넣지 않아요
+- 하나만 고르는 전환에 쓰지 않아요(Segment Control 몫)
+- 주요 액션을 칩으로 만들지 않아요(Button 몫)
+
+#### Code
+
+```tsx
+import { Chip } from '@polarisoffice/pds-react';
+
+<Chip>디자인</Chip>
+
+// ── 제어 모드 — type="select" 는 눌러서 켜고 끄는 선택 칩이에요. 흰 면에 테두리로 그려지고, selected 가 true 면 파란 면에 체크 표시가 붙어요. onClick 에서 selected 를 바꿔요. 여러 개가 함께 켜질 수 있어요. 하나만 고르는 전환은 SegmentControl 을 써요.
+// 바깥 상태와 묶을 때는 value + onChange. key 로 리마운트하지 않는다(모션이 사라진다).
+const [on, setOn] = useState<string[]>(['디자인']);
+
+{['디자인', '개발', '기획', '마케팅'].map((t) => (
+  <Chip
+    key={t}
+    type="select"
+    selected={on.includes(t)}
+    onClick={() => setOn(on.includes(t) ? on.filter((x) => x !== t) : [...on, t])}
+  >
+    {t}
+  </Chip>
+))}
 ```
 
 ### menu
@@ -335,14 +394,14 @@ import { Checkbox, Radio, RadioGroup } from '@polarisoffice/pds-react';
 **구성**
 
 - **Case 1 · 텍스트 전용** — 레이블만. 선택 표시가 필요 없는 명령 목록이에요.
-- **Case 2 · 텍스트 + 우측 체브론** — 하위 메뉴로 진입하는 항목. 우측에 18×18 체브론을 둬요.
+- **Case 2 · 텍스트 + 우측 체브론** — 하위 메뉴로 진입하는 항목. 우측에 체브론을 둬요.
 - **Case 1+2 · 혼용** — 하위 메뉴가 있는 항목과 없는 항목이 섞여요. 체브론 유무가 곧 더 들어갈 수 있는지의 신호예요.
 - **Case 3 · 체크 + 텍스트** — 현재 값을 표시하는 선택 목록. 거의 단독으로 쓰고, 체크 자리는 항상 남겨 정렬을 지켜요.
 
 **권장**
 
-- 너비는 부모 기준 fill
-- 항목이 많으면 max-height + 스크롤
+- 너비는 놓인 자리의 폭에 맞추기
+- 항목이 많으면 높이를 제한하고 스크롤
 - 그룹 구분이 필요하면 Divider
 - 선택된 항목은 Selected 로 표시
 
@@ -350,7 +409,7 @@ import { Checkbox, Radio, RadioGroup } from '@polarisoffice/pds-react';
 
 - 한 메뉴에 10개 이상(그룹 분리 검토)
 - 아이템 안에 이미지·멀티라인 같은 복잡한 UI
-- 고정 너비(px) 지정
+- 고정 너비 지정
 
 #### Code
 
@@ -364,6 +423,47 @@ import { Menu, MenuItem, MenuDivider } from '@polarisoffice/pds-react';
 </Menu>
 ```
 
+### date-picker
+
+**Date Picker**
+
+날짜 하나나 기간을 고르는 입력칸과 달력
+
+#### Usage
+
+- **Single (날짜 하나)** — mode 를 안 주면 날짜 하나를 받아요. value 는 Date 이고, 비우면 null 이에요. 날짜를 누르거나 입력칸에 YYYY.MM.DD 로 치고 칸을 벗어나면(또는 Enter) onChange 가 불려요. 형식이 틀리면 칸 아래에 오류 문구가 떠요. 입력칸 제목·크기·오류 문구는 InputField 와 같아요.
+- **Range (기간)** — mode="range" 는 기간을 받아요. value 는 { start, end } 이고, 시작일과 종료일을 차례로 누르면 onChange 가 불려요(종료일이 앞이면 뒤집어요). 입력칸에는 「2026.10.08 ~ 2026.10.14」처럼 ~ 로 이어 쳐요. 달력 왼쪽 빠른 선택(오늘·지난 7일·지난 30일·이번 달)은 기본으로 붙고, 누르는 즉시 정해져요. 목록을 바꾸려면 presets 에 이름(label)과 기간을 돌려주는 함수(range)를 주고(기본 목록에 더할 땐 DEFAULT_DATE_PRESETS 를 펼쳐 써요), 빼려면 presets={false} 예요.
+- **Calendar** — 입력칸 없이 달력만 페이지에 펼쳐 둘 때는 Calendar 를 써요. DatePicker 가 띄우는 패널과 같고, mode·value·onChange·presets 도 같아요.
+
+**구성**
+
+- **기간 고르기** — 조회·필터 화면에서 기간을 정할 때 써요. 빠른 선택으로 한 번에 고르거나, 시작일과 종료일을 차례로 눌러요.
+- **날짜 하나 고르기** — 폼에서 날짜 하나를 받을 때 써요. 빠른 선택 없이 달력만 떠요.
+- **직접 입력** — 날짜를 알고 있으면 입력칸에 바로 쳐요. 형식이 틀리면 칸 아래에 알려 줘요.
+
+**권장**
+
+- 기간을 고르는 화면에는 자주 쓰는 기간을 빠른 선택으로 둬요
+- 입력칸에 날짜 형식을 미리 보여 줘요(YYYY.MM.DD)
+- 같은 화면에서는 입력칸 크기를 다른 입력과 맞춰요
+
+**피하기**
+
+- 생년월일처럼 먼 날짜를 고르는 데 달력만 두지 않아요(직접 입력을 안내해요)
+- 시작일과 종료일을 날짜 선택기 두 개로 나누지 않아요(기간 모드 하나로)
+- 시간까지 고르는 데 쓰지 않아요
+
+#### Code
+
+```tsx
+import { DatePicker } from '@polarisoffice/pds-react';
+import { useState } from 'react';
+
+const [date, setDate] = useState<Date | null>(null);
+
+<DatePicker value={date} onChange={setDate} label="시작일" />
+```
+
 ### input
 
 **Input Field**
@@ -373,6 +473,7 @@ import { Menu, MenuItem, MenuDivider } from '@polarisoffice/pds-react';
 #### Usage
 
 - **Base** — Simple(placeholder 만)과 Labeled(title 포함). 폼 입력에는 Labeled 를 권장해요.
+- **Size** — Select 와 같은 4단계예요. LG 52(폼) · MD 40(검색) · SM 32(표 툴바·촘촘한 화면) · XS 28(표 셀 안). MD 부터는 제목을 그리지 않으니 label 은 접근성 이름으로만 쓰여요.
 - **Password** — 비밀번호 필드에는 항상 눈 아이콘(Right Icon)을 제공해요. 기본 상태는 숨김(eye-off).
 - **Left Icon** — 이메일·아이디처럼 입력 유형을 아이콘으로 암시할 때. 좌측 아이콘이 있으면 padding-x 는 46px.
 - **Error** — 빨간 테두리만으론 부족해요. 반드시 Error Message 로 원인을 구체적으로 알려요.
@@ -382,10 +483,10 @@ import { Menu, MenuItem, MenuDivider } from '@polarisoffice/pds-react';
 
 - **Active** — 필드를 누른 상태예요. 테두리가 파랗게 바뀌고 커서가 떠요.
 - **Error** — 유효성 실패예요. 빨간 테두리만으론 부족하니 무엇이 틀렸는지 Error Message 로 알려요.
-- **입력완료 && Focus out** — 포커스가 빠진 뒤 값이 남은 상태예요. 테두리는 기본색, 값은 유지돼요.
+- **입력 완료 후 포커스 아웃** — 포커스가 빠진 뒤 값이 남은 상태예요. 테두리는 기본색, 값은 유지돼요.
 
 - **Simple (Placeholder only)** — 검색창·인라인 필터처럼 레이블 자리가 없는 짧은 입력에 써요.
-- **Labeled** — 입력 후에도 어떤 필드인지 알아야 할 때 써요. title 이 위에 남아 맥락을 지켜요.
+- **Labeled** — 입력 후에도 어떤 필드인지 알아야 할 때 써요. 제목이 위에 남아 맥락을 지켜요.
 - **Visible 아이콘** — 비밀번호에만 써요. 눈 아이콘을 누르면 값이 보이고, 기본은 숨김이에요.
 - **사람 아이콘** — 이메일·아이디처럼 입력 유형을 아이콘으로 알릴 때 써요.
 
@@ -449,7 +550,7 @@ const [email, setEmail] = useState('');
 
 **피하기**
 
-- 진행률을 모르면 Determinate 로 흉내내지 않아요.
+- 진행률을 모르는데 아는 것처럼 채워 보이지 않아요.
 - 1초 안에 끝나는 작업엔 안 띄워요.
 - 한 영역에 하나만 둬요.
 - 실패하면 막대를 걷고 오류와 다음 행동을 안내해요.
@@ -458,7 +559,7 @@ const [email, setEmail] = useState('');
 
 - 1~4초의 짧은 로딩에 써요.
 - 버튼 안, 전체 화면 딤 위에 써요.
-- 어두운 배경에선 static/white 로 바꿔요.
+- 어두운 배경에선 흰색으로 바꿔요.
 
 **피하기**
 
@@ -477,7 +578,7 @@ const [email, setEmail] = useState('');
 **피하기**
 
 - 정적인 요소엔 쓰지 않아요.
-- shimmer 그라데이션을 얹지 않아요.
+- 반짝이며 지나가는 그라데이션을 얹지 않아요.
 - 실제 콘텐츠와 다른 크기로 두지 않아요. 끝날 때 화면이 튀어요.
 - 실패하면 골격을 걷고 오류와 다음 행동을 안내해요.
 
@@ -559,6 +660,42 @@ const remove = () => { /* 삭제 처리 */ close(); };
 </Popup>
 ```
 
+### radio
+
+여러 항목 중 하나만 고르는 단일 선택
+
+#### Usage
+
+- **Radio** — 그룹 안에서 하나만 선택돼요. RadioGroup 이 name·선택 상태를 안의 Radio 에 내려줘요. AI 기능에는 tone="ai" 를 써요.
+- **Size** — md · sm 두 단계. md(21×21px) · sm(16×16px). sm 은 표처럼 14px 글자 옆에 써요. RadioGroup 에 주면 안의 Radio 에 모두 적용돼요.
+
+**구성**
+
+- **Radio 단독** — 미선택 · 선택됨 · 비활성화 세 상태예요. 라디오에는 부분 선택이 없어요.
+- **Radio 그룹** — 그룹 안에서 하나만 선택돼요.
+
+**가이드라인**
+
+- 여러 항목 중 하나만 고를 때 써요. 여러 개를 고를 땐 Checkbox 를 써요.
+- 하나만 고르는 항목끼리는 한 그룹으로 묶어요.
+- 선택지는 둘 이상이어야 해요. 하나뿐인 라디오는 고른 뒤 되돌릴 수 없어요.
+- 라디오에는 부분 선택이 없어요. 「전체 선택」이 필요하면 Checkbox 그룹을 써요.
+- AI 색은 AI 기능 맥락에서만 써요.
+- 레이블은 링 오른쪽에 둬요.
+- Disabled 는 흐리게 보여요.
+
+#### Code
+
+```tsx
+import { Radio, RadioGroup } from '@polarisoffice/pds-react';
+
+<RadioGroup name="plan" defaultValue="basic">
+  <Radio value="basic" label="Basic" />
+  <Radio value="pro" label="Pro" />
+  <Radio value="off" label="비활성화" disabled />
+</RadioGroup>
+```
+
 ### segment
 
 **Segment Control**
@@ -588,7 +725,7 @@ const remove = () => { /* 삭제 처리 */ close(); };
 **피하기**
 
 - 페이지·섹션 이동(네비게이션 몫)
-- 선택마다 URL 이 바뀌는 라우팅
+- 선택마다 주소가 바뀌는 화면 이동
 - 옵션 6개 이상
 - 탭마다 전혀 다른 콘텐츠로 이동
 
@@ -621,16 +758,16 @@ const [view, setView] = useState('all');
 #### Usage
 
 - **Base** — 옵션 5개 이상일 때 써요. 2~4개면 Segment Control 이 나아요.
-- **Size** — LG(폼) · MD(필터·검색바) · SM(툴바·인라인).
+- **Size** — Input Field 와 같은 4단계예요. LG 52(폼) · MD 40(검색) · SM 32(표 툴바·촘촘한 화면) · XS 28(표 셀 안).
 - **State** — Disabled 는 텍스트·아이콘만 40% 로 흐려지고 배경·radius 는 그대로예요.
 - **Controlled** — 선택된 값은 trigger 텍스트에 반영돼요.
 
 **권장**
 
 - 옵션 5개 이상일 때
-- 선택한 값은 trigger 에 표시
+- 선택한 값은 입력칸에 표시
 - 메뉴는 Context & Menu Item 사용
-- 메뉴 너비는 trigger 와 같게
+- 메뉴 너비는 입력칸과 같게
 
 **피하기**
 
@@ -666,18 +803,31 @@ const [value, setValue] = useState('');
 
 - **Base** — 헤더 행 + 데이터 행. 헤더는 항상 넣어요.
 - **Column Divider** — 열 수가 많거나 데이터 구분이 필요할 때만 켜요. 기본은 끔.
+- **Long Text** — 긴 텍스트는 2줄까지 보이고 말줄임해요. 잘린 칸에 마우스를 올리면 전체가 보여요. 이메일·경로 같은 짧은 식별자는 lines 1, 문장 전체가 필요하면 lines 'all'. lines 1 은 열 폭이 정해져야 잘려요(layout fixed 또는 maxWidth 와 함께).
+- **Numeric** — 숫자·날짜 열은 numeric 을 켜요. 오른쪽 정렬, 자릿수가 맞는 숫자, 줄바꿈 없음. 글자 열은 align 을 안 주면 가운데라서 left 를 직접 줘요.
+- **Sort** — 헤더를 눌러 정렬해요. 오름차순, 내림차순, 해제 순으로 돌아요. 표는 상태만 알려 주고 정렬 계산은 앱이 해요.
+- **Toolbar** — 검색·필터는 표 위 툴바에 둬요. 툴바와 표 사이는 12px. 필터가 3개 이하면 툴바에 바로, 4개 이상이면 필터 버튼과 적용 칩으로 보여 줘요. 조건이 바뀌면 앱이 1페이지로 되돌리고 선택을 풀어요.
+- **Selection** — 행을 고르면 툴바 첫 줄이 일괄 작업 줄로 바뀌어요. 헤더 체크박스는 지금 페이지만 골라요. 정렬·선택을 쓰면 rowKey 를 꼭 줘요.
+- **Empty & Loading** — 결과가 없으면 emptyState 에 TableEmpty 를 넣어요. 처음 불러오는 동안은 loading 으로 스켈레톤 행을 보여 줘요.
+- **Resizable** — 헤더 오른쪽 경계를 끌어 열 너비를 바꿔요. 방향키로도, 두 번 누르면 내용에 맞춰요. 열마다 숫자 width 를 줘요.
+- **Pagination** — 표 아래 12px 에 Pagination 을 둬요. 페이지 크기를 바꾸면 앱이 1페이지로 되돌려요(onPageSizeChange 에서 page 를 1로).
+- **Scroll & Sticky** — maxHeight 를 주면 헤더는 고정되고 본문만 스크롤해요. 열이 많으면 stickyFirstColumn 으로 첫 열도 고정해요.
 
 **권장**
 
-- 열 너비는 콘텐츠 길이에 맞게
-- 열 구분선은 필요할 때만
-- 헤더는 항상 포함
-- Cell padding 최소 24/16
+- 헤더는 항상 넣기
+- 글자 열은 왼쪽, 숫자·날짜 열은 오른쪽
+- 검색·필터는 표 위 툴바에
+- 결과가 없어도 헤더는 남기기
+- 긴 텍스트는 2줄 후 말줄임 그대로
 
 **피하기**
 
-- 좁은 화면(모바일)에 복잡한 테이블
+- 좁은 화면(모바일)에 복잡한 표
 - 열 구분선 남용
+- 표 위 셀렉트로 정렬 대신하기
+- 넘치는 열 잘라내기
+- 빈 상태에 일러스트
 
 #### Code
 
@@ -721,7 +871,7 @@ import { Table } from '@polarisoffice/pds-react';
 
 - 같은 계층에 Primary 와 Secondary 혼용
 - 드롭다운·필터 대신 탭 쓰기
-- 페이지 간 라우팅(네비게이션 몫)
+- 페이지 간 이동(네비게이션 몫)
 
 #### Code
 
@@ -771,7 +921,7 @@ const [tab, setTab] = useState('all');
 - 메시지는 1~2줄로 짧게
 - 작업 결과(성공/실패)를 즉시 피드백할 때
 - 한 번에 하나만
-- 자동 닫힘 3,000ms 유지
+- 3초 뒤 자동으로 닫히게
 
 **피하기**
 
@@ -811,7 +961,7 @@ toast.success('작업 완료, 저장 성공');
 
 - 전환 결과가 바로 반영되는 설정에만 써요. 저장 버튼이 따로 있는 폼은 Checkbox 예요.
 - 맥락이 분명하면 단독, 아니면 Label, 결과를 짐작하기 어려우면 Description 까지 붙여요.
-- Disabled 는 투명도 38% 예요. 컴포넌트마다 다른 건 의도예요.
+- Disabled 는 흐리게 보여요.
 
 #### Code
 
@@ -844,7 +994,7 @@ const [on, setOn] = useState(false);
 - 아이콘 버튼처럼 레이블 없는 요소에
 - 텍스트는 1~2줄로 짧게
 - 보조 정보만. 핵심 정보는 화면에 항상 노출
-- 연속 호버는 Cascade 로 바로 표시
+- 연달아 볼 땐 기다림 없이 바로 표시
 
 **피하기**
 
@@ -862,34 +1012,6 @@ import { Tooltip, IconButton } from '@polarisoffice/pds-react';
 <Tooltip content="Text" placement="bottom"><IconButton /></Tooltip>
 <Tooltip content="Text" placement="left"><IconButton /></Tooltip>
 <Tooltip content="Text" placement="right"><IconButton /></Tooltip>
-```
-
-### radio
-
-**Radio**
-
-여러 항목 중 하나만 고르는 단일 선택 컨트롤. 다중 선택은 Checkbox 를 쓴다.
-
-#### Usage
-
-- 같은 `name` 을 가진 Radio 끼리 한 그룹이다 — `RadioGroup` 으로 묶으면 값 하나로 제어된다.
-- Radio 에는 부분 선택(indeterminate)이 없다. 「전체 선택」이 필요하면 Checkbox 그룹을 쓴다.
-- `tone="ai"` 는 AI 기능 문맥에서만.
-
-**가이드라인**
-
-- 다중 선택에는 Checkbox, 단일 선택에는 Radio 를 써요.
-- Radio 엔 부분 선택이 없어요. 전체 선택 제어는 Checkbox 그룹으로 해요.
-
-#### Code
-
-```tsx
-import { Radio, RadioGroup } from '@polarisoffice/pds-react';
-
-<RadioGroup name="plan" defaultValue="basic">
-  <Radio value="basic" label="Basic" />
-  <Radio value="pro" label="Pro" />
-</RadioGroup>
 ```
 
 ### badge

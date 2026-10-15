@@ -60,7 +60,7 @@ export default function SegmentControlDesign() {
 
       <H3>Layout</H3>
       <p>
-        base 는 fill 로 두고 전체 width 를 조절해요. Fill 은 옵션 5개 이하일 때만, 많아지면 Hug 예요.
+        기본은 놓인 자리의 폭을 채워요(Fill). Fill 은 옵션 5개 이하일 때만, 많아지면 Hug 예요.
       </p>
 
       <H3>Size</H3>
@@ -69,10 +69,10 @@ export default function SegmentControlDesign() {
       </p>
 
       <H3>State</H3>
-      <p>Enabled · Selected · Disabled. Segment Control 의 Disabled 는 투명도 35% 예요.</p>
+      <p>Enabled · Selected · Disabled. Disabled 는 흐리게 보여요.</p>
 
       <H2>Case</H2>
-      <p>base 는 fill 로 두고 전체 width 를 조절해요. 높이도 같아요.</p>
+      <p>기본은 놓인 자리의 폭을 채워요. 높이도 같아요.</p>
       <CaseList>
         {SEG_CASES.map((c) => (
           <CaseBlock key={c.n} badge={c.n} title={c.title} sub={c.desc}>
@@ -107,7 +107,15 @@ export default function SegmentControlDesign() {
       <p>
         항상 하나만 선택돼요. 복수 선택은 Checkbox 나 Filter Chip 이에요.
       </p>
+    </>
+  );
+}
 
+/** Specification — 치수·토큰 표. Code 탭 끝에 놓는다(2026-10-12: Design 탭은 쓰임새, Code 탭은 구현 값).
+ *  헤딩 id 는 Design 탭에 있을 때와 같아서 옛 딥링크(#specification 등)는 DocTabs 가 Code 탭을 열어 준다. */
+export function SegmentControlSpecification() {
+  return (
+    <>
       <H2>Specification</H2>
 
       <H3>Container</H3>

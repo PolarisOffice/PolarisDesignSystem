@@ -3,7 +3,7 @@ import PageLead from '@/components/docs/PageLead';
 import DocTabs from '@/components/docs/DocTabs';
 import { pageMeta } from '@/lib/docs/pages';
 import { isComponentLive } from '@/lib/docs/package';
-import InputDesign from './input.design';
+import InputDesign, { InputSpecification } from './input.design';
 import InputCode from './input.code';
 
 const meta = pageMeta('/components/input')!;
@@ -19,7 +19,12 @@ export default function InputPage() {
       </PageLead>
       <DocTabs
         design={<InputDesign />}
-        code={<InputCode />}
+        code={
+          <>
+            <InputCode />
+            <InputSpecification />
+          </>
+        }
         codeBadge={isComponentLive('input') ? undefined : '준비 중'}
       />
     </>

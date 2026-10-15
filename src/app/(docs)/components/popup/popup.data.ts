@@ -3,9 +3,9 @@
  * Title 18→16px, X 24→18px, 버튼 48/45→32px·radius-sm·14px Medium·우측 정렬. */
 
 export const POPUP_ANATOMY = [
-  { n: '01', title: 'Title', desc: '팝업의 목적을 나타내는 제목. 16px / bold (Web)' },
-  { n: '02', title: 'Close (X)', desc: '팝업을 닫는 18×18 아이콘 버튼. 선택적으로 사용' },
-  { n: '03', title: 'Body', desc: '상황 설명 또는 선택 안내 텍스트. 14px / regular' },
+  { n: '01', title: 'Title', desc: '팝업의 목적을 나타내는 굵은 제목' },
+  { n: '02', title: 'Close (X)', desc: '팝업을 닫는 아이콘 버튼. 선택적으로 사용' },
+  { n: '03', title: 'Body', desc: '상황 설명 또는 선택 안내 텍스트' },
   { n: '04', title: 'Secondary Button', desc: '취소 또는 보조 액션. 선택적으로 사용' },
   { n: '05', title: 'Primary CTA', desc: '주요 액션 버튼. 항상 포함' },
   { n: '06', title: '다시 보지 않기 (Optional)', desc: '반복 노출 방지 옵션. 필요 시에만 사용' },

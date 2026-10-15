@@ -74,7 +74,7 @@ export default function ButtonDesign() {
       <H3>Size</H3>
       {/* 사이즈별 실물 — 아이콘 간격(전 사이즈 4px, Figma 2026-09-18)을 작은 사이즈에서도 눈으로
           확인할 수 있게 leftIcon 을 단다. Variant 절과 같은 순서로 실물이 먼저, 표가 뒤. 아이콘 크기는 Figma 슬롯(64·54·48 = 24, 40·32·24 = 18) */}
-      <div className={s.sizeBand}>
+      <div className={s.sizeBand} inert aria-hidden="true">
         {BUTTON_SIZES.map((b) => (
           <Button key={b.size} variant="primary" size={b.size} leftIcon={<DownloadIcon size={b.size >= 48 ? 24 : 18} />}>
             버튼
@@ -82,24 +82,14 @@ export default function ButtonDesign() {
         ))}
       </div>
       <SpecTable
-        caption="Button 사이즈별 치수"
+        caption="사이즈별 사용 맥락"
         columns={[
-          { key: 'size', header: 'Size', width: '12%' },
-          { key: 'height', header: 'Height', width: '13%' },
-          { key: 'pad', header: 'Padding(좌우)', width: '17%' },
-          { key: 'font', header: 'Font', width: '12%' },
-          { key: 'weight', header: 'Weight', width: '12%' },
-          { key: 'radius', header: 'Radius', width: '12%' },
-          { key: 'gap', header: 'Icon gap', width: '12%' },
+          { key: 'size', header: 'Size', width: '16%' },
+          { key: 'usage', header: '용도', width: '84%' },
         ]}
         rows={BUTTON_SIZES.map((b) => ({
           size: <strong>{b.size}</strong>,
-          height: <SpecVal>{`${b.height}px`}</SpecVal>,
-          pad: <SpecVal>{`${b.padX}px`}</SpecVal>,
-          font: <SpecVal>{`${b.fontSize}px`}</SpecVal>,
-          weight: <SpecVal>{String(b.weight)}</SpecVal>,
-          radius: <SpecVal>{`${b.radius}px`}</SpecVal>,
-          gap: <SpecVal>{`${b.gap}px`}</SpecVal>,
+          usage: b.usage,
         }))}
       />
 
@@ -107,7 +97,7 @@ export default function ButtonDesign() {
       {/* 실물 밴드 + 스펙 표 짝(검토 반영 2026-08-28) — 표에 프리뷰 열을 넣는 안은
           SpecTable 이 table-layout: fixed 라 좁은 화면에서 버튼 셀이 찌그러져 기각.
           참고 예시(seed-design action-button#variant)처럼 버튼 아래 이름표를 단다 */}
-      <div className={s.variantRows}>
+      <div className={s.variantRows} inert aria-hidden="true">
         {BUTTON_SOLID_VARIANTS.map((v) => (
           <div key={v.name} className={s.variantRow}>
             <span className={s.variantRowHead}>
@@ -120,21 +110,17 @@ export default function ButtonDesign() {
         ))}
       </div>
       <SpecTable
-        caption="Solid variant 별 색상과 용도"
+        caption="Solid variant 별 용도"
         columns={[
-          { key: 'variant', header: 'Variant', width: '14%' },
-          { key: 'bg', header: '배경', width: '28%' },
-          { key: 'fg', header: '텍스트', width: '28%' },
-          { key: 'usage', header: '용도', width: '30%' },
+          { key: 'variant', header: 'Variant', width: '20%' },
+          { key: 'usage', header: '용도', width: '80%' },
         ]}
         rows={BUTTON_SOLID_VARIANTS.map((v) => ({
           variant: <strong>{v.label}</strong>,
-          bg: <Swatch hex={v.bg} token={v.bgToken} />,
-          fg: <Swatch hex={v.fg} token={v.fgToken} />,
           usage: v.usage,
         }))}
       />
-      <div className={s.variantRows}>
+      <div className={s.variantRows} inert aria-hidden="true">
         {BUTTON_GHOST_VARIANTS.map((v) => (
           <div key={v.name} className={s.variantRow}>
             <span className={s.variantRowHead}>
@@ -146,33 +132,28 @@ export default function ButtonDesign() {
         ))}
       </div>
       <SpecTable
-        caption="Ghost variant 별 색상과 용도"
+        caption="Ghost variant 별 용도"
         columns={[
-          { key: 'variant', header: 'Ghost Variant', width: '16%' },
-          { key: 'fg', header: '텍스트', width: '28%' },
-          { key: 'border', header: '테두리', width: '28%' },
-          { key: 'usage', header: '용도', width: '28%' },
+          { key: 'variant', header: 'Ghost Variant', width: '20%' },
+          { key: 'usage', header: '용도', width: '80%' },
         ]}
         rows={BUTTON_GHOST_VARIANTS.map((v) => ({
           variant: <strong>{v.label}</strong>,
-          fg: <Swatch hex={v.fg} token={v.fgToken} />,
-          border: <Swatch hex={v.border} token={v.borderToken} />,
           usage: v.usage,
         }))}
       />
 
       <H3>State</H3>
       <p>
-        Disabled 는 투명도가 아니라 색을 바꿔요. 배경 <SpecToken>--color-fill-strong</SpecToken>, 텍스트{' '}
-        <SpecToken>--color-label-assistive</SpecToken>. 컴포넌트마다 Disabled 방식이 다른 건 의도예요.
+        Disabled 는 흐리게 하지 않고 회색으로 바꿔요. 컴포넌트마다 Disabled 방식이 다른 건 의도예요.
       </p>
       {/* 상태 프리뷰 그리드(검토 반영 2026-08-28) — 대표 3형태(채움·중립 채움·아웃라인).
           Hovered·Pressed 는 실제 인터랙션으로만 나타나므로 **표시용 상태 고정**:
           패키지 style.ts FACES 의 hover 색(세 변형 모두 배경만 바꾼다)을 style 로 박아
           렌더한다. Pressed 는 현 구현에 전용 색이 없어 Hovered 와 같다(아래 각주).
-          Disabled 는 색 고정이 아니라 실제 disabled prop. 표시용 복제 버튼은 눌러도
-          의미가 없으니 보조기기·탭 순서에서 뺀다 */}
-      <div className={s.stateGridOuter}>
+          Disabled 는 색 고정이 아니라 실제 disabled prop. Design 탭 예시는 전부 그림이라(2026-10-12)
+          묶음째 inert 로 막는다 — 눌러 보는 건 Code 탭 */}
+      <div className={s.stateGridOuter} inert aria-hidden="true">
         <div className={s.stateGrid}>
           <span />
           {STATE_COLS.map((c) => (
@@ -186,10 +167,10 @@ export default function ButtonDesign() {
               <Fragment key={d.variant}>
                 <span className={s.stateRowLabel}>{d.label}</span>
                 <Button variant={d.variant} size={32}>버튼</Button>
-                <Button variant={d.variant} size={32} style={fixedHover} tabIndex={-1} aria-hidden="true">
+                <Button variant={d.variant} size={32} style={fixedHover}>
                   버튼
                 </Button>
-                <Button variant={d.variant} size={32} style={fixedHover} tabIndex={-1} aria-hidden="true">
+                <Button variant={d.variant} size={32} style={fixedHover}>
                   버튼
                 </Button>
                 <Button variant={d.variant} size={32} disabled>
@@ -211,7 +192,7 @@ export default function ButtonDesign() {
         {BUTTON_HIERARCHY.map((h) => (
           <CaseBlock key={h.n} badge={h.n} title={h.title} sub={h.desc}>
             {/* 설명에 언급된 variant 의 실물 견본(검토 반영 2026-08-28) — 라벨은 데이터에서 */}
-            <div className={s.hierarchyRow}>
+            <div className={s.hierarchyRow} inert aria-hidden="true">
               {h.examples.map((ex) => (
                 <Button key={ex.variant} variant={ex.variant} size={32}>
                   {ex.label}
@@ -229,7 +210,7 @@ export default function ButtonDesign() {
       <CaseList>
         {BUTTON_PAIRS.map((p) => (
           <CaseBlock key={p.n} badge={p.n} title={p.title} sub={p.desc}>
-            <div className={s.hierarchyRow}>
+            <div className={s.hierarchyRow} inert aria-hidden="true">
               {p.examples.map((ex) => (
                 <Button key={ex.variant} variant={ex.variant} size={32}>
                   {ex.label}
@@ -256,7 +237,15 @@ export default function ButtonDesign() {
           <p className={s.placementOrder}>취소 · <strong>저장</strong></p>
         </div>
       </div>
+    </>
+  );
+}
 
+/** Specification — 치수·토큰 표. Code 탭 끝에 놓는다(2026-10-12: Design 탭은 쓰임새, Code 탭은 구현 값).
+ *  헤딩 id 는 Design 탭에 있을 때와 같아서 옛 딥링크(#specification 등)는 DocTabs 가 Code 탭을 열어 준다. */
+export function ButtonSpecification() {
+  return (
+    <>
       <H2>Specification</H2>
 
       {/* ⚠️ 원본에 `### Size` 가 Properties 와 Specification 두 번 나온다 → VitePress 가 두 번째에
@@ -264,14 +253,52 @@ export default function ButtonDesign() {
           명시적으로 박는다. */}
       <H3 id="size-1">Size</H3>
       <SpecTable
-        caption="사이즈별 사용 맥락"
+        caption="Button 사이즈별 치수"
         columns={[
-          { key: 'size', header: 'Size', width: '16%' },
-          { key: 'usage', header: '용도', width: '84%' },
+          { key: 'size', header: 'Size', width: '12%' },
+          { key: 'height', header: 'Height', width: '13%' },
+          { key: 'pad', header: 'Padding(좌우)', width: '17%' },
+          { key: 'font', header: 'Font', width: '12%' },
+          { key: 'weight', header: 'Weight', width: '12%' },
+          { key: 'radius', header: 'Radius', width: '12%' },
+          { key: 'gap', header: 'Icon gap', width: '12%' },
         ]}
         rows={BUTTON_SIZES.map((b) => ({
           size: <strong>{b.size}</strong>,
-          usage: b.usage,
+          height: <SpecVal>{`${b.height}px`}</SpecVal>,
+          pad: <SpecVal>{`${b.padX}px`}</SpecVal>,
+          font: <SpecVal>{`${b.fontSize}px`}</SpecVal>,
+          weight: <SpecVal>{String(b.weight)}</SpecVal>,
+          radius: <SpecVal>{`${b.radius}px`}</SpecVal>,
+          gap: <SpecVal>{`${b.gap}px`}</SpecVal>,
+        }))}
+      />
+
+      <H3>Color</H3>
+      <SpecTable
+        caption="Solid variant 별 색상"
+        columns={[
+          { key: 'variant', header: 'Variant', width: '20%' },
+          { key: 'bg', header: '배경', width: '40%' },
+          { key: 'fg', header: '텍스트', width: '40%' },
+        ]}
+        rows={BUTTON_SOLID_VARIANTS.map((v) => ({
+          variant: <strong>{v.label}</strong>,
+          bg: <Swatch hex={v.bg} token={v.bgToken} />,
+          fg: <Swatch hex={v.fg} token={v.fgToken} />,
+        }))}
+      />
+      <SpecTable
+        caption="Ghost variant 별 색상"
+        columns={[
+          { key: 'variant', header: 'Ghost Variant', width: '20%' },
+          { key: 'fg', header: '텍스트', width: '40%' },
+          { key: 'border', header: '테두리', width: '40%' },
+        ]}
+        rows={BUTTON_GHOST_VARIANTS.map((v) => ({
+          variant: <strong>{v.label}</strong>,
+          fg: <Swatch hex={v.fg} token={v.fgToken} />,
+          border: <Swatch hex={v.border} token={v.borderToken} />,
         }))}
       />
 

@@ -3,7 +3,7 @@ import PageLead from '@/components/docs/PageLead';
 import DocTabs from '@/components/docs/DocTabs';
 import { pageMeta } from '@/lib/docs/pages';
 import { isComponentLive } from '@/lib/docs/package';
-import SegmentControlDesign from './segment-control.design';
+import SegmentControlDesign, { SegmentControlSpecification } from './segment-control.design';
 import SegmentControlCode from './segment-control.code';
 
 const meta = pageMeta('/components/segment-control')!;
@@ -19,7 +19,12 @@ export default function SegmentControlPage() {
       </PageLead>
       <DocTabs
         design={<SegmentControlDesign />}
-        code={<SegmentControlCode />}
+        code={
+          <>
+            <SegmentControlCode />
+            <SegmentControlSpecification />
+          </>
+        }
         codeBadge={isComponentLive('segment-control') ? undefined : '준비 중'}
       />
     </>

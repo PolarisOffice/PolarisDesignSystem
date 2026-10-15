@@ -11,16 +11,16 @@
 ## 사용 규칙
 
 - **Base** — 옵션 5개 이상일 때 써요. 2~4개면 Segment Control 이 나아요.
-- **Size** — LG(폼) · MD(필터·검색바) · SM(툴바·인라인).
+- **Size** — Input Field 와 같은 4단계예요. LG 52(폼) · MD 40(검색) · SM 32(표 툴바·촘촘한 화면) · XS 28(표 셀 안).
 - **State** — Disabled 는 텍스트·아이콘만 40% 로 흐려지고 배경·radius 는 그대로예요.
 - **Controlled** — 선택된 값은 trigger 텍스트에 반영돼요.
 
 **권장**
 
 - 옵션 5개 이상일 때
-- 선택한 값은 trigger 에 표시
+- 선택한 값은 입력칸에 표시
 - 메뉴는 Context & Menu Item 사용
-- 메뉴 너비는 trigger 와 같게
+- 메뉴 너비는 입력칸과 같게
 
 **피하기**
 

@@ -3,7 +3,7 @@ import PageLead from '@/components/docs/PageLead';
 import DocTabs from '@/components/docs/DocTabs';
 import { pageMeta } from '@/lib/docs/pages';
 import { isComponentLive } from '@/lib/docs/package';
-import CheckboxDesign from './checkbox.design';
+import CheckboxDesign, { CheckboxSpecification } from './checkbox.design';
 import CheckboxCode from './checkbox.code';
 
 const meta = pageMeta('/components/checkbox')!;
@@ -15,11 +15,16 @@ export default function CheckboxPage() {
     <>
       <h1>{meta.title}</h1>
       <PageLead>
-        Checkbox 는 다중 선택, Radio 는 단일 선택이에요. 옵션 고르기나 동의 확인에 써요.
+        여러 항목을 고르는 다중 선택이에요. 옵션 고르기나 동의 확인에 써요. 하나만 고를 땐 Radio 를 써요.
       </PageLead>
       <DocTabs
         design={<CheckboxDesign />}
-        code={<CheckboxCode />}
+        code={
+          <>
+            <CheckboxCode />
+            <CheckboxSpecification />
+          </>
+        }
         codeBadge={isComponentLive('checkbox') ? undefined : '준비 중'}
       />
     </>

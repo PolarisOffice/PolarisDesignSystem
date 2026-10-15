@@ -4,7 +4,7 @@
 
 - 소스: `src/components/input/` — 이 폴더를 **수정 없이** `components/pds/components/input/` 로 복사한다(공용 파일과 함께, SKILL.md 규칙 1).
 - import: `import { InputField } from '@/components/pds';`
-- 타입: `InputFieldProps` — prop 이름·허용값은 `src/components/input/types.ts` 가 정본이다. 여기 없는 prop 은 쓰지 않는다.
+- 타입: `InputFieldProps`, `InputFieldSize` — prop 이름·허용값은 `src/components/input/types.ts` 가 정본이다. 여기 없는 prop 은 쓰지 않는다.
 
 **Input Field**
 
@@ -13,6 +13,7 @@
 ## 사용 규칙
 
 - **Base** — Simple(placeholder 만)과 Labeled(title 포함). 폼 입력에는 Labeled 를 권장해요.
+- **Size** — Select 와 같은 4단계예요. LG 52(폼) · MD 40(검색) · SM 32(표 툴바·촘촘한 화면) · XS 28(표 셀 안). MD 부터는 제목을 그리지 않으니 label 은 접근성 이름으로만 쓰여요.
 - **Password** — 비밀번호 필드에는 항상 눈 아이콘(Right Icon)을 제공해요. 기본 상태는 숨김(eye-off).
 - **Left Icon** — 이메일·아이디처럼 입력 유형을 아이콘으로 암시할 때. 좌측 아이콘이 있으면 padding-x 는 46px.
 - **Error** — 빨간 테두리만으론 부족해요. 반드시 Error Message 로 원인을 구체적으로 알려요.
@@ -22,10 +23,10 @@
 
 - **Active** — 필드를 누른 상태예요. 테두리가 파랗게 바뀌고 커서가 떠요.
 - **Error** — 유효성 실패예요. 빨간 테두리만으론 부족하니 무엇이 틀렸는지 Error Message 로 알려요.
-- **입력완료 && Focus out** — 포커스가 빠진 뒤 값이 남은 상태예요. 테두리는 기본색, 값은 유지돼요.
+- **입력 완료 후 포커스 아웃** — 포커스가 빠진 뒤 값이 남은 상태예요. 테두리는 기본색, 값은 유지돼요.
 
 - **Simple (Placeholder only)** — 검색창·인라인 필터처럼 레이블 자리가 없는 짧은 입력에 써요.
-- **Labeled** — 입력 후에도 어떤 필드인지 알아야 할 때 써요. title 이 위에 남아 맥락을 지켜요.
+- **Labeled** — 입력 후에도 어떤 필드인지 알아야 할 때 써요. 제목이 위에 남아 맥락을 지켜요.
 - **Visible 아이콘** — 비밀번호에만 써요. 눈 아이콘을 누르면 값이 보이고, 기본은 숨김이에요.
 - **사람 아이콘** — 이메일·아이디처럼 입력 유형을 아이콘으로 알릴 때 써요.
 

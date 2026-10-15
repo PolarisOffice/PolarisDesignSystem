@@ -63,9 +63,9 @@ export default function ContextMenuDesign() {
         <TabSwitchLink to="code">코드로 보기</TabSwitchLink>
       </p>
 
-      <H3>Base — Single List</H3>
+      <H3>Single List</H3>
       <p>
-        기본 단일 목록이에요. 너비는 고정하지 않고 부모 기준 fill 로 채워요.
+        기본 단일 목록이에요. 너비는 고정하지 않고 놓인 자리의 폭을 채워요.
       </p>
 
       {/* 표준 명칭 'Case' 로 개칭(2026-08-21, Figma 1054:24690 case1·case2 추가 반영).
@@ -147,7 +147,15 @@ export default function ContextMenuDesign() {
 
       <H2>Guidelines</H2>
       <UsageGrid do={[...MENU_USAGE.do]} dont={[...MENU_USAGE.dont]} />
+    </>
+  );
+}
 
+/** Specification — 치수·토큰 표. Code 탭 끝에 놓는다(2026-10-12: Design 탭은 쓰임새, Code 탭은 구현 값).
+ *  헤딩 id 는 Design 탭에 있을 때와 같아서 옛 딥링크(#specification 등)는 DocTabs 가 Code 탭을 열어 준다. */
+export function ContextMenuSpecification() {
+  return (
+    <>
       <H2>Specification</H2>
 
       <H3>Container</H3>

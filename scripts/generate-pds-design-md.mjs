@@ -728,27 +728,9 @@ for (const slug of slugs) {
 /*
  * 패키지엔 있는데 문서 사이트에 독립 페이지가 없는 컴포넌트. md 에 없으면 PAX 조회
  * 도구가 못 찾아 AI 에게 존재하지 않는 컴포넌트가 된다 — 그래서 최소 예제라도 싣는다.
- * Radio 는 Checkbox 페이지 안에 살아서 그 데이터(RADIO_SPEC·GUIDELINES)를 빌려 쓴다.
- * 나머지 셋은 사이트에 페이지가 생기면 이 표에서 빼고 일반 경로로 넘긴다.
+ * 사이트에 페이지가 생기면 이 표에서 빼고 일반 경로로 넘긴다(Radio 는 2026-10-12 페이지가 생겨 빠졌다).
  */
 const ORPHAN_COMPONENTS = [
-  {
-    slug: 'radio',
-    title: 'Radio',
-    description: '여러 항목 중 하나만 고르는 단일 선택 컨트롤. 다중 선택은 Checkbox 를 쓴다.',
-    borrow: 'checkbox',
-    usage: [
-      '- 같은 `name` 을 가진 Radio 끼리 한 그룹이다 — `RadioGroup` 으로 묶으면 값 하나로 제어된다.',
-      '- Radio 에는 부분 선택(indeterminate)이 없다. 「전체 선택」이 필요하면 Checkbox 그룹을 쓴다.',
-      '- `tone="ai"` 는 AI 기능 문맥에서만.',
-    ],
-    code: `import { Radio, RadioGroup } from '${PACKAGE}';
-
-<RadioGroup name="plan" defaultValue="basic">
-  <Radio value="basic" label="Basic" />
-  <Radio value="pro" label="Pro" />
-</RadioGroup>`,
-  },
   {
     slug: 'badge',
     title: 'Badge',
@@ -794,13 +776,7 @@ const ORPHAN_COMPONENTS = [
 ];
 
 for (const o of ORPHAN_COMPONENTS) {
-  const borrowed = o.borrow ? await loadComponentData(o.borrow) : null;
   const out = [`### ${o.slug}`, '', `**${o.title}**`, '', o.description, '', '#### Usage', '', ...o.usage];
-  // 빌린 데이터에서 이 컴포넌트에 해당하는 것만 — Radio 는 checkbox 의 GUIDELINES 가 둘을 함께 다룬다
-  if (borrowed) {
-    const g = Object.entries(borrowed).find(([k, v]) => /GUIDELINE/.test(k) && Array.isArray(v));
-    if (g) out.push('', '**가이드라인**', '', ...g[1].filter((t) => /Radio|단일/.test(t)).map((t) => `- ${t}`));
-  }
   out.push('', '#### Code', '', '```tsx', o.code, '```', '');
   sections.push(out.join('\n'));
   names.push(o.slug);

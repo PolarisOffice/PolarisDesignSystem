@@ -34,7 +34,7 @@ export const INPUT_TYPES: readonly { n: string; title: string; desc: string; sam
   {
     n: '02',
     title: 'Labeled',
-    desc: '입력 후에도 어떤 필드인지 알아야 할 때 써요. title 이 위에 남아 맥락을 지켜요.',
+    desc: '입력 후에도 어떤 필드인지 알아야 할 때 써요. 제목이 위에 남아 맥락을 지켜요.',
     // 값이 있어야 title 고정(desc 의 핵심)이 보인다 — Code 탭 Error 예제의 값 재사용,
     // error 는 빼서 Done 배치만 남긴다. 빈 Labeled 는 Simple 과 픽셀이 같아 견본이 못 된다
     sample: { label: '이메일', value: 'polaris@' },
@@ -85,7 +85,7 @@ export const INPUT_CASES: readonly {
   },
   {
     n: '03',
-    title: '입력완료 && Focus out',
+    title: '입력 완료 후 포커스 아웃',
     desc: '포커스가 빠진 뒤 값이 남은 상태예요. 테두리는 기본색, 값은 유지돼요.',
     // Done 배치 = Type 02(Labeled)와 같은 상태라 같은 견본을 쓴다
     sample: { label: '이메일', value: 'polaris@' },
@@ -107,12 +107,26 @@ export const INPUT_USAGE = {
   ],
 } as const;
 
+/** `### Size` — 2026-10 디자인 결정. Select 와 같은 4단계(52/40/32/28)로, 같은 높이의 Button 과
+ *  한 줄에 선다. lg 밖은 필드 안 제목을 그리지 않는다(문자열 label 은 aria-label 로) */
+export const INPUT_SIZES = [
+  { prop: 'height', lg: '52px', md: '40px', sm: '32px', xs: '28px' },
+  { prop: 'padding-x', lg: '20px', md: '12px', sm: '10px', xs: '8px' },
+  { prop: 'font-size', lg: '14px', md: '14px', sm: '14px', xs: '13px' },
+  { prop: 'border-radius', lg: '8px', md: '8px', sm: '8px', xs: '6px' },
+  { prop: 'left icon', lg: '18×18px', md: '18×18px', sm: '16×16px', xs: '16×16px' },
+  { prop: 'icon gap', lg: '4px', md: '8px', sm: '6px', xs: '6px' },
+  { prop: 'clear button', lg: '24×24px', md: '24×24px', sm: '20×20px', xs: '20×20px' },
+  { prop: 'title', lg: '있음', md: '없음', sm: '없음', xs: '없음' },
+] as const;
+
+/** lg 기준 — 다른 크기의 값은 INPUT_SIZES */
 export const INPUT_CONTAINER = [
-  { prop: 'height', value: '52px', desc: 'simple · labeled 공통' },
-  { prop: 'border-radius', value: '8px', desc: '' },
+  { prop: 'height', value: '52px', desc: 'simple · labeled 공통 (lg)' },
+  { prop: 'border-radius', value: '8px', desc: 'lg 기준, 다른 크기는 위 Size 표' },
   { prop: 'border-width', value: '1px', desc: '모든 상태 공통' },
-  { prop: 'padding-x', value: '20px', desc: '아이콘 없을 때' },
-  { prop: 'padding-x (with left icon)', value: '46px', desc: '좌측 아이콘 존재 시' },
+  { prop: 'padding-x', value: '20px', desc: '아이콘 없을 때 (lg)' },
+  { prop: 'padding-x (with left icon)', value: '46px', desc: '좌측 아이콘 존재 시 (lg)' },
 ] as const;
 
 export const INPUT_BORDER_STATES = [
@@ -124,17 +138,17 @@ export const INPUT_BORDER_STATES = [
 ] as const;
 
 export const INPUT_TYPOGRAPHY = [
-  { el: 'Value', size: '14px', weight: '400', color: '--color-label-normal (#26282b)' },
-  { el: 'Placeholder', size: '14px', weight: '400', color: '--color-label-assistive (#9ea4aa)' },
-  { el: 'Title Label', size: '12px', weight: '400', color: '--color-label-assistive (#9ea4aa)' },
+  { el: 'Value', size: '14px (xs 13px)', weight: '400', color: '--color-label-normal (#26282b)' },
+  { el: 'Placeholder', size: '14px (xs 13px)', weight: '400', color: '--color-label-assistive (#9ea4aa)' },
+  { el: 'Title Label', size: '12px (lg 만)', weight: '400', color: '--color-label-assistive (#9ea4aa)' },
   { el: 'Error Message', size: '13px', weight: '400', color: '--color-state-error (#f95c5c)' },
 ] as const;
 
 export const INPUT_ICON = [
-  { prop: 'size', value: '18×18px', desc: 'Left / Right 공통' },
+  { prop: 'size', value: '18×18px', desc: 'Left / Right 공통 (lg)' },
   { prop: 'color', value: '--color-label-assistive (#9ea4aa)', desc: '기본 아이콘 색' },
-  { prop: 'left icon position', value: '20px from edge', desc: '' },
-  { prop: 'right icon position', value: '20px from edge', desc: '' },
+  { prop: 'left icon position', value: '20px from edge', desc: 'lg 기준, 다른 크기는 위 Size 표' },
+  { prop: 'right icon position', value: '20px from edge', desc: 'lg 기준, 다른 크기는 위 Size 표' },
   { prop: 'error icon size', value: '16×16px', desc: '에러 메시지 앞 아이콘' },
   { prop: 'error message margin-top', value: '4px', desc: 'container 하단 간격' },
 ] as const;

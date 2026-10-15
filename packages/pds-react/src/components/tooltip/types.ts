@@ -20,5 +20,12 @@ export interface TooltipProps {
   showDelay?: number;
   /** 벗어난 뒤 사라지기까지 ms. @default 0 */
   hideDelay?: number;
+  /**
+   * 말풍선을 document.body 에 position: fixed 로 띄운다. 표처럼 overflow 가 잘라내는
+   * 컨테이너 안에서 쓴다. 이때만 top 의 위쪽 공간이 모자라면 bottom 으로 뒤집는다. @default false
+   */
+  portal?: boolean;
+  /** 호버·포커스로 열지 않는다(열려 있으면 닫는다). open(강제)이 이보다 우선한다. @default false */
+  disabled?: boolean;
   className?: string;
 }

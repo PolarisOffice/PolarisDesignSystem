@@ -3,7 +3,7 @@ import PageLead from '@/components/docs/PageLead';
 import DocTabs from '@/components/docs/DocTabs';
 import { pageMeta } from '@/lib/docs/pages';
 import { isComponentLive } from '@/lib/docs/package';
-import ButtonDesign from './button.design';
+import ButtonDesign, { ButtonSpecification } from './button.design';
 import ButtonCode from './button.code';
 
 const meta = pageMeta('/components/button')!;
@@ -24,7 +24,12 @@ export default function ButtonPage() {
       </PageLead>
       <DocTabs
         design={<ButtonDesign />}
-        code={<ButtonCode />}
+        code={
+          <>
+            <ButtonCode />
+            <ButtonSpecification />
+          </>
+        }
         codeBadge={isComponentLive('button') ? undefined : '준비 중'}
       />
     </>

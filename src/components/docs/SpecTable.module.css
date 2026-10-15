@@ -8,7 +8,7 @@
  * 없다.** 죽은 설정이므로 다수결인 14px 24px 하나로 고정하고 density prop 을 만들지 않는다.
  *
  * 글자 위계(2026-09-18): 헤더 13/alternative < 셀 13/neutral(=본문 14 와 같은 색) — 셀이 normal 로
- * 본문보다 밝던 역전을 풀었다. 토큰 코드(.token)는 한 단 더 아래(alternative).
+ * 본문보다 밝던 역전을 풀었다. 토큰 코드(.token)는 회색 박스로 구분한다(글자는 neutral).
  *
  * `!important` 는 필요 없다 — 원본의 그것들은 VitePress 기본 테마의 표 스타일을 이기기 위한
  * 것이었고, 여기서는 경쟁 상대가 없다. */
@@ -91,7 +91,8 @@
   line-height: 1.5;
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: var(--font-size-xxxs);
-  color: var(--color-label-alternative);
+  /* neutral — alternative 는 다크에서 회색 박스(fill-normal) 위 대비가 2.3:1 이라 글자가 안 읽혔다 (2026-10-12) */
+  color: var(--color-label-neutral);
 }
 
 /* 값(hex·px) — 모노스페이스 브랜드색. 원본에서 가장 많이 쓰인 인라인 요소 */

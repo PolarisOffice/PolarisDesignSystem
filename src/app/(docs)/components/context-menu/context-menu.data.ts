@@ -4,14 +4,14 @@ export const MENU_ANATOMY = [
   {
     n: '01',
     title: 'Container (Menu List)',
-    desc: '리스트 컨테이너. radius 8px, padding 4px, gap 4px, shadow-md',
+    desc: '항목을 담는 상자. 그림자로 화면 위에 떠 보여요.',
   },
   {
     n: '02',
     title: 'Menu Item (Check Icon + Label)',
-    desc: '높이 28px. 18×18 체크 아이콘 + 레이블(gap 8px), hover 시 배경 채움',
+    desc: '체크 아이콘과 레이블. 마우스를 올리면 배경이 채워져요',
   },
-  { n: '03', title: 'Divider', desc: '그룹을 나누는 1px 선. 필요할 때만' },
+  { n: '03', title: 'Divider', desc: '그룹을 나누는 얇은 선. 필요할 때만' },
 ] as const;
 
 /** 아이템 구성 케이스 — Figma 1054:24690 Case 밴드 (case1·case2 는 2026-08-21 추가분).
@@ -39,7 +39,7 @@ export const MENU_CASES: readonly { n: string; title: string; desc: string; samp
   {
     n: '02',
     title: 'Case 2 · 텍스트 + 우측 체브론',
-    desc: '하위 메뉴로 진입하는 항목. 우측에 18×18 체브론을 둬요.',
+    desc: '하위 메뉴로 진입하는 항목. 우측에 체브론을 둬요.',
     sample: [
       { label: '내보내기', submenu: true },
       { label: '공유', submenu: true },
@@ -78,15 +78,15 @@ export const MENU_SCROLL_ITEMS: readonly string[] = Array.from({ length: 12 }, (
 
 export const MENU_USAGE = {
   do: [
-    '너비는 부모 기준 fill',
-    '항목이 많으면 max-height + 스크롤',
+    '너비는 놓인 자리의 폭에 맞추기',
+    '항목이 많으면 높이를 제한하고 스크롤',
     '그룹 구분이 필요하면 Divider',
     '선택된 항목은 Selected 로 표시',
   ],
   dont: [
     '한 메뉴에 10개 이상(그룹 분리 검토)',
     '아이템 안에 이미지·멀티라인 같은 복잡한 UI',
-    '고정 너비(px) 지정',
+    '고정 너비 지정',
   ],
 } as const;
 

@@ -26,10 +26,10 @@ export const DURATION_RULES = [
 ] as const;
 
 export const CIRCLE_COLORS = [
-  { context: '기본', token: '--color-label-alternative', desc: '밝은 배경 위' },
-  { context: '어두운 배경 · Black 버튼', token: '--color-static-white', desc: '딤 위도 같아요' },
-  { context: '버튼 안', token: 'currentColor', desc: '버튼 라벨 색을 그대로 따라가요' },
-  { context: '그 밖', token: '자유', desc: '브랜드·AI 색 등 화면에 맞게' },
+  { context: '기본', color: '회색', token: '--color-label-alternative', desc: '밝은 배경 위' },
+  { context: '어두운 배경 · Black 버튼', color: '흰색', token: '--color-static-white', desc: '딤 위도 같아요' },
+  { context: '버튼 안', color: '버튼 글자색', token: 'currentColor', desc: '버튼 라벨 색을 그대로 따라가요' },
+  { context: '그 밖', color: '자유', token: '자유', desc: '브랜드·AI 색 등 화면에 맞게' },
 ] as const;
 
 export const CIRCLE_MOTION = [
@@ -45,7 +45,7 @@ export const CIRCLE_USAGE = {
   do: [
     '1~4초의 짧은 로딩에 써요.',
     '버튼 안, 전체 화면 딤 위에 써요.',
-    '어두운 배경에선 static/white 로 바꿔요.',
+    '어두운 배경에선 흰색으로 바꿔요.',
   ],
   dont: [
     '1초 안에 끝나는 작업엔 안 띄워요.',
@@ -66,7 +66,7 @@ export const BAR_TYPES = [
   {
     type: 'determinate',
     label: 'Determinate',
-    desc: '진행률을 알 때. value(0~100) 만큼 좌에서 우로 채워요.',
+    desc: '진행률을 알 때. 진행된 만큼 왼쪽에서 오른쪽으로 채워요.',
   },
 ] as const;
 
@@ -93,7 +93,7 @@ export const BAR_USAGE = {
     '항목별 진행은 그 항목 아래에 둬요.',
   ],
   dont: [
-    '진행률을 모르면 Determinate 로 흉내내지 않아요.',
+    '진행률을 모르는데 아는 것처럼 채워 보이지 않아요.',
     '1초 안에 끝나는 작업엔 안 띄워요.',
     '한 영역에 하나만 둬요.',
     '실패하면 막대를 걷고 오류와 다음 행동을 안내해요.',
@@ -123,7 +123,7 @@ export const SKELETON_USAGE = {
   ],
   dont: [
     '정적인 요소엔 쓰지 않아요.',
-    'shimmer 그라데이션을 얹지 않아요.',
+    '반짝이며 지나가는 그라데이션을 얹지 않아요.',
     '실제 콘텐츠와 다른 크기로 두지 않아요. 끝날 때 화면이 튀어요.',
     '실패하면 골격을 걷고 오류와 다음 행동을 안내해요.',
   ],

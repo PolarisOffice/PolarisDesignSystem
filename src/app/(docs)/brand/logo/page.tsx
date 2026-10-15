@@ -11,7 +11,6 @@ import {
   LOGO_DONTS,
   PO26_ALL_ITEMS,
   PO26_DONT_LOGO,
-  PO26_GUIDE_COMING_SOON,
   PO26_GUIDE_PDF,
   PO26_LOGOS,
   PO26_SMALL,
@@ -170,16 +169,15 @@ export default function BrandLogoPage() {
         ))}
       </div>
 
-      {/* 정본: 「Polaris Office Logo Usage Basics」 (디자인팀 7섹션 PDF, 2026-08-13 반영).
-          H2 텍스트는 기존 앵커(사용-가이드라인) 보존을 위해 유지, 내용은 PDF 전면 대체.
-          가이드 PDF 다운로드 버튼은 하단 별도 섹션 대신 이 타이틀 줄에 배치 (2026-08-25 피드백).
-          PDF 수정 중이라 잠금(2026-09-04): 버튼 비활성 + hover 툴팁(시안 A). 파일 자체도 public 과
-          전체 패키지 zip 에서 뺐다 — 수정본을 PO26_GUIDE_PDF 경로에 올리고 zip 에 넣은 뒤
-          comingSoon prop 을 제거한다. */}
+      {/* 가이드 문서: 「Polaris Office Brand Identity Guidelines」 (디자인팀 8섹션 PDF, 2026.10.).
+          H2 텍스트는 기존 앵커(사용-가이드라인) 보존을 위해 유지한다.
+          다운로드 버튼은 하단 별도 섹션 대신 이 타이틀 줄에 배치 (2026-08-25 피드백).
+          2026-09-04 ~ 10-14 는 PDF 수정 중이라 잠겨 있었다(DownloadButton comingSoon) — 개정본 공개로 해제.
+          용량 표기는 파일을 바꿀 때 함께 고친다 */}
       <div className={s.titleRow}>
         <H2>사용 가이드라인</H2>
-        <DownloadButton href={PO26_GUIDE_PDF} icon comingSoon={PO26_GUIDE_COMING_SOON}>
-          가이드 문서 (PDF · 2.8MB)
+        <DownloadButton href={PO26_GUIDE_PDF} icon>
+          가이드 문서 (PDF · 6.9MB)
         </DownloadButton>
       </div>
 

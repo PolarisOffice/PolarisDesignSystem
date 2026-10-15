@@ -3,7 +3,7 @@ import PageLead from '@/components/docs/PageLead';
 import DocTabs from '@/components/docs/DocTabs';
 import { pageMeta } from '@/lib/docs/pages';
 import { isComponentLive } from '@/lib/docs/package';
-import ContextMenuDesign from './context-menu.design';
+import ContextMenuDesign, { ContextMenuSpecification } from './context-menu.design';
 import ContextMenuCode from './context-menu.code';
 
 const meta = pageMeta('/components/context-menu')!;
@@ -19,7 +19,12 @@ export default function ContextMenuPage() {
       </PageLead>
       <DocTabs
         design={<ContextMenuDesign />}
-        code={<ContextMenuCode />}
+        code={
+          <>
+            <ContextMenuCode />
+            <ContextMenuSpecification />
+          </>
+        }
         codeBadge={isComponentLive('context-menu') ? undefined : '준비 중'}
       />
     </>

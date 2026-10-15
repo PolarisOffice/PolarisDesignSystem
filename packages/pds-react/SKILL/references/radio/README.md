@@ -4,22 +4,29 @@
 
 - 소스: `src/components/radio/` — 이 폴더를 **수정 없이** `components/pds/components/radio/` 로 복사한다(공용 파일과 함께, SKILL.md 규칙 1).
 - import: `import { Radio, RadioGroup } from '@/components/pds';`
-- 타입: `RadioProps`, `RadioTone`, `RadioGroupProps` — prop 이름·허용값은 `src/components/radio/types.ts` 가 정본이다. 여기 없는 prop 은 쓰지 않는다.
+- 타입: `RadioProps`, `RadioTone`, `RadioSize`, `RadioGroupProps` — prop 이름·허용값은 `src/components/radio/types.ts` 가 정본이다. 여기 없는 prop 은 쓰지 않는다.
 
-**Radio**
-
-여러 항목 중 하나만 고르는 단일 선택 컨트롤. 다중 선택은 Checkbox 를 쓴다.
+여러 항목 중 하나만 고르는 단일 선택
 
 ## 사용 규칙
 
-- 같은 `name` 을 가진 Radio 끼리 한 그룹이다 — `RadioGroup` 으로 묶으면 값 하나로 제어된다.
-- Radio 에는 부분 선택(indeterminate)이 없다. 「전체 선택」이 필요하면 Checkbox 그룹을 쓴다.
-- `tone="ai"` 는 AI 기능 문맥에서만.
+- **Radio** — 그룹 안에서 하나만 선택돼요. RadioGroup 이 name·선택 상태를 안의 Radio 에 내려줘요. AI 기능에는 tone="ai" 를 써요.
+- **Size** — md · sm 두 단계. md(21×21px) · sm(16×16px). sm 은 표처럼 14px 글자 옆에 써요. RadioGroup 에 주면 안의 Radio 에 모두 적용돼요.
+
+**구성**
+
+- **Radio 단독** — 미선택 · 선택됨 · 비활성화 세 상태예요. 라디오에는 부분 선택이 없어요.
+- **Radio 그룹** — 그룹 안에서 하나만 선택돼요.
 
 **가이드라인**
 
-- 다중 선택에는 Checkbox, 단일 선택에는 Radio 를 써요.
-- Radio 엔 부분 선택이 없어요. 전체 선택 제어는 Checkbox 그룹으로 해요.
+- 여러 항목 중 하나만 고를 때 써요. 여러 개를 고를 땐 Checkbox 를 써요.
+- 하나만 고르는 항목끼리는 한 그룹으로 묶어요.
+- 선택지는 둘 이상이어야 해요. 하나뿐인 라디오는 고른 뒤 되돌릴 수 없어요.
+- 라디오에는 부분 선택이 없어요. 「전체 선택」이 필요하면 Checkbox 그룹을 써요.
+- AI 색은 AI 기능 맥락에서만 써요.
+- 레이블은 링 오른쪽에 둬요.
+- Disabled 는 흐리게 보여요.
 
 ## 예제
 
@@ -29,5 +36,6 @@ import { Radio, RadioGroup } from '@/components/pds';
 <RadioGroup name="plan" defaultValue="basic">
   <Radio value="basic" label="Basic" />
   <Radio value="pro" label="Pro" />
+  <Radio value="off" label="비활성화" disabled />
 </RadioGroup>
 ```

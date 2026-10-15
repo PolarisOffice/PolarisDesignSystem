@@ -68,7 +68,7 @@ export function RolesSection() {
                     <span className={s.val}>
                       {/* #ffffff 만 라인 — 흰 칩은 표 배경과 붙어 라인 없이는 안 보인다 */}
                       <span
-                        className={isWhiteHex(t.swatch) ? `${s.chip} ${s.chipBordered}` : s.chip}
+                        className={isWhiteHex(t.swatch) ? `${s.chip} ${s.chipBordered}` : isNearDarkHex(t.swatch) ? `${s.chip} ${s.chipBorderedDark}` : s.chip}
                         style={{ background: t.swatch }}
                         aria-hidden="true"
                       />
@@ -105,6 +105,14 @@ export function RolesSection() {
 /** #ffffff/#fff 판별 — 흰 칩만 라인을 받는다 (2026-08-28 요청) */
 function isWhiteHex(hex: string): boolean {
   return /^#(?:fff|ffffff)$/i.test(hex.trim());
+}
+
+/** 다크 배경(#232323)과 거의 같은 진회색 — 다크 모드에서 칩이 배경에 묻힌다(#26282b 등). 순수 검정은 구분돼 제외 */
+function isNearDarkHex(hex: string): boolean {
+  const m = /^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(hex.trim());
+  if (!m) return false;
+  const avg = (parseInt(m[1]!, 16) + parseInt(m[2]!, 16) + parseInt(m[3]!, 16)) / 3;
+  return avg >= 0x18 && avg <= 0x40;
 }
 
 /**

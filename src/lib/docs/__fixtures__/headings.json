@@ -86,6 +86,11 @@
         },
         {
           "tag": "h2",
+          "id": "_1-2-0",
+          "text": "1.2.0"
+        },
+        {
+          "tag": "h2",
           "id": "_1-1-0",
           "text": "1.1.0"
         },
@@ -178,21 +183,6 @@
           "tag": "h3",
           "id": "배치",
           "text": "배치"
-        },
-        {
-          "tag": "h2",
-          "id": "specification",
-          "text": "Specification"
-        },
-        {
-          "tag": "h3",
-          "id": "size-1",
-          "text": "Size"
-        },
-        {
-          "tag": "h3",
-          "id": "token",
-          "text": "Token"
         }
       ]
     },
@@ -201,8 +191,8 @@
       "headings": [
         {
           "tag": "h1",
-          "id": "checkbox-radio",
-          "text": "Checkbox & Radio"
+          "id": "checkbox",
+          "text": "Checkbox"
         },
         {
           "tag": "h2",
@@ -216,8 +206,78 @@
         },
         {
           "tag": "h3",
-          "id": "base",
-          "text": "Base"
+          "id": "variant",
+          "text": "Variant"
+        },
+        {
+          "tag": "h3",
+          "id": "size",
+          "text": "Size"
+        },
+        {
+          "tag": "h3",
+          "id": "state",
+          "text": "State"
+        },
+        {
+          "tag": "h2",
+          "id": "case",
+          "text": "Case"
+        },
+        {
+          "tag": "h2",
+          "id": "guidelines",
+          "text": "Guidelines"
+        }
+      ]
+    },
+    {
+      "route": "/components/chip",
+      "headings": [
+        {
+          "tag": "h1",
+          "id": "chip",
+          "text": "Chip"
+        },
+        {
+          "tag": "h2",
+          "id": "anatomy",
+          "text": "Anatomy"
+        },
+        {
+          "tag": "h2",
+          "id": "properties",
+          "text": "Properties"
+        },
+        {
+          "tag": "h3",
+          "id": "type",
+          "text": "Type"
+        },
+        {
+          "tag": "h3",
+          "id": "size",
+          "text": "Size"
+        },
+        {
+          "tag": "h3",
+          "id": "state",
+          "text": "State"
+        },
+        {
+          "tag": "h3",
+          "id": "check",
+          "text": "Check"
+        },
+        {
+          "tag": "h3",
+          "id": "icon",
+          "text": "Icon"
+        },
+        {
+          "tag": "h3",
+          "id": "remove",
+          "text": "Remove"
         },
         {
           "tag": "h2",
@@ -230,19 +290,9 @@
           "text": "Guidelines"
         },
         {
-          "tag": "h2",
-          "id": "specification",
-          "text": "Specification"
-        },
-        {
           "tag": "h3",
-          "id": "checkbox",
-          "text": "Checkbox"
-        },
-        {
-          "tag": "h3",
-          "id": "radio",
-          "text": "Radio"
+          "id": "chip-vs-badge",
+          "text": "Chip vs Badge"
         }
       ]
     },
@@ -271,8 +321,8 @@
         },
         {
           "tag": "h3",
-          "id": "base-—-single-list",
-          "text": "Base — Single List"
+          "id": "single-list",
+          "text": "Single List"
         },
         {
           "tag": "h2",
@@ -293,21 +343,51 @@
           "tag": "h2",
           "id": "guidelines",
           "text": "Guidelines"
+        }
+      ]
+    },
+    {
+      "route": "/components/date-picker",
+      "headings": [
+        {
+          "tag": "h1",
+          "id": "date-picker",
+          "text": "Date Picker"
         },
         {
           "tag": "h2",
-          "id": "specification",
-          "text": "Specification"
+          "id": "anatomy",
+          "text": "Anatomy"
+        },
+        {
+          "tag": "h2",
+          "id": "properties",
+          "text": "Properties"
         },
         {
           "tag": "h3",
-          "id": "container",
-          "text": "Container"
+          "id": "mode",
+          "text": "Mode"
         },
         {
           "tag": "h3",
-          "id": "item",
-          "text": "Item"
+          "id": "size",
+          "text": "Size"
+        },
+        {
+          "tag": "h3",
+          "id": "day",
+          "text": "Day"
+        },
+        {
+          "tag": "h2",
+          "id": "case",
+          "text": "Case"
+        },
+        {
+          "tag": "h2",
+          "id": "guidelines",
+          "text": "Guidelines"
         }
       ]
     },
@@ -331,8 +411,8 @@
         },
         {
           "tag": "h3",
-          "id": "base",
-          "text": "Base"
+          "id": "type",
+          "text": "Type"
         },
         {
           "tag": "h3",
@@ -340,9 +420,9 @@
           "text": "Size"
         },
         {
-          "tag": "h2",
-          "id": "type",
-          "text": "Type"
+          "tag": "h3",
+          "id": "state",
+          "text": "State"
         },
         {
           "tag": "h2",
@@ -358,31 +438,6 @@
           "tag": "h3",
           "id": "placeholder-vs-labeled",
           "text": "Placeholder vs Labeled"
-        },
-        {
-          "tag": "h2",
-          "id": "specification",
-          "text": "Specification"
-        },
-        {
-          "tag": "h3",
-          "id": "container",
-          "text": "Container"
-        },
-        {
-          "tag": "h3",
-          "id": "border-color-by-state",
-          "text": "Border Color by State"
-        },
-        {
-          "tag": "h3",
-          "id": "typography",
-          "text": "Typography"
-        },
-        {
-          "tag": "h3",
-          "id": "icon",
-          "text": "Icon"
         }
       ]
     },
@@ -433,26 +488,6 @@
           "tag": "h2",
           "id": "guidelines",
           "text": "Guidelines"
-        },
-        {
-          "tag": "h2",
-          "id": "specification",
-          "text": "Specification"
-        },
-        {
-          "tag": "h3",
-          "id": "progress-circle",
-          "text": "Progress Circle"
-        },
-        {
-          "tag": "h3",
-          "id": "progress-bar",
-          "text": "Progress Bar"
-        },
-        {
-          "tag": "h3",
-          "id": "skeleton",
-          "text": "Skeleton"
         }
       ]
     },
@@ -513,26 +548,46 @@
           "tag": "h3",
           "id": "x-button-사용-기준",
           "text": "X Button 사용 기준"
+        }
+      ]
+    },
+    {
+      "route": "/components/radio",
+      "headings": [
+        {
+          "tag": "h1",
+          "id": "radio",
+          "text": "Radio"
         },
         {
           "tag": "h2",
-          "id": "specification",
-          "text": "Specification"
+          "id": "anatomy",
+          "text": "Anatomy"
+        },
+        {
+          "tag": "h2",
+          "id": "properties",
+          "text": "Properties"
         },
         {
           "tag": "h3",
-          "id": "container",
-          "text": "Container"
+          "id": "size",
+          "text": "Size"
         },
         {
           "tag": "h3",
-          "id": "button",
-          "text": "Button"
+          "id": "state",
+          "text": "State"
         },
         {
-          "tag": "h3",
-          "id": "typography",
-          "text": "Typography"
+          "tag": "h2",
+          "id": "case",
+          "text": "Case"
+        },
+        {
+          "tag": "h2",
+          "id": "guidelines",
+          "text": "Guidelines"
         }
       ]
     },
@@ -598,26 +653,6 @@
           "tag": "h3",
           "id": "단일-선택-원칙",
           "text": "단일 선택 원칙"
-        },
-        {
-          "tag": "h2",
-          "id": "specification",
-          "text": "Specification"
-        },
-        {
-          "tag": "h3",
-          "id": "container",
-          "text": "Container"
-        },
-        {
-          "tag": "h3",
-          "id": "item",
-          "text": "Item"
-        },
-        {
-          "tag": "h3",
-          "id": "count-badge",
-          "text": "Count Badge"
         }
       ]
     },
@@ -653,21 +688,6 @@
           "tag": "h2",
           "id": "guidelines",
           "text": "Guidelines"
-        },
-        {
-          "tag": "h2",
-          "id": "specification",
-          "text": "Specification"
-        },
-        {
-          "tag": "h3",
-          "id": "container",
-          "text": "Container"
-        },
-        {
-          "tag": "h3",
-          "id": "menu",
-          "text": "Menu"
         }
       ]
     },
@@ -691,8 +711,8 @@
         },
         {
           "tag": "h3",
-          "id": "base",
-          "text": "Base"
+          "id": "basic",
+          "text": "Basic"
         },
         {
           "tag": "h3",
@@ -700,19 +720,64 @@
           "text": "Column Divider"
         },
         {
+          "tag": "h3",
+          "id": "long-text",
+          "text": "Long Text"
+        },
+        {
+          "tag": "h3",
+          "id": "align",
+          "text": "Align"
+        },
+        {
           "tag": "h2",
           "id": "case",
           "text": "Case"
         },
         {
-          "tag": "h2",
-          "id": "guidelines",
-          "text": "Guidelines"
+          "tag": "h3",
+          "id": "sort",
+          "text": "Sort"
+        },
+        {
+          "tag": "h3",
+          "id": "toolbar",
+          "text": "Toolbar"
+        },
+        {
+          "tag": "h3",
+          "id": "selection",
+          "text": "Selection"
+        },
+        {
+          "tag": "h3",
+          "id": "empty-loading",
+          "text": "Empty & Loading"
+        },
+        {
+          "tag": "h3",
+          "id": "resizable",
+          "text": "Resizable"
+        },
+        {
+          "tag": "h3",
+          "id": "pagination",
+          "text": "Pagination"
+        },
+        {
+          "tag": "h3",
+          "id": "scroll-sticky",
+          "text": "Scroll & Sticky"
+        },
+        {
+          "tag": "h3",
+          "id": "row-click",
+          "text": "Row Click"
         },
         {
           "tag": "h2",
-          "id": "specification",
-          "text": "Specification"
+          "id": "guidelines",
+          "text": "Guidelines"
         }
       ]
     },
@@ -783,21 +848,6 @@
           "tag": "h3",
           "id": "탭-vs-다른-컴포넌트",
           "text": "탭 vs 다른 컴포넌트"
-        },
-        {
-          "tag": "h2",
-          "id": "specification",
-          "text": "Specification"
-        },
-        {
-          "tag": "h3",
-          "id": "container",
-          "text": "Container"
-        },
-        {
-          "tag": "h3",
-          "id": "item",
-          "text": "Item"
         }
       ]
     },
@@ -848,26 +898,6 @@
           "tag": "h3",
           "id": "toast-vs-popup",
           "text": "Toast vs Popup"
-        },
-        {
-          "tag": "h2",
-          "id": "specification",
-          "text": "Specification"
-        },
-        {
-          "tag": "h3",
-          "id": "container",
-          "text": "Container"
-        },
-        {
-          "tag": "h3",
-          "id": "status-icon",
-          "text": "Status Icon"
-        },
-        {
-          "tag": "h3",
-          "id": "typography",
-          "text": "Typography"
         }
       ]
     },
@@ -891,8 +921,8 @@
         },
         {
           "tag": "h3",
-          "id": "base",
-          "text": "Base"
+          "id": "state",
+          "text": "State"
         },
         {
           "tag": "h2",
@@ -903,21 +933,6 @@
           "tag": "h2",
           "id": "guidelines",
           "text": "Guidelines"
-        },
-        {
-          "tag": "h2",
-          "id": "specification",
-          "text": "Specification"
-        },
-        {
-          "tag": "h3",
-          "id": "size",
-          "text": "Size"
-        },
-        {
-          "tag": "h3",
-          "id": "token",
-          "text": "Token"
         }
       ]
     },
@@ -945,11 +960,6 @@
           "text": "Position"
         },
         {
-          "tag": "h3",
-          "id": "base",
-          "text": "Base"
-        },
-        {
           "tag": "h2",
           "id": "case",
           "text": "Case"
@@ -958,41 +968,6 @@
           "tag": "h2",
           "id": "guidelines",
           "text": "Guidelines"
-        },
-        {
-          "tag": "h3",
-          "id": "노출-정책",
-          "text": "노출 정책"
-        },
-        {
-          "tag": "h4",
-          "id": "_1-default",
-          "text": "1. Default"
-        },
-        {
-          "tag": "h4",
-          "id": "_2-cascade-연속-호버",
-          "text": "2. Cascade (연속 호버)"
-        },
-        {
-          "tag": "h2",
-          "id": "specification",
-          "text": "Specification"
-        },
-        {
-          "tag": "h3",
-          "id": "container",
-          "text": "Container"
-        },
-        {
-          "tag": "h3",
-          "id": "typography",
-          "text": "Typography"
-        },
-        {
-          "tag": "h3",
-          "id": "animation",
-          "text": "Animation"
         }
       ]
     },

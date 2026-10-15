@@ -35,7 +35,7 @@ export const TABS_VARIANT_USAGE = {
   dont: [
     '같은 계층에 Primary 와 Secondary 혼용',
     '드롭다운·필터 대신 탭 쓰기',
-    '페이지 간 라우팅(네비게이션 몫)',
+    '페이지 간 이동(네비게이션 몫)',
   ],
 } as const;
 
@@ -98,7 +98,7 @@ export const TAB_TOKEN_CORRECTIONS = [
 
 /** Anatomy — 2026-08-13 신설. 같은 페이지 Specification 값에서만 유도(창작 없음) */
 export const TABS_ANATOMY = [
-  { n: '01', title: 'Tab Item', desc: '레이블 단위. 선택되면 굵기 700, variant 별 선택색' },
-  { n: '02', title: 'Indicator', desc: '선택 탭 아래 2px 선. 150ms 로 슬라이드해요' },
-  { n: '03', title: 'Divider', desc: '탭바 아래 1px 선. 탭과 콘텐츠를 나눠요' },
+  { n: '01', title: 'Tab Item', desc: '레이블 단위. 선택되면 글자가 굵어지고 색이 바뀌어요.' },
+  { n: '02', title: 'Indicator', desc: '선택 탭 아래 선. 선택이 바뀌면 미끄러지듯 옮겨 가요' },
+  { n: '03', title: 'Divider', desc: '탭바 아래 얇은 선. 탭과 콘텐츠를 나눠요' },
 ] as const;

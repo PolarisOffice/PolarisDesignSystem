@@ -53,18 +53,17 @@ export default function ToggleDesign() {
 
       <H2>Properties</H2>
 
-      <H3>Base</H3>
+      <H3>State</H3>
       <p>
-        ON / OFF / Disabled 세 상태예요. Disabled 는 투명도 38% 이고, 컴포넌트마다 다른 건 의도예요.{' '}
+        ON / OFF / Disabled 세 상태예요. Disabled 는 흐리게 보여요.{' '}
         <TabSwitchLink to="code">코드로 보기</TabSwitchLink>
       </p>
       <SpecTable
-        caption="Toggle 상태별 실물과 트랙 색상"
+        caption="Toggle 상태별 실물"
         columns={[
-          { key: 'state', header: 'State', width: '14%' },
-          { key: 'preview', header: 'Preview', width: '18%' },
-          { key: 'track', header: 'Track 색상', width: '34%' },
-          { key: 'desc', header: '설명', width: '34%' },
+          { key: 'state', header: 'State', width: '18%' },
+          { key: 'preview', header: 'Preview', width: '22%' },
+          { key: 'desc', header: '설명', width: '60%' },
         ]}
         rows={TOGGLE_STATES.map((row) => ({
           state: <strong>{row.state}</strong>,
@@ -73,8 +72,6 @@ export default function ToggleDesign() {
               <Toggle {...STATE_PREVIEW[row.state]} />
             </span>
           ),
-          track:
-            row.track.startsWith('#') ? <Swatch hex={row.track} token={row.trackToken} /> : <SpecVal>{row.track}</SpecVal>,
           desc: row.desc,
         }))}
       />
@@ -97,7 +94,15 @@ export default function ToggleDesign() {
           <li key={i}>{g}</li>
         ))}
       </ul>
+    </>
+  );
+}
 
+/** Specification — 치수·토큰 표. Code 탭 끝에 놓는다(2026-10-12: Design 탭은 쓰임새, Code 탭은 구현 값).
+ *  헤딩 id 는 Design 탭에 있을 때와 같아서 옛 딥링크(#specification 등)는 DocTabs 가 Code 탭을 열어 준다. */
+export function ToggleSpecification() {
+  return (
+    <>
       <H2>Specification</H2>
 
       <H3>Size</H3>

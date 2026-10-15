@@ -3,7 +3,7 @@ import PageLead from '@/components/docs/PageLead';
 import DocTabs from '@/components/docs/DocTabs';
 import { pageMeta } from '@/lib/docs/pages';
 import { isComponentLive } from '@/lib/docs/package';
-import ToggleDesign from './toggle.design';
+import ToggleDesign, { ToggleSpecification } from './toggle.design';
 import ToggleCode from './toggle.code';
 
 const meta = pageMeta('/components/toggle')!;
@@ -19,7 +19,12 @@ export default function TogglePage() {
       </PageLead>
       <DocTabs
         design={<ToggleDesign />}
-        code={<ToggleCode />}
+        code={
+          <>
+            <ToggleCode />
+            <ToggleSpecification />
+          </>
+        }
         codeBadge={isComponentLive('toggle') ? undefined : '준비 중'}
       />
     </>

@@ -31,10 +31,6 @@ import s from './popup.module.css';
 export default function PopupDesign() {
   return (
     <>
-      <p className="kit-muted">
-        치수·스펙은 Web 기준이에요. Mobile 은 추후 반영해요.
-      </p>
-
       <H2>Anatomy</H2>
       {/* 실물 기반 도해 — 패키지 Popup 을 렌더해 파트를 실측·콜아웃한다(번호는 아래 legend 와 같은 축).
           Popup 은 화면 전체를 덮는 fixed 오버레이라 그대로는 문서를 덮는다 — transform 래퍼가
@@ -154,7 +150,15 @@ export default function PopupDesign() {
         ]}
         rows={POPUP_X_RULES.map((r) => ({ case: r.case, x: r.x }))}
       />
+    </>
+  );
+}
 
+/** Specification — 치수·토큰 표. Code 탭 끝에 놓는다(2026-10-12: Design 탭은 쓰임새, Code 탭은 구현 값).
+ *  헤딩 id 는 Design 탭에 있을 때와 같아서 옛 딥링크(#specification 등)는 DocTabs 가 Code 탭을 열어 준다. */
+export function PopupSpecification() {
+  return (
+    <>
       <H2>Specification</H2>
 
       <H3>Container</H3>

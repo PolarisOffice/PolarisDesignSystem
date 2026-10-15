@@ -34,6 +34,11 @@ export default function HashRescue() {
       // 마지막 수단 — 명명 통일(2026-08-13)로 사라진 구 앵커를 별칭 맵으로 구제
       for (const id of candidates) {
         const alias = resolveAnchorAlias(pathname, id);
+        // 페이지가 나뉘어 다른 페이지로 옮긴 앵커
+        if (alias?.startsWith('/')) {
+          window.location.replace(alias);
+          return;
+        }
         const el = alias ? document.getElementById(alias) : null;
         if (el) {
           el.scrollIntoView({ block: 'start' });

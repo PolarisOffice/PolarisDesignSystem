@@ -182,7 +182,9 @@ for (const [size, exp] of Object.entries(SPEC.select.sizes)) {
 {
   const got = await page.evaluate(() => {
     const t = document.querySelector('table');
-    const box = t?.parentElement;
+    // 테두리 상자는 표 바깥 두 번째 요소다(1.2.0 부터 사이에 가로 스크롤 영역이 있다) — 테두리가 있는 조상을 찾는다
+    let box = t?.parentElement;
+    while (box && box.parentElement && getComputedStyle(box).borderTopWidth === '0px') box = box.parentElement;
     const th = t?.querySelector('th'), td = t?.querySelector('td');
     return t ? { radius: getComputedStyle(box).borderRadius, pad: getComputedStyle(th).padding, fs: getComputedStyle(th).fontSize,
       headerBg: getComputedStyle(th).backgroundColor, headerColor: getComputedStyle(th).color,

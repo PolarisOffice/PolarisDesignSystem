@@ -52,7 +52,8 @@ export const PAGES: PageMeta[] = [
   { path: '/components/segment-control', title: 'Segment Control', description: '한 영역 안에서 보기를 전환' },
   { path: '/components/input', title: 'Input Field', description: '텍스트 입력 필드' },
   { path: '/components/toggle', title: 'Toggle', description: '켜짐/꺼짐 전환' },
-  { path: '/components/checkbox', title: 'Checkbox & Radio', description: '다중 선택과 단일 선택' },
+  { path: '/components/checkbox', title: 'Checkbox', description: '여러 항목을 고르는 다중 선택' },
+  { path: '/components/radio', title: 'Radio', description: '여러 항목 중 하나만 고르는 단일 선택' },
   { path: '/components/toast', title: 'Toast', description: '짧게 나타났다 사라지는 알림' },
   { path: '/components/popup', title: 'Popup', description: '집중이 필요한 확인·입력' },
   { path: '/components/tooltip', title: 'Tooltip', description: '보조 설명' },
@@ -60,6 +61,8 @@ export const PAGES: PageMeta[] = [
   { path: '/components/context-menu', title: 'Context & Menu Item', description: '맥락 메뉴와 메뉴 항목' },
   { path: '/components/select', title: 'Select', description: '목록에서 하나를 고르는 드롭다운' },
   { path: '/components/table', title: 'Table', description: '표 형식 데이터' },
+  { path: '/components/chip', title: 'Chip', description: '조건을 보여 주거나 여러 개를 고르는 칩' },
+  { path: '/components/date-picker', title: 'Date Picker', description: '날짜 하나나 기간을 고르는 입력칸과 달력' },
 
   { path: '/ai', title: 'Skill 파일', description: 'PDS 스킬 파일 다운로드와 AI 툴 설치 안내' },
   // 킷 전용(PAX 동봉본엔 없음) — 사이드바 항목은 nav.ts 가 IS_EMBED 로 뺀다. 공개 서버(IS_HOSTED)는 업로드 없는 MCP 연결 안내

@@ -3,7 +3,7 @@ import PageLead from '@/components/docs/PageLead';
 import DocTabs from '@/components/docs/DocTabs';
 import { pageMeta } from '@/lib/docs/pages';
 import { isComponentLive } from '@/lib/docs/package';
-import SelectDesign from './select.design';
+import SelectDesign, { SelectSpecification } from './select.design';
 import SelectCode from './select.code';
 
 const meta = pageMeta('/components/select')!;
@@ -19,7 +19,12 @@ export default function SelectPage() {
       </PageLead>
       <DocTabs
         design={<SelectDesign />}
-        code={<SelectCode />}
+        code={
+          <>
+            <SelectCode />
+            <SelectSpecification />
+          </>
+        }
         codeBadge={isComponentLive('select') ? undefined : '준비 중'}
       />
     </>

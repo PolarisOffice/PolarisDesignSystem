@@ -4,36 +4,38 @@
 
 - 소스: `src/components/checkbox/` — 이 폴더를 **수정 없이** `components/pds/components/checkbox/` 로 복사한다(공용 파일과 함께, SKILL.md 규칙 1).
 - import: `import { Checkbox } from '@/components/pds';`
-- 타입: `CheckboxProps` — prop 이름·허용값은 `src/components/checkbox/types.ts` 가 정본이다. 여기 없는 prop 은 쓰지 않는다.
+- 타입: `CheckboxProps`, `CheckboxSize`, `CheckboxVariant` — prop 이름·허용값은 `src/components/checkbox/types.ts` 가 정본이다. 여기 없는 prop 은 쓰지 않는다.
 
-**Checkbox & Radio**
-
-다중 선택과 단일 선택
+여러 항목을 고르는 다중 선택
 
 ## 사용 규칙
 
 - **Checkbox** — 미선택 · 선택됨 · 부분 선택(indeterminate) · 비활성화.
-- **Radio** — 그룹 안에서 하나만 선택돼요. 라디오에는 부분 선택이 없어요.
+- **Variant** — Checkbox 모양 두 가지. box(기본) · check(면 없이 체크 표시만). 상태와 동작은 같아요.
+- **Size** — md · sm 두 단계. md(21×21px) · sm(16×16px). sm 은 표처럼 14px 글자 옆에 써요. 두 모양 모두 같은 크기 체계예요.
 - **Checkbox 그룹** — 「전체 선택」이 하위 항목을 제어하고, 일부만 선택되면 부분 선택 상태가 돼요.
 
 **구성**
 
-- **Checkbox 단독** — 미선택 · 선택됨 · 부분 선택(indeterminate) · 비활성화 네 상태를 가져요.
-- **Radio 단독** — 미선택 · 선택됨 · 비활성화. 라디오에는 부분 선택이 없어요.
+- **Checkbox 단독** — 미선택 · 선택됨 · 부분 선택 · 비활성화 네 상태를 가져요.
 - **Checkbox 그룹** — 「전체 선택」이 하위 항목을 모두 제어해요. 일부만 선택되면 전체 선택은 부분 선택 상태가 돼요.
-- **Radio 그룹** — 그룹 안에서 하나만 선택돼요.
+- **체크형 · 메뉴에서 켜진 항목 표시** — 메뉴·드롭다운 안에서 켜진 옵션을 표시할 때 써요. 면이 없어 글자가 주인공인 자리에 가볍게 붙어요. 꺼진 항목은 회색 체크로 남아요.
 
 **가이드라인**
 
-- 다중 선택에는 Checkbox, 단일 선택에는 Radio 를 써요.
-- Radio 엔 부분 선택이 없어요. 전체 선택 제어는 Checkbox 그룹으로 해요.
-- 레이블은 컨트롤 오른쪽에 붙여요. 히트 영역이 넓어 gap 없이도 간격이 생겨요.
-- Disabled 는 투명도 60% 예요. 컴포넌트마다 다른 건 의도예요.
+- 여러 항목을 고르는 자리에 써요. 하나만 고를 땐 Radio 를 써요.
+- Checkbox 는 네모와 체크형 두 모양이 있어요. 모양만 다르고 상태와 동작은 같아요. 어디에 놓이는지로 골라요.
+- 네모(기본): 폼·설정·필터처럼 항목 옆에서 여러 개를 고를 때. 약관 동의처럼 하나만 있을 때도 네모예요.
+- 체크형: 메뉴·드롭다운 안에서 켜진 옵션을 표시할 때. 면이 없어 글자 흐름을 끊지 않아요.
+- 한 목록 안에서는 한 모양만 써요.
+- 「전체 선택」은 Checkbox 그룹으로 해요. 일부만 선택되면 전체 선택은 부분 선택 상태가 돼요.
+- 레이블은 박스 오른쪽에 둬요.
+- Disabled 는 흐리게 보여요.
 
 ## 예제
 
 ```tsx
-import { Checkbox, Radio, RadioGroup } from '@/components/pds';
+import { Checkbox } from '@/components/pds';
 
 <Checkbox label="항목 1" />
 <Checkbox label="항목 2" checked />

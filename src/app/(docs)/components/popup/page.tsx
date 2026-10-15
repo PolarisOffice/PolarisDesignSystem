@@ -3,7 +3,7 @@ import PageLead from '@/components/docs/PageLead';
 import DocTabs from '@/components/docs/DocTabs';
 import { pageMeta } from '@/lib/docs/pages';
 import { isComponentLive } from '@/lib/docs/package';
-import PopupDesign from './popup.design';
+import PopupDesign, { PopupSpecification } from './popup.design';
 import PopupCode from './popup.code';
 
 const meta = pageMeta('/components/popup')!;
@@ -19,7 +19,12 @@ export default function PopupPage() {
       </PageLead>
       <DocTabs
         design={<PopupDesign />}
-        code={<PopupCode />}
+        code={
+          <>
+            <PopupCode />
+            <PopupSpecification />
+          </>
+        }
         codeBadge={isComponentLive('popup') ? undefined : '준비 중'}
       />
     </>

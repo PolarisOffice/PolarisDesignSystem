@@ -3,7 +3,7 @@ import PageLead from '@/components/docs/PageLead';
 import DocTabs from '@/components/docs/DocTabs';
 import { pageMeta } from '@/lib/docs/pages';
 import { isComponentLive } from '@/lib/docs/package';
-import ToastDesign from './toast.design';
+import ToastDesign, { ToastSpecification } from './toast.design';
 import ToastCode from './toast.code';
 
 const meta = pageMeta('/components/toast')!;
@@ -19,7 +19,12 @@ export default function ToastPage() {
       </PageLead>
       <DocTabs
         design={<ToastDesign />}
-        code={<ToastCode />}
+        code={
+          <>
+            <ToastCode />
+            <ToastSpecification />
+          </>
+        }
         codeBadge={isComponentLive('toast') ? undefined : '준비 중'}
       />
     </>

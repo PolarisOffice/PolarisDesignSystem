@@ -72,6 +72,11 @@
   box-shadow: inset 0 0 0 1px var(--color-line-normal);
 }
 
+/* 다크 배경과 거의 같은 진회색 칩 — 다크 모드에서만 라인(라이트에선 "라인 없음" 기본 유지) */
+:global([data-theme='dark']) .chipBorderedDark {
+  box-shadow: inset 0 0 0 1px var(--color-line-normal);
+}
+
 /* ── Palette — 패밀리별 단계 스케일 ── */
 .palList {
   display: grid;

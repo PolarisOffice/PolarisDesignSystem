@@ -112,7 +112,7 @@ for (const folder of folders) {
       lines.push('## 예제', '', code.replaceAll(`'${PACKAGE}'`, `'${LOCAL_IMPORT}'`).replaceAll(`"${PACKAGE}"`, `"${LOCAL_IMPORT}"`), '');
     }
   } else {
-    lines.push(`문서 사이트에 별도 절이 없는 컴포넌트다. 용도·prop 은 \`src/components/${folder}/\` 의 타입·주석과, 이 컴포넌트를 쓰는 다른 참조 문서의 예제를 따른다.`, '');
+    lines.push(`문서 사이트에 별도 절이 없는 컴포넌트다. 용도·prop 은 \`src/components/${folder}/\` 의 타입·주석을 따른다(예제는 아직 없다).`, '');
   }
   files.set(`references/${folder}/README.md`, lines.join('\n'));
 }

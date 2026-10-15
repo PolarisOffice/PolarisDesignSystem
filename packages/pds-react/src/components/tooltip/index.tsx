@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 import { color, font } from '../../tokens.js';
 import { withSupported } from '../../supported.js';
@@ -12,12 +13,12 @@ import type { TooltipPlacement, TooltipProps } from './types.js';
  * PDS docs/components/tooltip.md + Figma `Component/Feedback → Tooltip` 실측.
  * 노출 정책 표(Default·Cascade)의 값을 그대로 상수로 둔다.
  *
- * 값의 출처: 치수·색은 디자인이 정본이다. md 산문과 어긋난 곳 —
- * 배경(산문 rgba(44,44,44,0.78) → 디자인 layer/overlay), padding(6px 10px → 4px 8px).
+ * 값의 출처: 치수는 디자인이 정본이다. md 산문과 어긋난 곳 — padding(6px 10px → 4px 8px).
+ * 배경은 layer/inverse, 글자는 label/inverse 토큰(2026-10-12 — 아래 bubble 주석).
  * radius 는 2026-08-28 Figma Radius 표에서 radius-xs(6) 로 확정 — 토큰 참조.
  *
- * 미구현: 산문의 "가장자리는 자동 반전". 뷰포트 충돌을 감지해 방향을 뒤집는
- * 동작은 아직 없다 — placement 로 지정한 방향에 그대로 붙는다.
+ * 일부 구현: 산문의 "가장자리는 자동 반전". portal 모드의 top 만 위 여백이 모자라면
+ * bottom 으로 뒤집는다 — 그 밖은 placement 로 지정한 방향에 그대로 붙는다.
  */
 const SHOW_DELAY = 600; // 의도적 멈춤과 우연한 통과를 가르는 임계점
 const CASCADE_DELAY = 100; // 이미 하나를 본 사용자는 탐색 중으로 본다
@@ -49,7 +50,12 @@ const bubble: CSSProperties = {
   // max-content 로 내용만큼 잡고, 200px 을 넘을 때만 줄바꿈한다.
   width: 'max-content',
   maxWidth: MAX_WIDTH,
-  padding: '4px 8px',
+  // 4px 8px. 축약형(padding)으로 쓰지 않는다 — 화살표 쪽만 longhand 로 덮는데, portal 모드에서
+  // top↔bottom 이 뒤집히면 React 가 축약형·longhand 혼용 경고를 낸다.
+  paddingTop: 4,
+  paddingBottom: 4,
+  paddingLeft: 8,
+  paddingRight: 8,
   // 배경·둥근 모서리는 svg path 가 그린다(아래 tooltipPath). blur 는 2026-08-31 제거 —
   // WebKit 에서 backdrop-filter 는 clip-path·마스크와 한 요소에 두면 합성 단계에서 간헐적으로
   // 풀리고(화살표가 나왔다 사라지는 증상), 별도 조각으로 붙이면 알파 경계가 이음새로 보인다.
@@ -58,8 +64,9 @@ const bubble: CSSProperties = {
   fontSize: font.caption1Size,
   fontWeight: 500,
   lineHeight: 1.3,
-  // 배경 layer-overlay 가 양 테마에서 같은 반투명 검정이라 글자도 고정 흰색이다
-  color: color.staticWhite,
+  // 배경 layer/inverse(라이트 진회색 · 다크 밝은 회색) 위의 글자 — 짝인 label/inverse 가 테마를 따라 뒤집힌다.
+  // 예전 layer/overlay(검정 50%)는 블러를 뺀 뒤 뒤 글자가 비쳐 읽히지 않았고, 직접 적은 진회색은 다크 배경에 묻혔다
+  color: color.labelInverse,
   textAlign: 'center',
   wordBreak: 'break-word',
 };
@@ -67,7 +74,7 @@ const bubble: CSSProperties = {
 /**
  * 말풍선+화살표를 **한 도형**으로 그리는 clip-path.
  *
- * 화살표를 별도 조각(svg 형제·절대 위치 svg)으로 붙이면 반투명 배경(layer/overlay 0.78 알파)과
+ * 화살표를 별도 조각(svg 형제·절대 위치 svg)으로 붙이면 반투명 배경과
  * backdrop-filter 의 경계가 이음새로 드러난다 — 2026-08-28~31 디자이너 리포트·실측: right 에서
  * 틈, top 에서 화살표 밑변에 밝은 선. 두 조각을 붙이는 한(겹치든 맞대든) 알파 합성·블러 경계
  * 때문에 어느 브라우저에선 반드시 보인다. 요소 **하나**에 배경·블러를 깔고 "둥근 사각형 + 삼각형"
@@ -120,6 +127,8 @@ function TooltipBase({
   arrow = true,
   showDelay = SHOW_DELAY,
   hideDelay = 0,
+  portal = false,
+  disabled = false,
   className,
 }: TooltipProps) {
   const [visible, setVisible] = useState(false);
@@ -127,10 +136,12 @@ function TooltipBase({
   /** 마운트 프레임에 최종 상태로 그리면 transition 이 스킵된다 — 페인트 한 프레임 뒤 true */
   const [entered, setEntered] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const triggerRef = useRef<HTMLSpanElement>(null);
   const tipId = useId();
 
   const controlled = open !== undefined;
-  const shown = controlled ? open : visible;
+  // disabled 는 호버·포커스만 막는다 — 강제(open)는 그대로 연다
+  const shown = controlled ? open : visible && !disabled;
 
   const clear = () => {
     if (timer.current) clearTimeout(timer.current);
@@ -138,11 +149,18 @@ function TooltipBase({
   };
 
   const show = useCallback(() => {
-    if (controlled) return;
+    if (controlled || disabled) return;
     clear();
     const cascading = Date.now() - lastHiddenAt < CASCADE_RESET;
     timer.current = setTimeout(() => setVisible(true), cascading ? CASCADE_DELAY : showDelay);
-  }, [controlled, showDelay]);
+  }, [controlled, disabled, showDelay]);
+
+  // 꺼지는 순간 예약된 열림까지 비운다 — 다시 켜졌을 때 호버 없이 저절로 열리지 않게
+  useEffect(() => {
+    if (!disabled) return;
+    clear();
+    setVisible(false);
+  }, [disabled]);
 
   const hide = useCallback(() => {
     if (controlled) return;
@@ -172,14 +190,13 @@ function TooltipBase({
         cancelAnimationFrame(raf2);
       };
     }
+    // 닫힌 채 처음 마운트될 때는 떼어낼 것이 없다 — 표의 셀마다 타이머가 하나씩 걸리지 않게
+    if (!mounted) return;
     setEntered(false);
     const t = setTimeout(() => setMounted(false), FADE_OUT);
     return () => clearTimeout(t);
   }, [shown]);
 
-  const vertical = placement === 'top' || placement === 'bottom';
-  // placement 'none' 은 화살표 없이 붙는 변형이라 arrow 와 무관하게 안 그린다
-  const showArrow = arrow && placement !== 'none';
   // 화살표 깊이는 도형(padding) 안에 있다 — 트리거↔화살표 끝 간격이 곧 OFFSET
   const gap = OFFSET;
 
@@ -204,40 +221,108 @@ function TooltipBase({
     return () => ro.disconnect();
   }, [mounted]);
 
+  /*
+   * portal 모드 — 트리거의 뷰포트 좌표로 fixed 위치를 잡는다. 표 안쪽 스크롤 컨테이너의
+   * scroll 은 window 로 버블되지 않으므로 capture 로 받는다. mounted 는 클라이언트
+   * effect 에서만 true 가 되므로 SSR 에서 document 에 닿을 일이 없다.
+   */
+  const [rect, setRect] = useState<DOMRect | null>(null);
+  useEffect(() => {
+    if (!portal || !mounted) {
+      setRect(null);
+      return;
+    }
+    const el = triggerRef.current;
+    if (!el) return;
+    const update = () => setRect(el.getBoundingClientRect());
+    update();
+    const opts = { capture: true, passive: true };
+    window.addEventListener('scroll', update, opts);
+    window.addEventListener('resize', update);
+    return () => {
+      window.removeEventListener('scroll', update, opts);
+      window.removeEventListener('resize', update);
+    };
+  }, [portal, mounted]);
+
+  // 위 여백이 말풍선+간격보다 좁으면 아래로 뒤집는다 — portal 모드의 top 만
+  const side: TooltipPlacement =
+    portal && placement === 'top' && rect && dims && rect.top < dims.h + gap ? 'bottom' : placement;
+
+  const vertical = side === 'top' || side === 'bottom';
+  // placement 'none' 은 화살표 없이 붙는 변형이라 arrow 와 무관하게 안 그린다
+  const showArrow = arrow && side !== 'none';
+
   const shapeStyle: CSSProperties = {
     ...bubble,
     // 화살표 영역만큼 그쪽 padding 을 넓혀 두고 path 로 잘라낸다 — 글자는 말풍선 부분에만 앉는다
-    ...(showArrow && placement === 'top' && { paddingBottom: 4 + ARROW_DEPTH }),
-    ...(showArrow && placement === 'bottom' && { paddingTop: 4 + ARROW_DEPTH }),
-    ...(showArrow && placement === 'left' && { paddingRight: 8 + ARROW_DEPTH }),
-    ...(showArrow && placement === 'right' && { paddingLeft: 8 + ARROW_DEPTH }),
-    ...(showArrow && (placement === 'left' || placement === 'right') && { maxWidth: MAX_WIDTH + ARROW_DEPTH }),
+    ...(showArrow && side === 'top' && { paddingBottom: 4 + ARROW_DEPTH }),
+    ...(showArrow && side === 'bottom' && { paddingTop: 4 + ARROW_DEPTH }),
+    ...(showArrow && side === 'left' && { paddingRight: 8 + ARROW_DEPTH }),
+    ...(showArrow && side === 'right' && { paddingLeft: 8 + ARROW_DEPTH }),
+    ...(showArrow && (side === 'left' || side === 'right') && { maxWidth: MAX_WIDTH + ARROW_DEPTH }),
   };
 
   // 등장 모션 — 트리거 쪽에서 3px 떠오른다 (reduced-motion 이면 페이드만)
   const slide = entered || REDUCE_MOTION ? 0 : 3;
+  // portal 모드는 트리거 박스 대신 뷰포트 좌표에 붙인다 — 간격·화살표 규격은 같다.
+  // top·left 는 말풍선 크기를 재지 않고 translate(-100%) 로 자기 크기만큼 물린다
+  const fixedPos = (r: DOMRect): CSSProperties => {
+    const cx = r.left + r.width / 2;
+    const cy = r.top + r.height / 2;
+    if (side === 'bottom') return { top: r.bottom + gap, left: cx, transform: `translateX(-50%) translateY(${-slide}px)` };
+    if (side === 'left') return { top: cy, left: r.left - gap, transform: `translate(-100%, -50%) translateX(${slide}px)` };
+    if (side === 'right') return { top: cy, left: r.right + gap, transform: `translateY(-50%) translateX(${-slide}px)` };
+    // top·none
+    return { top: r.top - gap, left: cx, transform: `translate(-50%, -100%) translateY(${slide}px)` };
+  };
   const anchor: CSSProperties = {
-    position: 'absolute',
+    position: portal ? 'fixed' : 'absolute',
     zIndex: 1200,
     display: 'flex',
     flexDirection: vertical ? 'column' : 'row',
     alignItems: 'center',
     pointerEvents: 'none',
-    opacity: entered ? 1 : 0,
+    // portal 은 좌표를 재기 전 한 프레임을 숨긴다
+    opacity: entered && (!portal || rect) ? 1 : 0,
     transition: shown
       ? `opacity ${FADE_IN}ms ease-out, transform ${FADE_IN}ms ease-out`
       : `opacity ${FADE_OUT}ms ease-in`,
-    ...(placement === 'top' && { bottom: `calc(100% + ${gap}px)`, left: '50%', transform: `translateX(-50%) translateY(${slide}px)` }),
-    ...(placement === 'bottom' && { top: `calc(100% + ${gap}px)`, left: '50%', transform: `translateX(-50%) translateY(${-slide}px)` }),
-    ...(placement === 'left' && { right: `calc(100% + ${gap}px)`, top: '50%', transform: `translateY(-50%) translateX(${slide}px)` }),
-    ...(placement === 'right' && { left: `calc(100% + ${gap}px)`, top: '50%', transform: `translateY(-50%) translateX(${-slide}px)` }),
-    ...(placement === 'none' && { bottom: `calc(100% + ${OFFSET}px)`, left: '50%', transform: `translateX(-50%) translateY(${slide}px)` }),
+    ...(portal && rect && fixedPos(rect)),
+    ...(!portal && side === 'top' && { bottom: `calc(100% + ${gap}px)`, left: '50%', transform: `translateX(-50%) translateY(${slide}px)` }),
+    ...(!portal && side === 'bottom' && { top: `calc(100% + ${gap}px)`, left: '50%', transform: `translateX(-50%) translateY(${-slide}px)` }),
+    ...(!portal && side === 'left' && { right: `calc(100% + ${gap}px)`, top: '50%', transform: `translateY(-50%) translateX(${slide}px)` }),
+    ...(!portal && side === 'right' && { left: `calc(100% + ${gap}px)`, top: '50%', transform: `translateY(-50%) translateX(${-slide}px)` }),
+    ...(!portal && side === 'none' && { bottom: `calc(100% + ${OFFSET}px)`, left: '50%', transform: `translateX(-50%) translateY(${slide}px)` }),
   };
+
+  const tip = mounted && (
+    <span style={anchor}>
+      <span id={tipId} role="tooltip" ref={shapeRef} style={shapeStyle}>
+        {dims && (
+          <svg
+            aria-hidden="true"
+            focusable="false"
+            width={dims.w}
+            height={dims.h}
+            viewBox={`0 0 ${dims.w} ${dims.h}`}
+            style={{ position: 'absolute', inset: 0 }}
+          >
+            <path d={tooltipPath(dims.w, dims.h, showArrow ? side : 'none')} fill={color.layerInverse} />
+          </svg>
+        )}
+        {/* svg(positioned) 위에 얹히도록 텍스트도 positioned 로 */}
+        <span style={{ position: 'relative' }}>{content}</span>
+      </span>
+    </span>
+  );
 
   return (
     <span
+      ref={triggerRef}
       className={className}
-      style={{ position: 'relative', display: 'inline-flex' }}
+      // maxWidth — 표 셀처럼 폭이 정해진 칸 안에서 한 줄 말줄임 트리거가 내용 폭만큼 넘쳐 나가지 않게
+      style={{ position: 'relative', display: 'inline-flex', maxWidth: '100%' }}
       onMouseEnter={show}
       onMouseLeave={hide}
       onFocus={show}
@@ -245,26 +330,8 @@ function TooltipBase({
       aria-describedby={mounted ? tipId : undefined}
     >
       {children}
-      {mounted && (
-        <span style={anchor}>
-          <span id={tipId} role="tooltip" ref={shapeRef} style={shapeStyle}>
-            {dims && (
-              <svg
-                aria-hidden="true"
-                focusable="false"
-                width={dims.w}
-                height={dims.h}
-                viewBox={`0 0 ${dims.w} ${dims.h}`}
-                style={{ position: 'absolute', inset: 0 }}
-              >
-                <path d={tooltipPath(dims.w, dims.h, showArrow ? placement : 'none')} fill={color.layerOverlay} />
-              </svg>
-            )}
-            {/* svg(positioned) 위에 얹히도록 텍스트도 positioned 로 */}
-            <span style={{ position: 'relative' }}>{content}</span>
-          </span>
-        </span>
-      )}
+      {/* tip 은 mounted(클라이언트 effect 이후)일 때만 있다 — document.body 접근이 SSR 에 닿지 않는다 */}
+      {portal && tip ? createPortal(tip, document.body) : tip}
     </span>
   );
 }

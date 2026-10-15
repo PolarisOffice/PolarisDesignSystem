@@ -3,7 +3,7 @@ import PageLead from '@/components/docs/PageLead';
 import DocTabs from '@/components/docs/DocTabs';
 import { pageMeta } from '@/lib/docs/pages';
 import { isComponentLive } from '@/lib/docs/package';
-import LoadingDesign from './loading.design';
+import LoadingDesign, { LoadingSpecification } from './loading.design';
 import LoadingCode from './loading.code';
 
 const meta = pageMeta('/components/loading')!;
@@ -20,7 +20,12 @@ export default function LoadingPage() {
       </PageLead>
       <DocTabs
         design={<LoadingDesign />}
-        code={<LoadingCode />}
+        code={
+          <>
+            <LoadingCode />
+            <LoadingSpecification />
+          </>
+        }
         codeBadge={isComponentLive('loading') ? undefined : '준비 중'}
       />
     </>

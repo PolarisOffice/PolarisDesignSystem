@@ -47,11 +47,11 @@ ${OPTIONS}
   {
     id: 'size',
     title: 'Size',
-    desc: 'LG(폼) · MD(필터·검색바) · SM(툴바·인라인).',
+    desc: 'Input Field 와 같은 4단계예요. LG 52(폼) · MD 40(검색) · SM 32(표 툴바·촘촘한 화면) · XS 28(표 셀 안).',
     previewName: 'Select',
     preview: (
       <DemoRow gap="wide">
-        {(['lg', 'md', 'sm'] as const).map((size) => (
+        {(['lg', 'md', 'sm', 'xs'] as const).map((size) => (
           <DemoCol key={size} label={size}>
             <Select size={size} options={options} placeholder="Placeholder" />
           </DemoCol>
@@ -62,7 +62,8 @@ ${OPTIONS}
 
 <Select size="lg" options={options} placeholder="Placeholder" />
 <Select size="md" options={options} placeholder="Placeholder" />
-<Select size="sm" options={options} placeholder="Placeholder" />`,
+<Select size="sm" options={options} placeholder="Placeholder" />
+<Select size="xs" options={options} placeholder="Placeholder" />`,
   },
   {
     id: 'state',

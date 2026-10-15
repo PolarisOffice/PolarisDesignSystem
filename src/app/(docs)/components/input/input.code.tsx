@@ -53,6 +53,27 @@ export const EXAMPLES: CodeExampleSpec[] = [
 <InputField label="title" placeholder="placeholder" />`,
   },
   {
+    id: 'size',
+    title: 'Size',
+    desc: 'Select 와 같은 4단계예요. LG 52(폼) · MD 40(검색) · SM 32(표 툴바·촘촘한 화면) · XS 28(표 셀 안). MD 부터는 제목을 그리지 않으니 label 은 접근성 이름으로만 쓰여요.',
+    previewName: 'InputField',
+    preview: (
+      <DemoRow gap="wide">
+        {(['lg', 'md', 'sm', 'xs'] as const).map((size) => (
+          <DemoCol key={size} label={size}>
+            <InputField size={size} label="검색" placeholder="placeholder" />
+          </DemoCol>
+        ))}
+      </DemoRow>
+    ),
+    code: `${IMPORT}
+
+<InputField size="lg" label="검색" placeholder="placeholder" />
+<InputField size="md" label="검색" placeholder="placeholder" />
+<InputField size="sm" label="검색" placeholder="placeholder" />
+<InputField size="xs" label="검색" placeholder="placeholder" />`,
+  },
+  {
     id: 'password',
     title: 'Password',
     desc: '비밀번호 필드에는 항상 눈 아이콘(Right Icon)을 제공해요. 기본 상태는 숨김(eye-off).',

@@ -65,7 +65,7 @@ export default function TabsDesign() {
       <H3>Variant</H3>
       <p>
         Primary 는 페이지 최상단 메인 네비게이션, Secondary 는 섹션 안 서브 카테고리에 써요. 선택 탭은 하단
-        2px 선으로 표시해요.
+        선으로 표시해요.
       </p>
       {/* 실물 프리뷰(2026-08-28, toggle 패턴) — 텍스트로만 서술되던 유형 축을 실물로 보인다.
           프리뷰는 그림이므로 inert 로 클릭·포커스를 막고, 폭 없는 컨테이너의 fill 어긋남
@@ -119,7 +119,7 @@ export default function TabsDesign() {
       </div>
 
       <H3>State</H3>
-      <p>Enabled · Selected · Disabled. Tabs 의 Disabled 는 투명도 35% 예요.</p>
+      <p>Enabled · Selected · Disabled. Disabled 는 흐리게 보여요.</p>
       {/* 선택=전체 로 Selected(전체)·Enabled(문서)·Disabled(보관함) 세 상태가 한 번에 보인다 */}
       <div className={s.typePreview} inert aria-hidden="true">
         <Tabs layout="hug" items={TABS_STATE_SAMPLE_ITEMS} defaultValue={TABS_STATE_SAMPLE_DEFAULT} />
@@ -159,7 +159,15 @@ export default function TabsDesign() {
         ]}
         rows={TABS_ALTERNATIVES.map((r) => ({ situation: r.situation, alternative: <strong>{r.alternative}</strong> }))}
       />
+    </>
+  );
+}
 
+/** Specification — 치수·토큰 표. Code 탭 끝에 놓는다(2026-10-12: Design 탭은 쓰임새, Code 탭은 구현 값).
+ *  헤딩 id 는 Design 탭에 있을 때와 같아서 옛 딥링크(#specification 등)는 DocTabs 가 Code 탭을 열어 준다. */
+export function TabsSpecification() {
+  return (
+    <>
       <H2>Specification</H2>
 
       <H3>Container</H3>

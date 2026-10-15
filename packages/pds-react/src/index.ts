@@ -2,7 +2,7 @@ export { Button } from './components/button/index.js';
 export type { ButtonProps, ButtonSize, ButtonVariant } from './components/button/types.js';
 
 export { InputField } from './components/input/index.js';
-export type { InputFieldProps } from './components/input/types.js';
+export type { InputFieldProps, InputFieldSize } from './components/input/types.js';
 
 export { Popup } from './components/popup/index.js';
 export type { PopupProps } from './components/popup/types.js';
@@ -24,11 +24,30 @@ export type { SelectProps, SelectOption, SelectSize } from './components/select/
 export { Dim } from './components/dim/index.js';
 export type { DimProps } from './components/dim/types.js';
 
-export { Table } from './components/table/index.js';
-export type { TableProps, TableColumn } from './components/table/types.js';
+export { Table, TableEmpty } from './components/table/index.js';
+export type { TableProps, TableColumn, TableSort, TableSortDirection, TableAlign, TableEmptyProps } from './components/table/types.js';
+
+export { TableToolbar } from './components/table-toolbar/index.js';
+export type { TableToolbarProps, TableToolbarSelection } from './components/table-toolbar/types.js';
+
+export { Pagination } from './components/pagination/index.js';
+export type { PaginationProps } from './components/pagination/types.js';
 
 export { Badge } from './components/badge/index.js';
 export type { BadgeProps } from './components/badge/types.js';
+
+export { Chip } from './components/chip/index.js';
+export type { ChipProps, ChipSize, ChipType } from './components/chip/types.js';
+
+export { DatePicker, Calendar, DEFAULT_DATE_PRESETS } from './components/date-picker/index.js';
+export type {
+  DatePickerProps,
+  DatePickerSingleProps,
+  DatePickerRangeProps,
+  CalendarProps,
+  DateRange,
+  DatePreset,
+} from './components/date-picker/types.js';
 
 export { Credit } from './components/credit/index.js';
 export type { CreditProps } from './components/credit/types.js';
@@ -37,10 +56,10 @@ export { Toggle } from './components/toggle/index.js';
 export type { ToggleProps, ToggleSize } from './components/toggle/types.js';
 
 export { Checkbox } from './components/checkbox/index.js';
-export type { CheckboxProps } from './components/checkbox/types.js';
+export type { CheckboxProps, CheckboxSize, CheckboxVariant } from './components/checkbox/types.js';
 
 export { Radio, RadioGroup } from './components/radio/index.js';
-export type { RadioProps, RadioTone, RadioGroupProps } from './components/radio/types.js';
+export type { RadioProps, RadioTone, RadioSize, RadioGroupProps } from './components/radio/types.js';
 
 export { Tabs } from './components/tab/index.js';
 export type { TabsProps, TabItem, TabVariant, TabLayout, TabSize } from './components/tab/types.js';
@@ -48,7 +67,20 @@ export type { TabsProps, TabItem, TabVariant, TabLayout, TabSize } from './compo
 export { SegmentControl } from './components/segment/index.js';
 export type { SegmentControlProps, SegmentItem, SegmentVariant, SegmentLayout, SegmentSize } from './components/segment/types.js';
 
-export { DownloadIcon, UserIcon } from './icons/index.js';
+export {
+  DownloadIcon,
+  UserIcon,
+  SearchIcon,
+  CloseIcon,
+  CalendarIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  ChevronDownIcon,
+  FilterIcon,
+  SortIcon,
+  SortAscIcon,
+  SortDescIcon,
+} from './icons/index.js';
 
 export { IconButton } from './components/icon-button/index.js';
 export type { IconButtonProps, IconButtonSize } from './components/icon-button/types.js';

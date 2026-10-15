@@ -3,7 +3,7 @@ import PageLead from '@/components/docs/PageLead';
 import DocTabs from '@/components/docs/DocTabs';
 import { pageMeta } from '@/lib/docs/pages';
 import { isComponentLive } from '@/lib/docs/package';
-import TooltipDesign from './tooltip.design';
+import TooltipDesign, { TooltipSpecification } from './tooltip.design';
 import TooltipCode from './tooltip.code';
 
 const meta = pageMeta('/components/tooltip')!;
@@ -19,7 +19,12 @@ export default function TooltipPage() {
       </PageLead>
       <DocTabs
         design={<TooltipDesign />}
-        code={<TooltipCode />}
+        code={
+          <>
+            <TooltipCode />
+            <TooltipSpecification />
+          </>
+        }
         codeBadge={isComponentLive('tooltip') ? undefined : '준비 중'}
       />
     </>

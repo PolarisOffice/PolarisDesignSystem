@@ -2,7 +2,7 @@ import { H2, H3 } from '@/components/docs/Heading';
 import SpecTable, { SpecToken, SpecVal } from '@/components/docs/SpecTable';
 import Anatomy from '@/components/docs/Anatomy';
 import AnatomyFigure from '@/components/docs/AnatomyFigure';
-import { InputField, UserIcon } from '@polarisoffice/pds-react';
+import { InputField, UserIcon, type InputFieldSize } from '@polarisoffice/pds-react';
 import UsageGrid from '@/components/docs/UsageGrid';
 import { CaseList, CaseBlock } from '@/components/docs/CaseList';
 import { TabSwitchLink } from '@/components/docs/DocTabs';
@@ -13,6 +13,7 @@ import {
   INPUT_CASES,
   INPUT_CONTAINER,
   INPUT_ICON,
+  INPUT_SIZES,
   INPUT_TYPES,
   INPUT_TYPOGRAPHY,
   INPUT_USAGE,
@@ -54,6 +55,15 @@ function SamplePreview({ sample, activeBorder }: { sample: InputSample; activeBo
     </div>
   );
 }
+/** Size 표 Preview 행의 실물 — 셀 폭을 채워 네 높이를 같은 행에서 대조한다(표시 전용) */
+function SizePreview({ size }: { size: InputFieldSize }) {
+  return (
+    <span className={s.cellPreview} inert aria-hidden="true">
+      <InputField size={size} placeholder="placeholder" fullWidth />
+    </span>
+  );
+}
+
 export default function InputDesign() {
   return (
     <>
@@ -88,18 +98,13 @@ export default function InputDesign() {
 
       <H2>Properties</H2>
 
-      <H3>Base</H3>
+      {/* 2026-10-12 'Base' 를 없애고, 따로 H2 였던 Type 을 Properties 안으로 넣었다(Properties = 어떤 옵션이 있나).
+          앵커 id 'type' 은 그대로다. 상태 모습은 Case 가 보여 줘서 State 에는 그림을 또 두지 않는다 */}
+      <H3>Type</H3>
       <p>
-        Placeholder 만 있는 Simple 형태와 Title 이 함께 있는 Labeled 형태가 기본이에요.{' '}
+        안내 문구만 있는 Simple 과 제목이 함께 있는 Labeled 가 기본이에요. 아이콘은 필요할 때만 붙여요.{' '}
         <TabSwitchLink to="code">코드로 보기</TabSwitchLink>
       </p>
-
-      <H3>Size</H3>
-      <p>
-        MD(52px)가 기본이고 폼에 써요. SM 은 좁은 곳에 써요. Disabled 는 투명도 35% 예요.
-      </p>
-
-      <H2>Type</H2>
       <CaseList>
         {INPUT_TYPES.map((t) => (
           <CaseBlock key={t.n} badge={t.n} title={t.title} sub={t.desc}>
@@ -107,6 +112,28 @@ export default function InputDesign() {
           </CaseBlock>
         ))}
       </CaseList>
+
+      <H3>Size</H3>
+      <p>
+        Select 와 같은 4단계예요. 필드 안 제목은 LG 에만 있어요.
+      </p>
+      <SpecTable
+        caption="Input 사이즈별 실물과 쓰는 자리"
+        columns={[
+          { key: 'size', header: 'Size', width: '16%' },
+          { key: 'preview', header: '실물', width: '34%' },
+          { key: 'use', header: '쓰는 자리', width: '50%' },
+        ]}
+        rows={[
+          { size: <strong>LG</strong>, preview: <SizePreview size="lg" />, use: '폼. 기본 크기예요' },
+          { size: <strong>MD</strong>, preview: <SizePreview size="md" />, use: '검색' },
+          { size: <strong>SM</strong>, preview: <SizePreview size="sm" />, use: '표 툴바, 촘촘한 화면' },
+          { size: <strong>XS</strong>, preview: <SizePreview size="xs" />, use: '표 셀 안처럼 좁은 곳' },
+        ]}
+      />
+
+      <H3>State</H3>
+      <p>누른 상태, 오류, 입력 완료 모습은 아래 Case 에 있어요. Disabled 는 흐리게 보여요.</p>
 
       <H2>Case</H2>
       <CaseList>
@@ -125,10 +152,38 @@ export default function InputDesign() {
         Placeholder only(Simple): 검색창·인라인 필터처럼 레이블 자리가 없는 짧은 입력.
       </p>
       <p>
-        Labeled: 입력 후에도 어떤 필드인지 알아야 하는 폼. title 이 남아 맥락을 지켜요.
+        Labeled: 입력 후에도 어떤 필드인지 알아야 하는 폼. 제목이 남아 맥락을 지켜요.
       </p>
+    </>
+  );
+}
 
+/** Specification — 치수·토큰 표. Code 탭 끝에 놓는다(2026-10-12: Design 탭은 쓰임새, Code 탭은 구현 값).
+ *  헤딩 id 는 Design 탭에 있을 때와 같아서 옛 딥링크(#specification 등)는 DocTabs 가 Code 탭을 열어 준다. */
+export function InputSpecification() {
+  return (
+    <>
       <H2>Specification</H2>
+
+      {/* Design 탭 Properties 에도 Size 가 있다 — id 를 따로 박는다(button 과 같은 방식) */}
+      <H3 id="size-1">Size</H3>
+      <SpecTable
+        caption="Input 사이즈별 치수"
+        columns={[
+          { key: 'prop', header: '', width: '20%' },
+          { key: 'lg', header: 'LG', width: '20%' },
+          { key: 'md', header: 'MD', width: '20%' },
+          { key: 'sm', header: 'SM', width: '20%' },
+          { key: 'xs', header: 'XS', width: '20%' },
+        ]}
+        rows={INPUT_SIZES.map((r) => ({
+          prop: <strong>{r.prop}</strong>,
+          lg: <SpecVal>{r.lg}</SpecVal>,
+          md: <SpecVal>{r.md}</SpecVal>,
+          sm: <SpecVal>{r.sm}</SpecVal>,
+          xs: <SpecVal>{r.xs}</SpecVal>,
+        }))}
+      />
 
       <H3>Container</H3>
       <SpecTable

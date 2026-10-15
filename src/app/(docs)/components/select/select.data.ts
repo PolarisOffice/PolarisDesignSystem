@@ -46,7 +46,7 @@ export const SELECT_STATES: readonly {
     state: 'Open',
     border: '#1d7ff9',
     token: '--color-accent-normal',
-    desc: '메뉴 노출 중, chevron 위 방향',
+    desc: '메뉴가 열림, 화살표가 위로',
     preview: null,
   },
   { state: 'Filled', border: '#e8ebed', token: '--color-line-neutral', desc: '값 선택 완료, 닫힘', preview: { value: 'a' } },
@@ -54,25 +54,26 @@ export const SELECT_STATES: readonly {
     state: 'Disabled',
     border: '#e8ebed',
     token: '--color-line-neutral',
-    desc: '배경·radius 는 그대로, 텍스트·아이콘만 40%',
+    desc: '배경과 모서리는 그대로, 글자와 아이콘만 흐려져요',
     preview: { disabled: true },
   },
 ];
 
+/** 2026-10 디자인 결정 — InputField 와 같은 4단계(52/40/32/28), 같은 높이의 Button 과 한 줄에 선다 */
 export const SELECT_SIZES = [
-  { prop: 'height', lg: '52px', md: '38px', sm: '26px' },
-  { prop: 'padding', lg: '0 8px 0 12px', md: '0 8px 0 12px', sm: '0 8px 0 4px' },
-  { prop: 'font-size', lg: '14px', md: '13px', sm: '13px' },
-  { prop: 'border-radius', lg: '8px', md: '8px', sm: '6px' },
-  { prop: 'chevron', lg: '24×24px', md: '18×18px', sm: '14×14px' },
+  { prop: 'height', lg: '52px', md: '40px', sm: '32px', xs: '28px' },
+  { prop: 'padding', lg: '0 8px 0 12px', md: '0 8px 0 12px', sm: '0 8px 0 10px', xs: '0 8px 0 8px' },
+  { prop: 'font-size', lg: '14px', md: '14px', sm: '14px', xs: '13px' },
+  { prop: 'border-radius', lg: '8px', md: '8px', sm: '8px', xs: '6px' },
+  { prop: 'chevron', lg: '24×24px', md: '18×18px', sm: '16×16px', xs: '14×14px' },
 ] as const;
 
 export const SELECT_USAGE = {
   do: [
     '옵션 5개 이상일 때',
-    '선택한 값은 trigger 에 표시',
+    '선택한 값은 입력칸에 표시',
     '메뉴는 Context & Menu Item 사용',
-    '메뉴 너비는 trigger 와 같게',
+    '메뉴 너비는 입력칸과 같게',
   ],
   dont: [
     '옵션 2~4개(Segment Control 몫)',
@@ -83,23 +84,25 @@ export const SELECT_USAGE = {
 
 export const SELECT_TRIGGER_SPEC = [
   { prop: 'height (lg)', value: '52px', desc: '' },
-  { prop: 'height (md)', value: '38px', desc: '' },
-  { prop: 'padding (lg)', value: '0 8px 0 12px', desc: 'left 12px / right 8px' },
-  { prop: 'padding (md)', value: '0 8px 0 12px', desc: 'left 12px / right 8px' },
-  { prop: 'padding (sm)', value: '0 8px 0 4px', desc: 'left 4px / right 8px' },
-  { prop: 'border-radius (lg)', value: '8px', desc: '' },
-  { prop: 'border-radius (md)', value: '8px', desc: '' },
-  { prop: 'border-radius (sm)', value: '6px', desc: '' },
+  { prop: 'height (md)', value: '40px', desc: '' },
+  { prop: 'height (sm)', value: '32px', desc: '' },
+  { prop: 'height (xs)', value: '28px', desc: '' },
+  { prop: 'padding (lg/md)', value: '0 8px 0 12px', desc: 'left 12px / right 8px' },
+  { prop: 'padding (sm)', value: '0 8px 0 10px', desc: 'left 10px / right 8px' },
+  { prop: 'padding (xs)', value: '0 8px 0 8px', desc: 'left 8px / right 8px' },
+  { prop: 'border-radius (lg/md/sm)', value: '8px', desc: '' },
+  { prop: 'border-radius (xs)', value: '6px', desc: '' },
   { prop: 'border (default)', value: '1px solid --color-line-neutral (#e8ebed)', desc: '' },
   { prop: 'border (open)', value: '1px solid --color-accent-normal (#1d7ff9)', desc: '' },
   { prop: 'background', value: '--color-background-base (#ffffff)', desc: '' },
   { prop: 'placeholder color', value: '--color-label-assistive (#9ea4aa)', desc: '' },
   { prop: 'value color', value: '--color-label-normal (#26282b)', desc: '' },
-  { prop: 'font-size (lg)', value: '14px (font-size/sm)', desc: '' },
-  { prop: 'font-size (md/sm)', value: '13px (font-size/xs)', desc: '' },
+  { prop: 'font-size (lg/md/sm)', value: '14px (font-size/sm)', desc: '' },
+  { prop: 'font-size (xs)', value: '13px (font-size/xs)', desc: '' },
   { prop: 'chevron (lg)', value: '24×24px', desc: 'Open 시 위 방향' },
   { prop: 'chevron (md)', value: '18×18px', desc: '' },
-  { prop: 'chevron (sm)', value: '14×14px', desc: '' },
+  { prop: 'chevron (sm)', value: '16×16px', desc: '' },
+  { prop: 'chevron (xs)', value: '14×14px', desc: '' },
   { prop: 'disabled opacity (text/icon)', value: '40%', desc: '배경·border-radius는 Default와 동일' },
 ] as const;
 

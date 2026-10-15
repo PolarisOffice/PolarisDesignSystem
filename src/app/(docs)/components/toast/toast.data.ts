@@ -1,10 +1,10 @@
 /** Toast 스펙 — 원본 `docs/components/toast.md` */
 
 export const TOAST_ANATOMY = [
-  { n: '01', title: 'Container', desc: '블러 반투명 배경, border-radius 12px, padding 13px 16px' },
-  { n: '02', title: 'Status Icon', desc: 'Error / Success 상태 구분. 20×20px SVG 아이콘' },
-  { n: '03', title: 'Message', desc: '1~2줄 피드백 텍스트. 14px / white' },
-  { n: '04', title: 'Close', desc: '수동으로 닫는 버튼. 기본 opacity 55%' },
+  { n: '01', title: 'Container', desc: '반투명 배경의 둥근 상자.' },
+  { n: '02', title: 'Status Icon', desc: 'Error / Success 상태를 구분하는 아이콘' },
+  { n: '03', title: 'Message', desc: '1~2줄 피드백 텍스트' },
+  { n: '04', title: 'Close', desc: '수동으로 닫는 버튼' },
 ] as const;
 
 export const TOAST_VARIANTS = [
@@ -19,7 +19,7 @@ export const TOAST_USAGE = {
     '메시지는 1~2줄로 짧게',
     '작업 결과(성공/실패)를 즉시 피드백할 때',
     '한 번에 하나만',
-    '자동 닫힘 3,000ms 유지',
+    '3초 뒤 자동으로 닫히게',
   ],
   dont: [
     '확인·결정이 필요하면 Popup',

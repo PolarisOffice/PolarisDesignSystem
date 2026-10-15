@@ -23,6 +23,8 @@ import DimDemo from './live-demos/DimDemo';
 import TableDemo from './live-demos/TableDemo';
 import CreditDemo from './live-demos/CreditDemo';
 import BadgeDemo from './live-demos/BadgeDemo';
+import ChipDemo from './live-demos/ChipDemo';
+import DatePickerDemo from './live-demos/DatePickerDemo';
 import { CheckboxDemo, RadioDemo, SegmentDemo, TabDemo, ToggleDemo } from './live-demos/ActionDemos';
 import { LoadingDemo } from './live-demos/LoadingDemos';
 
@@ -54,6 +56,8 @@ export const LIVE_COMPONENTS: LiveMap = {
     tab: TabDemo as ComponentType<Record<string, unknown>>,
     segment: SegmentDemo as ComponentType<Record<string, unknown>>,
     badge: BadgeDemo as ComponentType<Record<string, unknown>>,
+    chip: ChipDemo as ComponentType<Record<string, unknown>>,
+    'date-picker': DatePickerDemo as ComponentType<Record<string, unknown>>,
     loading: LoadingDemo as ComponentType<Record<string, unknown>>,
   },
 };

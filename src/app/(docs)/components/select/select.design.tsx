@@ -38,7 +38,7 @@ const SPEC_COLUMNS = [
  * Code 탭에 있다. Open 상태만 프리뷰가 없다(사유는 data 주석).
  */
 
-/** Size 표 Preview 행의 실물 — 짧은 선택값(문서)으로 세 치수를 같은 행에서 대조한다 */
+/** Size 표 Preview 행의 실물 — 짧은 선택값(문서)으로 네 치수를 같은 행에서 대조한다 */
 function SizePreview({ size }: { size: SelectSize }) {
   return (
     <span className={s.cellPreview} inert aria-hidden="true">
@@ -70,16 +70,15 @@ export default function SelectDesign() {
 
       <H3>State</H3>
       <p>
-        상태에 따라 테두리 색이 바뀌어요. Disabled 는 텍스트·아이콘만 40% 로 흐려지고 배경·radius 는
+        상태에 따라 테두리 색이 바뀌어요. Disabled 는 글자와 아이콘만 흐려지고 배경과 모서리는
         그대로예요. <TabSwitchLink to="code">코드로 보기</TabSwitchLink>
       </p>
       <SpecTable
-        caption="Select 상태별 실물과 테두리"
+        caption="Select 상태별 실물"
         columns={[
-          { key: 'state', header: 'State', width: '14%' },
-          { key: 'preview', header: 'Preview', width: '24%' },
-          { key: 'border', header: 'Border', width: '30%' },
-          { key: 'desc', header: '설명', width: '32%' },
+          { key: 'state', header: 'State', width: '18%' },
+          { key: 'preview', header: 'Preview', width: '32%' },
+          { key: 'desc', header: '설명', width: '50%' },
         ]}
         rows={SELECT_STATES.map((r) => ({
           state: <strong>{r.state}</strong>,
@@ -96,48 +95,61 @@ export default function SelectDesign() {
           ) : (
             '—'
           ),
-          border: (
-            <>
-              <SpecToken>{r.token}</SpecToken> <Swatch hex={r.border} />
-            </>
-          ),
           desc: r.desc,
         }))}
       />
 
       <H3>Size</H3>
       <p>
-        LG 는 폼, MD 는 필터·검색바, SM 은 툴바·인라인처럼 가장 좁은 곳에 써요.
+        Input Field 와 같은 4단계예요. 같은 높이의 Button 과 한 줄에 맞춰 써요.
       </p>
       <SpecTable
-        caption="Select 사이즈별 치수"
+        caption="Select 사이즈별 실물과 쓰는 자리"
         columns={[
-          { key: 'prop', header: '', width: '28%' },
-          { key: 'lg', header: 'LG', width: '24%' },
-          { key: 'md', header: 'MD', width: '24%' },
-          { key: 'sm', header: 'SM', width: '24%' },
+          { key: 'size', header: 'Size', width: '16%' },
+          { key: 'preview', header: '실물', width: '34%' },
+          { key: 'use', header: '쓰는 자리', width: '50%' },
         ]}
         rows={[
-          // 실물 행(2026-08-28) — 치수 값들을 실물과 같은 열에서 대조한다
-          {
-            prop: <strong>Preview</strong>,
-            lg: <SizePreview size="lg" />,
-            md: <SizePreview size="md" />,
-            sm: <SizePreview size="sm" />,
-          },
-          ...SELECT_SIZES.map((r) => ({
-            prop: <strong>{r.prop}</strong>,
-            lg: <SpecVal>{r.lg}</SpecVal>,
-            md: <SpecVal>{r.md}</SpecVal>,
-            sm: <SpecVal>{r.sm}</SpecVal>,
-          })),
+          { size: <strong>LG</strong>, preview: <SizePreview size="lg" />, use: '폼. 기본 크기예요' },
+          { size: <strong>MD</strong>, preview: <SizePreview size="md" />, use: '검색' },
+          { size: <strong>SM</strong>, preview: <SizePreview size="sm" />, use: '표 툴바, 촘촘한 화면' },
+          { size: <strong>XS</strong>, preview: <SizePreview size="xs" />, use: '표 셀 안처럼 좁은 곳' },
         ]}
       />
 
       <H2>Guidelines</H2>
       <UsageGrid do={[...SELECT_USAGE.do]} dont={[...SELECT_USAGE.dont]} />
+    </>
+  );
+}
 
+/** Specification — 치수·토큰 표. Code 탭 끝에 놓는다(2026-10-12: Design 탭은 쓰임새, Code 탭은 구현 값).
+ *  헤딩 id 는 Design 탭에 있을 때와 같아서 옛 딥링크(#specification 등)는 DocTabs 가 Code 탭을 열어 준다. */
+export function SelectSpecification() {
+  return (
+    <>
       <H2>Specification</H2>
+
+      {/* Design 탭 Properties 에도 Size 가 있다 — id 를 따로 박는다(button 과 같은 방식) */}
+      <H3 id="size-1">Size</H3>
+      <SpecTable
+        caption="Select 사이즈별 치수"
+        columns={[
+          { key: 'prop', header: '', width: '20%' },
+          { key: 'lg', header: 'LG', width: '20%' },
+          { key: 'md', header: 'MD', width: '20%' },
+          { key: 'sm', header: 'SM', width: '20%' },
+          { key: 'xs', header: 'XS', width: '20%' },
+        ]}
+        rows={SELECT_SIZES.map((r) => ({
+          prop: <strong>{r.prop}</strong>,
+          lg: <SpecVal>{r.lg}</SpecVal>,
+          md: <SpecVal>{r.md}</SpecVal>,
+          sm: <SpecVal>{r.sm}</SpecVal>,
+          xs: <SpecVal>{r.xs}</SpecVal>,
+        }))}
+      />
 
       <H3>Container</H3>
       <SpecTable
@@ -147,6 +159,23 @@ export default function SelectDesign() {
           prop: r.prop,
           value: <SpecVal>{r.value}</SpecVal>,
           desc: r.desc,
+        }))}
+      />
+
+      <H3>Border Color by State</H3>
+      <SpecTable
+        caption="상태별 테두리 색"
+        columns={[
+          { key: 'state', header: 'State', width: '30%' },
+          { key: 'border', header: 'Border', width: '70%' },
+        ]}
+        rows={SELECT_STATES.map((r) => ({
+          state: <strong>{r.state}</strong>,
+          border: (
+            <>
+              <SpecToken>{r.token}</SpecToken> <Swatch hex={r.border} />
+            </>
+          ),
         }))}
       />
 

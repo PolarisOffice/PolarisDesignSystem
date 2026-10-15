@@ -83,7 +83,7 @@ export default function LoadingDesign() {
           ))}
         </DemoRow>
       </DemoSurface>
-      <p>Progress Bar 는 높이 4px 에 부모 폭을 따라요. Skeleton 은 실제 콘텐츠 크기에 맞추고, 아래는 모양별 기본값이에요.</p>
+      <p>Progress Bar 는 얇은 막대로, 놓인 자리의 폭을 채워요. Skeleton 은 실제 콘텐츠 크기에 맞추고, 아래는 모양별 기본 크기예요.</p>
       <DemoSurface>
         <DemoRow gap="wide" align="center">
           {SKELETON_SHAPES.map((s) => (
@@ -121,23 +121,24 @@ export default function LoadingDesign() {
 
       <H3>Color</H3>
       <p>
-        Progress Circle 은 트랙 없이 호 하나만 돌고, 색은 화면에 맞춰 바꿔요. Skeleton 은{' '}
-        <code>--color-fill-normal</code> 하나만 써요.
+        Progress Circle 은 트랙 없이 호 하나만 돌고, 색은 화면에 맞춰 바꿔요. Skeleton 은 옅은 회색 하나만 써요.
       </p>
       <SpecTable
         caption="맥락별 색"
         columns={[
           { key: 'context', header: '맥락', width: '30%' },
-          { key: 'token', header: '토큰', width: '34%' },
-          { key: 'desc', header: '설명', width: '36%' },
+          { key: 'color', header: '색', width: '24%' },
+          { key: 'desc', header: '설명', width: '46%' },
         ]}
-        rows={CIRCLE_COLORS.map((c) => ({ context: c.context, token: <code>{c.token}</code>, desc: c.desc }))}
+        rows={CIRCLE_COLORS.map((c) => ({ context: c.context, color: c.color, desc: c.desc }))}
       />
 
       <H2>Case</H2>
       <CaseList>
-        <CaseBlock badge="01" title="버튼 안" sub="아이콘 자리에 18 스피너가 들어가요. 라벨을 진행 문구로 바꾸거나 스피너만 두되, 버튼 폭과 색은 그대로예요. 회색은 비활성 몫이에요.">
+        <CaseBlock badge="01" title="버튼 안" sub="아이콘 자리에 가장 작은 스피너가 들어가요. 라벨을 진행 문구로 바꾸거나 스피너만 두되, 버튼 폭과 색은 그대로예요. 회색은 비활성 몫이에요.">
           <DemoSurface>
+            {/* 그림 — Design 탭 예시는 눌리지 않는다(2026-10-12). contents 라 배치는 그대로 */}
+            <div inert style={{ display: 'contents' }}>
             <DemoRow gap="wide">
               <DemoCol label="라벨 유지">
                 <Button variant="primary" size={40} loading>
@@ -148,10 +149,11 @@ export default function LoadingDesign() {
                 <Button variant="primary" size={40} loading aria-label="저장중" style={{ width: 79 }} />
               </DemoCol>
             </DemoRow>
+            </div>
           </DemoSurface>
         </CaseBlock>
 
-        <CaseBlock badge="02" title="전체 화면" sub="딤 위 화면 가운데에 48을 둬요.">
+        <CaseBlock badge="02" title="전체 화면" sub="딤 위 화면 가운데에 가장 큰 스피너를 둬요.">
           <DemoSurface pad="tall">
             <div style={{ position: 'relative', width: '100%', minHeight: 200, borderRadius: 12, overflow: 'hidden' }}>
               <Dim loading label="불러오는 중" />
@@ -219,7 +221,15 @@ export default function LoadingDesign() {
         do={[...CIRCLE_USAGE.do, ...BAR_USAGE.do, ...SKELETON_USAGE.do]}
         dont={[...CIRCLE_USAGE.dont, ...BAR_USAGE.dont, ...SKELETON_USAGE.dont]}
       />
+    </>
+  );
+}
 
+/** Specification — 치수·토큰 표. Code 탭 끝에 놓는다(2026-10-12: Design 탭은 쓰임새, Code 탭은 구현 값).
+ *  헤딩 id 는 Design 탭에 있을 때와 같아서 옛 딥링크(#specification 등)는 DocTabs 가 Code 탭을 열어 준다. */
+export function LoadingSpecification() {
+  return (
+    <>
       <H2>Specification</H2>
 
       <H3>Progress Circle</H3>
@@ -239,6 +249,14 @@ export default function LoadingDesign() {
         }))}
       />
       <p>2초에 한 바퀴 돌며 호 길이가 함께 변해요. 멈춰 보이는 구간이 없어요.</p>
+      <SpecTable
+        caption="원형 맥락별 색 토큰"
+        columns={[
+          { key: 'context', header: '맥락', width: '40%' },
+          { key: 'token', header: '토큰', width: '60%' },
+        ]}
+        rows={CIRCLE_COLORS.map((c) => ({ context: c.context, token: <code>{c.token}</code> }))}
+      />
       <SpecTable
         caption="원형 애니메이션 값"
         columns={[

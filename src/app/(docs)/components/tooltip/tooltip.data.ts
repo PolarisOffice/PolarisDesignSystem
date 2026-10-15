@@ -5,7 +5,7 @@ export const TOOLTIP_USAGE = {
     '아이콘 버튼처럼 레이블 없는 요소에',
     '텍스트는 1~2줄로 짧게',
     '보조 정보만. 핵심 정보는 화면에 항상 노출',
-    '연속 호버는 Cascade 로 바로 표시',
+    '연달아 볼 땐 기다림 없이 바로 표시',
   ],
   dont: [
     '링크·버튼 같은 인터랙션 콘텐츠를 안에 넣기',
@@ -31,8 +31,7 @@ export const TOOLTIP_TIMING_CASCADE = [
 ] as const;
 
 export const TOOLTIP_CONTAINER = [
-  { prop: 'background', value: 'rgba(44,44,44,0.78)', desc: '블러 + 반투명' },
-  { prop: 'backdrop-filter', value: 'blur(16px)', desc: '' },
+  { prop: 'background', value: '--color-layer-inverse', desc: '불투명' },
   { prop: 'border-radius', value: '--radius-xs (6px)', desc: '' },
   { prop: 'padding', value: '6px 10px', desc: '' },
   { prop: 'offset (기본)', value: '8px', desc: '트리거 요소 상단에서 8px 간격' },
@@ -43,7 +42,7 @@ export const TOOLTIP_CONTAINER = [
 export const TOOLTIP_TYPOGRAPHY = [
   { prop: 'font-size', value: '12px', desc: '' },
   { prop: 'font-weight', value: '500 (Medium)', desc: '' },
-  { prop: 'color', value: '--color-static-white (#ffffff)', desc: '' },
+  { prop: 'color', value: '--color-label-inverse', desc: '' },
   { prop: 'max-width', value: '200px', desc: '초과 시 줄바꿈' },
 ] as const;
 
@@ -68,7 +67,7 @@ export const TOOLTIP_ARROW_CASES = [
 
 /** Anatomy — 2026-08-13 신설. 같은 페이지 Specification 값에서만 유도(창작 없음) */
 export const TOOLTIP_ANATOMY = [
-  { n: '01', title: 'Container', desc: '블러 반투명 말풍선. radius 6px, padding 6px 10px, 트리거에서 8px 간격' },
-  { n: '02', title: 'Text', desc: '12px / white 보조 설명. max-width 200px 초과 시 줄바꿈' },
-  { n: '03', title: 'Arrow (선택)', desc: '5px 삼각형, 컨테이너와 같은 색. 트리거와의 관계가 불분명할 때만' },
+  { n: '01', title: 'Container', desc: '배경과 반대 색의 불투명 말풍선. 대상에서 조금 떨어져 떠요.' },
+  { n: '02', title: 'Text', desc: '짧은 보조 설명. 길어지면 줄바꿈해요.' },
+  { n: '03', title: 'Arrow (선택)', desc: '말풍선과 같은 색의 작은 삼각형. 어느 대상의 설명인지 불분명할 때만 써요.' },
 ] as const;

@@ -64,18 +64,14 @@ export default function TooltipDesign() {
 
       <H3>Position</H3>
       <p>
-        기본은 Top 이에요. 가장자리에 가려지면 반대 방향으로 자동 전환해요.{' '}
+        기본은 Top 이에요. 가장자리에 가려지면 반대 방향으로 자동 전환해요. 대상에서 조금 떨어져 떠요.
+        시각적 여유를 주고, 마우스가 지나갈 때 잘못 닫히는 걸 막아요.{' '}
         <TabSwitchLink to="code">네 방향을 코드와 함께 보기</TabSwitchLink>
-      </p>
-
-      <H3>Base</H3>
-      <p>
-        트리거와 8px 떨어져 떠요. 시각적 여유를 주고, 마우스가 지나갈 때 잘못 닫히는 걸 막아요.
       </p>
 
       <H2>Case</H2>
       <p>
-        화살표는 트리거와의 관계가 불분명할 때만 붙여요.
+        화살표는 대상과의 관계가 불분명할 때만 붙여요.
       </p>
       {/* 실물 프리뷰 (2026-08-28 디자인 검토 반영 — 텍스트로만 서술되던 두 갈래를 실물로).
           호버로만 뜨는 컴포넌트지만 Anatomy 와 같은 open(문서용 컨트롤드 모드)이 있어
@@ -100,6 +96,39 @@ export default function TooltipDesign() {
 
       <H2>Guidelines</H2>
       <UsageGrid do={[...TOOLTIP_USAGE.do]} dont={[...TOOLTIP_USAGE.dont]} />
+      <p>마우스를 올리고 잠깐 뒤에 떠요. 연달아 다른 대상으로 옮기면 기다림 없이 바로 떠요.</p>
+    </>
+  );
+}
+
+/** Specification — 치수·토큰 표. Code 탭 끝에 놓는다(2026-10-12: Design 탭은 쓰임새, Code 탭은 구현 값).
+ *  헤딩 id 는 Design 탭에 있을 때와 같아서 옛 딥링크(#specification 등)는 DocTabs 가 Code 탭을 열어 준다. */
+export function TooltipSpecification() {
+  return (
+    <>
+      <H2>Specification</H2>
+
+      <H3>Container</H3>
+      <SpecTable
+        caption="Tooltip 컨테이너 스펙"
+        columns={PROP_COLUMNS}
+        rows={TOOLTIP_CONTAINER.map((r) => ({
+          prop: r.prop,
+          value: <SpecVal>{r.value}</SpecVal>,
+          desc: r.desc,
+        }))}
+      />
+
+      <H3>Typography</H3>
+      <SpecTable
+        caption="Tooltip 타이포그래피"
+        columns={PROP_COLUMNS}
+        rows={TOOLTIP_TYPOGRAPHY.map((r) => ({
+          prop: r.prop,
+          value: <SpecVal>{r.value}</SpecVal>,
+          desc: r.desc,
+        }))}
+      />
 
       <H3>노출 정책</H3>
 
@@ -129,30 +158,6 @@ export default function TooltipDesign() {
         rows={TOOLTIP_TIMING_CASCADE.map((r) => ({
           state: r.state,
           delay: <SpecVal>{r.delay}</SpecVal>,
-        }))}
-      />
-
-      <H2>Specification</H2>
-
-      <H3>Container</H3>
-      <SpecTable
-        caption="Tooltip 컨테이너 스펙"
-        columns={PROP_COLUMNS}
-        rows={TOOLTIP_CONTAINER.map((r) => ({
-          prop: r.prop,
-          value: <SpecVal>{r.value}</SpecVal>,
-          desc: r.desc,
-        }))}
-      />
-
-      <H3>Typography</H3>
-      <SpecTable
-        caption="Tooltip 타이포그래피"
-        columns={PROP_COLUMNS}
-        rows={TOOLTIP_TYPOGRAPHY.map((r) => ({
-          prop: r.prop,
-          value: <SpecVal>{r.value}</SpecVal>,
-          desc: r.desc,
         }))}
       />
 

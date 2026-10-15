@@ -6,4 +6,4 @@
 - import: `import { IconButton } from '@/components/pds';`
 - 타입: `IconButtonProps`, `IconButtonSize` — prop 이름·허용값은 `src/components/icon-button/types.ts` 가 정본이다. 여기 없는 prop 은 쓰지 않는다.
 
-문서 사이트에 별도 절이 없는 컴포넌트다. 용도·prop 은 `src/components/icon-button/` 의 타입·주석과, 이 컴포넌트를 쓰는 다른 참조 문서의 예제를 따른다.
+문서 사이트에 별도 절이 없는 컴포넌트다. 용도·prop 은 `src/components/icon-button/` 의 타입·주석을 따른다(예제는 아직 없다).

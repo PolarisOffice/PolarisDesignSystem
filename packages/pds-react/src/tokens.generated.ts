@@ -60,6 +60,7 @@ export const color = {
   "labelInverse": v('--color-label-inverse', "#ffffff"),
   "labelNeutral": v('--color-label-neutral', "#454c53"),
   "labelNormal": v('--color-label-normal', "#26282b"),
+  "layerInverse": v('--color-layer-inverse', "#26282b"),
   "layerOverlay": v('--color-layer-overlay', "#00000080"),
   "layerSurface": v('--color-layer-surface', "#ffffff"),
   "lineNeutral": v('--color-line-neutral', "#e8ebed"),

@@ -48,6 +48,7 @@ export const PDS_ON_NPM: boolean = true;
 export const PDS_LIVE_COMPONENTS: ReadonlySet<string> = new Set([
   'button',
   'checkbox',
+  'radio',
   'toggle',
   'tooltip',
   'input',
@@ -59,6 +60,8 @@ export const PDS_LIVE_COMPONENTS: ReadonlySet<string> = new Set([
   'toast',
   'tabs',
   'loading',
+  'chip',
+  'date-picker',
 ]);
 
 /** 이 컴포넌트의 Code 탭이 실물을 렌더하는가 — 전역 스위치 AND 개별 배선 */

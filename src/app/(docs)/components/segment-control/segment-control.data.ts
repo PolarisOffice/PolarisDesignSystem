@@ -73,7 +73,7 @@ export const SEG_VS_TABS = {
   ],
   dont: [
     '페이지·섹션 이동(네비게이션 몫)',
-    '선택마다 URL 이 바뀌는 라우팅',
+    '선택마다 주소가 바뀌는 화면 이동',
     '옵션 6개 이상',
     '탭마다 전혀 다른 콘텐츠로 이동',
   ],
@@ -118,7 +118,7 @@ export const SEG_VARIANTS = ['pill', 'filled', 'outlined'] as const;
 
 /** Anatomy — 2026-08-13 신설. 같은 페이지 Specification 값에서만 유도(창작 없음) */
 export const SEG_ANATOMY = [
-  { n: '01', title: 'Container', desc: 'Filled/Outlined 는 패딩 3px·radius-md 상자, Pill 은 배경 없이 항목만' },
-  { n: '02', title: 'Segment Item', desc: '선택 단위. 선택되면 배경·글자색이 바뀌고 radius-sm(8px)' },
-  { n: '03', title: 'Count Badge', desc: 'Pill 전용. 결과 수를 표시하는 radius-full 배지' },
+  { n: '01', title: 'Container', desc: 'Filled·Outlined 는 상자 안에, Pill 은 배경 없이 항목만 놓여요.' },
+  { n: '02', title: 'Segment Item', desc: '선택 단위. 선택되면 배경과 글자색이 바뀌어요.' },
+  { n: '03', title: 'Count Badge', desc: 'Pill 전용. 결과 수를 표시하는 둥근 배지' },
 ] as const;

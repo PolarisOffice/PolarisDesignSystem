@@ -24,3 +24,8 @@
 .activeCase > div > div:first-child {
   border-color: var(--color-accent-normal) !important;
 }
+
+/* Size 표 셀 안의 실물 — fullWidth 로 셀 폭을 채운다(Select 페이지 .cellPreview 와 같은 방식) */
+.cellPreview {
+  display: flex;
+}

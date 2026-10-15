@@ -1,0 +1,19 @@
+/* Radio 페이지 전용 — Design 탭 Case 실물 프리뷰. Checkbox 페이지(checkbox.module.css)와 같은 규칙:
+   프리뷰는 그림이라 inert, CaseList 면이 이미 조용한 면이라 상자를 또 두르지 않는다. */
+
+.casePreview {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-md);
+}
+
+/* 그룹 — Code 탭 데모와 같은 세로 축·간격. 덩어리는 가운데, 항목은 왼끝 정렬 */
+.casePreviewColumn {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-3xs);
+  width: max-content;
+  margin-inline: auto;
+}

@@ -1,10 +1,11 @@
-import { Checkbox, Radio, RadioGroup } from '@polarisoffice/pds-react';
+import { Checkbox } from '@polarisoffice/pds-react';
 import { CodeExample, CodeTabShell, type CodeExampleSpec } from '@/components/docs/CodeExample';
-import { DemoRow } from '@/components/docs/Demo';
+import { DemoRow, DemoCol } from '@/components/docs/Demo';
 import { PDS_PACKAGE } from '@/lib/docs/package';
 import { CheckboxGroupDemo } from './checkbox-demos';
+import { CHECKBOX_SIZES } from './checkbox.data';
 
-const IMPORT = `import { Checkbox, Radio, RadioGroup } from '${PDS_PACKAGE}';`;
+const IMPORT = `import { Checkbox } from '${PDS_PACKAGE}';`;
 
 export const EXAMPLES: CodeExampleSpec[] = [
   {
@@ -28,24 +29,36 @@ export const EXAMPLES: CodeExampleSpec[] = [
     ),
   },
   {
-    id: 'radio',
-    title: 'Radio',
-    desc: '그룹 안에서 하나만 선택돼요. 라디오에는 부분 선택이 없어요.',
-    previewName: 'Radio',
+    id: 'variant',
+    title: 'Variant',
+    desc: 'Checkbox 모양 두 가지. box(기본) · check(면 없이 체크 표시만). 상태와 동작은 같아요.',
+    previewName: 'Checkbox',
     code: `${IMPORT}
 
-<RadioGroup name="plan" defaultValue="basic">
-  <Radio value="basic" label="Basic" />
-  <Radio value="pro" label="Pro" />
-  <Radio value="off" label="비활성화" disabled />
-</RadioGroup>`,
+<Checkbox variant="box" label="박스" checked />
+<Checkbox variant="check" label="체크형" checked />`,
     preview: (
       <DemoRow>
-        <RadioGroup name="docs-plan" defaultValue="basic">
-          <Radio value="basic" label="Basic" />
-          <Radio value="pro" label="Pro" />
-          <Radio value="off" label="비활성화" disabled />
-        </RadioGroup>
+        <Checkbox variant="box" label="박스" defaultChecked />
+        <Checkbox variant="check" label="체크형" defaultChecked />
+      </DemoRow>
+    ),
+  },
+  {
+    id: 'size',
+    title: 'Size',
+    desc: `md · sm 두 단계. ${CHECKBOX_SIZES.map((t) => `${t.size}(${t.box})`).join(' · ')}. sm 은 표처럼 14px 글자 옆에 써요. 두 모양 모두 같은 크기 체계예요.`,
+    previewName: 'Checkbox',
+    code: `${IMPORT}
+
+${CHECKBOX_SIZES.map((t) => `<Checkbox size="${t.size}" checked />`).join('\n')}`,
+    preview: (
+      <DemoRow gap="wide">
+        {CHECKBOX_SIZES.map((t) => (
+          <DemoCol key={t.size} label={`${t.size} · ${t.box}`}>
+            <Checkbox size={t.size} defaultChecked />
+          </DemoCol>
+        ))}
       </DemoRow>
     ),
   },

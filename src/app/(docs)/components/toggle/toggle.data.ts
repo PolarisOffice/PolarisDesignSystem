@@ -2,7 +2,7 @@
 
 export const TOGGLE_STATES = [
   { state: 'ON', track: '#1d7ff9', trackToken: '--color-accent-normal', desc: '활성화 상태' },
-  { state: 'OFF', track: '#e5e7eb', trackToken: undefined, desc: '비활성화 상태. ⚠️ #e5e7eb 는 팔레트 미등재 값(디자인 확인 필요)' },
+  { state: 'OFF', track: '#e5e7eb', trackToken: undefined, desc: '비활성화 상태' },
   { state: 'Disabled', track: '#e5e7eb + opacity 38%', trackToken: undefined, desc: '인터랙션 불가' },
 ] as const;
 
@@ -55,7 +55,7 @@ export const TOGGLE_CASES: readonly { n: string; title: string; desc: string; sa
 
 /** Anatomy — 2026-08-13 신설. 같은 페이지 Specification 값에서만 유도(창작 없음) */
 export const TOGGLE_ANATOMY = [
-  { n: '01', title: 'Track', desc: '배경 트랙. ON 은 --color-accent-normal, OFF 는 #e5e7eb(팔레트 미등재, 디자인 확인 필요)' },
+  { n: '01', title: 'Track', desc: '배경 트랙. ON 은 파란색, OFF 는 회색이에요.' },
   { n: '02', title: 'Thumb', desc: '흰 원형 손잡이. 전환 시 좌우로 움직여요' },
   { n: '03', title: 'Label · Description (선택)', desc: '토글 오른쪽 레이블과 설명' },
 ] as const;
@@ -64,5 +64,5 @@ export const TOGGLE_ANATOMY = [
 export const TOGGLE_GUIDELINES = [
   '전환 결과가 바로 반영되는 설정에만 써요. 저장 버튼이 따로 있는 폼은 Checkbox 예요.',
   '맥락이 분명하면 단독, 아니면 Label, 결과를 짐작하기 어려우면 Description 까지 붙여요.',
-  'Disabled 는 투명도 38% 예요. 컴포넌트마다 다른 건 의도예요.',
+  'Disabled 는 흐리게 보여요.',
 ] as const;

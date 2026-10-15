@@ -166,7 +166,7 @@ export default function Showcase() {
       </Section>
 
       <Section title="Select" note="옵션이 5개 이상일 때 사용. 눌러서 메뉴를 열어보세요.">
-        {(['lg', 'md', 'sm'] as const).map((s) => (
+        {(['lg', 'md', 'sm', 'xs'] as const).map((s) => (
           <Row key={s} label={s} align="start">
             <div style={{ width: 312 }}>
               <Select size={s} options={OPTIONS} value={sel[s]} onChange={(v) => setSel((p) => ({ ...p, [s]: v }))} />

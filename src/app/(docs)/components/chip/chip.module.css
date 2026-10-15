@@ -1,0 +1,14 @@
+/* Chip 페이지 전용 — Design 탭 Case 그림. CaseList 면이 이미 조용한 면이라 상자를 또 두르지 않는다.
+   그림은 눌리지 않는다(inert) — 살아있는 예제는 Code 탭에 있다. */
+
+.casePreview {
+  display: flex;
+  justify-content: center;
+}
+
+/* Properties 그림 — 한 이름표 아래 칩 두 개를 나란히 */
+.pair {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}

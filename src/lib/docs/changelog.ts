@@ -28,6 +28,36 @@ export interface ChangelogEntry {
 
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: '1.2.0', date: '2026.10.14',
+    added: [
+      'Table: 열 옵션 lines·numeric·width·sortable·resizable',
+      'Table: 정렬(sort·onSortChange, 화살표는 회색), 빈 상태(emptyState·TableEmpty), 로딩(loading)',
+      'Table: 행 선택(selectedKeys), 행 클릭(onRowClick), 헤더 고정(maxHeight), 첫 열 고정(stickyFirstColumn)',
+      'TableToolbar: 검색·필터 자리와 일괄 작업 바. 줄 높이 40(InputField sm·Select sm·Button 32 는 줄 가운데)',
+      'Pagination: 건수·페이지 크기·이전/다음',
+      'InputField: size md(40)·sm(32)·xs(28), clearable(지우기 버튼)',
+      'Select: size xs(28)',
+      'Chip: 조건 칩(걸린 조건을 보여 주고 × 로 지움)과 선택 칩(type="select", 눌러서 켜고 끔). 앞 아이콘(leftIcon)·지우기(onRemove)·체크 표시(checkIcon)·size md(28)·sm(24)',
+      'DatePicker: 날짜 하나(mode="single")와 기간(mode="range") 고르기. 입력칸에 YYYY.MM.DD 로 직접 입력, 기간은 왼쪽 빠른 선택(오늘·지난 7일·지난 30일·이번 달, presets 로 바꿈). 달력만 펼쳐 둘 때는 Calendar',
+      'Checkbox·Radio·RadioGroup: size sm(16)',
+      'Checkbox: variant check(면 없이 체크 표시만)',
+      'Tooltip: portal·disabled',
+      '토큰: --color-layer-inverse (배경과 반대 색의 면. 라이트 #26282b · 다크 #d8d8d8)',
+      '아이콘 10종: Search·Close·ChevronLeft·ChevronRight·ChevronDown·Filter·Sort·SortAsc·SortDesc·Calendar(Figma Icon 세트 모양, 획 1.5)',
+    ],
+    changed: [
+      'Table: 긴 텍스트 기본이 한 줄 고정에서 2줄 후 말줄임으로',
+      'Table: 헤더·본문 글자 16px → 14px(body2)',
+      'Select: md 38→40·sm 26→32(글자 14px), Input 과 같은 52/40/32/28 체계',
+      'Checkbox·Radio: 컨트롤 끝에서 레이블까지 8px 로 통일',
+      'Tooltip: 배경을 layer/overlay(검정 50%)에서 layer/inverse 로, 글자는 label/inverse 로. 뒤 글자가 비쳐 내용이 안 읽히던 문제',
+    ],
+    fixed: [
+      'Table: 넘치면 오른쪽 열이 잘려 사라지던 문제. 이제 가로 스크롤',
+      'InputField: 크기를 안 준 leftIcon 아이콘이 자리(18)보다 크게 그려지던 문제. 이제 자리 크기에 맞춰짐',
+    ],
+  },
+  {
     version: '1.1.0',
     date: '2026.09.18',
     added: [
@@ -102,3 +132,4 @@ const minor = (v: string) => v.split('.').slice(0, 2).join('.');
  * 아직 발행 전(package.json 이 이전 버전)이면 거짓이라, 배지는 release:pds 와 함께 켜진다.
  */
 export const isNew = (since?: string): boolean => Boolean(since) && minor(since!) === minor(PDS_VERSION);
+

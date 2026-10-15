@@ -23,3 +23,29 @@
   width: max-content;
   margin-inline: auto;
 }
+
+/* Case 03 — check 모양을 쓰는 자리(메뉴)에 놓아 보여 준다. 실제 메뉴 컴포넌트가 아니라 그림이다 */
+.contextCard {
+  width: 240px;
+  padding: var(--spacing-2xs) 0;
+  background: var(--color-background-base);
+  border: 1px solid var(--color-line-neutral);
+  border-radius: var(--radius-md);
+}
+
+.contextHead {
+  padding: var(--spacing-2xs) var(--spacing-sm);
+  font-size: 13px;
+  color: var(--color-label-alternative);
+}
+
+/* 메뉴는 글자가 앞, 체크가 끝 */
+.contextRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 40px;
+  padding: 0 var(--spacing-2xs) 0 var(--spacing-sm);
+  font-size: 14px;
+  color: var(--color-label-normal);
+}

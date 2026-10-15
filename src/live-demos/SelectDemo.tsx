@@ -14,9 +14,9 @@ const OPTIONS = [
   { value: 'e', label: 'Text' },
 ];
 
-const SIZES: SelectSize[] = ['lg', 'md', 'sm'];
+const SIZES: SelectSize[] = ['lg', 'md', 'sm', 'xs'];
 
-/** 가이드 견본용 — 사이즈 3종을 늘어놓고 실제로 열어 볼 수 있게 한다 */
+/** 가이드 견본용 — 사이즈 4종을 늘어놓고 실제로 열어 볼 수 있게 한다 */
 export default function SelectDemo() {
   const [value, setValue] = useState<Record<string, string | undefined>>({});
   return (

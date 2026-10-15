@@ -326,6 +326,7 @@
   /* ── Layer ── */
   --color-layer-surface: var(--primitive-white);
   --color-layer-overlay: #00000080;  /* black 50% — 알파 합성값 */
+  --color-layer-inverse: var(--primitive-gray-90);  /* 배경과 반대 색의 면(툴팁). 글자는 label-inverse */
 
   /* ── Elevation (Shadow) — 라이트 ── */
   --shadow-sm: 0 1px 8px rgba(0, 0, 0, 0.04);
@@ -451,6 +452,7 @@
   /* ── Layer ── */
   --color-layer-surface: #282828;
   --color-layer-overlay: #00000080;
+  --color-layer-inverse: #d8d8d8;
 
   /* ── Elevation (Shadow) — 다크 ── */
   --shadow-sm: 0 1px 8px rgba(0, 0, 0, 0.08);

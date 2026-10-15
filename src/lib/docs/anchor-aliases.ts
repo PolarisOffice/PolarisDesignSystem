@@ -6,6 +6,7 @@
  *
  * 규칙:
  * - key 는 pathname, value 는 { 구 id: 신 id }. id 는 렌더된 앵커 문자열 그대로(영문이라 정규화 무관).
+ * - 신 id 가 '/' 로 시작하면 다른 페이지 주소다 — 페이지가 둘로 나뉜 경우(2026-10-12 Checkbox·Radio).
  * - HashRescue 가 hashIdCandidates 실패 후 마지막 수단으로 조회한다. 여기 등재된 별칭은
  *   지우지 않는다 — 링크는 문서 밖(슬랙·노션)에 살아 있다.
  */
@@ -57,6 +58,24 @@ export const ANCHOR_ALIASES: Record<string, Record<string, string>> = {
     'segment-item': 'item',
     'count-badge-pill-only': 'count-badge',
   },
+  // 2026-10-12 Checkbox & Radio 페이지 분리 — Radio 앵커는 새 페이지로 보낸다('/' 로 시작하면 페이지 이동)
+  '/components/checkbox': {
+    // 2026-10-12 Properties 'Base' 를 Variant · Size · State 로 나눔
+    base: 'properties',
+    checkbox: 'box',
+    radio: `/components/radio#${slugify('Ring · Dot')}`,
+    'code-radio': '/components/radio#code-radio',
+  },
+  // 2026-10-12 Design 탭 'Numeric' 절을 'Align' 으로 개명(정렬 기준선 그림)
+  '/components/table': {
+    numeric: 'align',
+    base: 'basic',
+  },
+  // 2026-10-12 'Base' 소제목 정리 — 내용에 맞는 이름으로 바꾸거나 나눴다
+  '/components/radio': { base: 'properties' },
+  '/components/toggle': { base: 'state' },
+  '/components/input': { base: 'type' },
+  '/components/tooltip': { base: 'position' },
   '/components/toast': {
     'typography-color': 'typography',
   },
@@ -69,6 +88,7 @@ export const ANCHOR_ALIASES: Record<string, Record<string, string>> = {
     'menu-item': 'item',
     // 2026-08-21 Case 표준화 — 구 'Case — Multi-column + Scroll' H2 를 'Case' 로 개칭
     [slugify('Case — Multi-column + Scroll')]: 'case',
+    [slugify('Base — Single List')]: slugify('Single List'),
   },
 };
 

@@ -109,25 +109,23 @@ export default function ToastDesign() {
         Default · Error · Success 세 가지. <TabSwitchLink to="code">코드로 보기</TabSwitchLink>
       </p>
       <SpecTable
-        caption="Toast variant 별 아이콘과 색상"
+        caption="Toast variant 별 아이콘과 용도"
         columns={[
-          { key: 'variant', header: 'Variant', width: '18%' },
-          { key: 'icon', header: 'Icon', width: '12%' },
-          { key: 'color', header: '색상', width: '30%' },
-          { key: 'usage', header: '용도', width: '40%' },
+          { key: 'variant', header: 'Variant', width: '20%' },
+          { key: 'icon', header: 'Icon', width: '14%' },
+          { key: 'usage', header: '용도', width: '66%' },
         ]}
         rows={TOAST_VARIANTS.map((v) => ({
           variant: <strong>{v.label}</strong>,
           // 실물 아이콘 (2026-08-28 검토 반영) — default 는 상태 아이콘이 없어 데이터의 '—' 그대로
           icon: v.name === 'default' ? v.icon : <StatusIconSample type={v.name} />,
-          color: v.color ? <Swatch hex={v.color} token={v.colorToken} /> : '—',
           usage: v.usage,
         }))}
       />
 
       <H3>Position</H3>
       <p>
-        화면 상단 또는 하단에 50px 여백을 두고 띄워요.
+        화면 상단 또는 하단에 여백을 두고 띄워요.
       </p>
 
       <H2>Case</H2>
@@ -171,7 +169,15 @@ export default function ToastDesign() {
         ]}
         rows={TOAST_VS_POPUP.map((r) => ({ item: <strong>{r.item}</strong>, toast: r.toast, popup: r.popup }))}
       />
+    </>
+  );
+}
 
+/** Specification — 치수·토큰 표. Code 탭 끝에 놓는다(2026-10-12: Design 탭은 쓰임새, Code 탭은 구현 값).
+ *  헤딩 id 는 Design 탭에 있을 때와 같아서 옛 딥링크(#specification 등)는 DocTabs 가 Code 탭을 열어 준다. */
+export function ToastSpecification() {
+  return (
+    <>
       <H2>Specification</H2>
 
       <H3>Container</H3>

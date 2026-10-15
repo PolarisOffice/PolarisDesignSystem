@@ -3,7 +3,7 @@ import PageLead from '@/components/docs/PageLead';
 import DocTabs from '@/components/docs/DocTabs';
 import { pageMeta } from '@/lib/docs/pages';
 import { isComponentLive } from '@/lib/docs/package';
-import TabsDesign from './tabs.design';
+import TabsDesign, { TabsSpecification } from './tabs.design';
 import TabsCode from './tabs.code';
 
 const meta = pageMeta('/components/tabs')!;
@@ -19,7 +19,12 @@ export default function TabsPage() {
       </PageLead>
       <DocTabs
         design={<TabsDesign />}
-        code={<TabsCode />}
+        code={
+          <>
+            <TabsCode />
+            <TabsSpecification />
+          </>
+        }
         codeBadge={isComponentLive('tabs') ? undefined : '준비 중'}
       />
     </>

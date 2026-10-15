@@ -26,6 +26,7 @@ export const color = {
   labelInverse: generated.labelInverse,
   labelAlternative: generated.labelAlternative,
   layerOverlay: generated.layerOverlay,
+  layerInverse: generated.layerInverse,
   labelAssistive: generated.labelAssistive,
   stateError: generated.stateError,
   staticWhite: generated.staticWhite,

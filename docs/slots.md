@@ -47,7 +47,7 @@ segment/filled             Type=Primary(채움)
 
 ## 2. Input Field
 
-**Figma** `Action → Input Filed` · Status 4
+**Figma** `Action → Input Filed` · Size 4 × Status 4
 
 ```
 구멍   input/{status}  또는  input-with-icon
@@ -65,9 +65,12 @@ Status 는 prop 이 아니라 **상호작용과 값으로 결정**됩니다. 구
 
 | 옵션 | prop |
 |---|---|
-| 좌측 아이콘 | `leftIcon={<Icon/>}` (18×18) |
+| 좌측 아이콘 | `leftIcon={<Icon/>}` (lg·md 18×18, sm·xs 16×16 — 아이콘에 `size` 를 주지 않으면 자리에 맞춰집니다) |
 | 비밀번호 표시/숨김 | `revealToggle` |
 | 가로 채움 | `fullWidth` |
+| 크기 | `size` — `lg`(52, 기본) · `md`(40) · `sm`(32) · `xs`(28). lg 밖은 제목을 그리지 않습니다 |
+
+구멍 이름에는 크기가 없습니다 — 구멍은 `lg` 기준이고, 다른 크기는 연결 코드에 `size` 를 적어 씁니다.
 
 ---
 
@@ -87,7 +90,7 @@ Status 는 prop 이 아니라 **상호작용과 값으로 결정**됩니다. 구
 
 ## 4. Checkbox
 
-**Figma** `Action → checkbox` · unchecked / checked / indeterminate + tone
+**Figma** `Action → checkbox` · unchecked / checked / indeterminate + tone · Size = 21 / 16 · 모양 = checkbox(box) · 체크형 checkbox(check). select-btn(원형 체크)은 코드에 없음
 
 ```
 구멍   checkbox/{unchecked|checked|indeterminate}
@@ -98,7 +101,11 @@ Status 는 prop 이 아니라 **상호작용과 값으로 결정**됩니다. 구
 |---|---|
 | 상태 | `checked` · `indeterminate` · (둘 다 없으면 unchecked) |
 | `tone` | `brand`(기본) · `ai` |
+| `size` | `md`(21, 기본) · `sm`(16) — sm 은 표처럼 14px 글자 옆 |
+| `variant` | `box`(기본) · `check`(체크 표시만) |
 | 기타 | `disabled` · `label` |
+
+구멍 이름에는 크기가 없습니다 — 구멍은 `md`(Size=21) 기준이고, Size=16 은 연결 코드에 `size="sm"` 을 적어 씁니다.
 
 ---
 
@@ -168,20 +175,18 @@ Status 는 prop 이 아니라 **상호작용과 값으로 결정**됩니다. 구
 
 ## 8. Select
 
-**Figma** `Overlay → DropdownList` · Property 1 = Default / Variant2(열림)
+**Figma** `Overlay → DropdownList` · Property 1 = Default / Variant2(열림) · Size = 52 / 40 / 32 / 28
 
 ```
-구멍   select/{lg|md|sm}
+구멍   select/{lg|md|sm|xs}
 연결   <Select size="lg" options={[…]} value={v} onChange={setV} />
 ```
 
 | 축 | 값 |
 |---|---|
-| `size` | `lg`(52) · `md`(38) · `sm`(26) |
+| `size` | `lg`(52) · `md`(40) · `sm`(32) · `xs`(28) — InputField 와 같은 4단계 |
 
 열림 상태는 클릭하면 나옵니다 — 테두리가 accent 로 바뀌고 메뉴가 트리거와 같은 너비로 열립니다. 메뉴는 Context & Menu Item 을 그대로 씁니다.
-
-⚠️ **`md`·`sm` 수치는 Figma 가 아니라 PDS 문서 사이트에서 왔습니다.** Figma 에는 `lg` 만 있습니다 — 확인이 필요합니다.
 
 ---
 
@@ -219,6 +224,19 @@ Status 는 prop 이 아니라 **상호작용과 값으로 결정**됩니다. 구
 
 `onClick` 을 주면 `<button>` 으로 렌더됩니다(누를 수 있는 필터 태그).
 
+### Chip
+
+**Figma** `Action → Chip` · Type Default / Select · Size 28 / 24 · State Default / Selected · Icon · Remove · Check
+
+```
+구멍   chip/{default|select}/{md|sm}/{default|selected}
+연결   <Chip>Text</Chip>
+       <Chip leftIcon={<UserIcon size={16} />} onRemove={…}>Text</Chip>
+       <Chip type="select" size="sm" selected onClick={…}>Text</Chip>
+```
+
+종류가 둘입니다. `default`(조건 칩)는 걸린 조건·값을 보여 주는 회색 칩으로 `onRemove` 를 주면 × 가 붙고, `select`(선택 칩)는 눌러서 켜고 끄는 테두리 칩으로 `selected` 가 켜지면 파란 면에 체크 표시가 붙습니다(`checkIcon={false}` 로 뺍니다). `selected` 는 `select` 에만, `onRemove` 는 `default` 에만 듣습니다. 글자만 있는 굵은 태그는 `Badge` 입니다.
+
 ---
 
 ## 11. Credit
@@ -245,7 +263,7 @@ Status 는 prop 이 아니라 **상호작용과 값으로 결정**됩니다. 구
 연결   <Table columns={[{ header, cell }]} rows={[…]} />
 ```
 
-헤더는 항상 포함합니다. 열 구분선은 `columnDividers` 로 켜되 꼭 필요할 때만 씁니다.
+헤더는 항상 포함합니다. 열 구분선은 `columnDivider` 로 켜되 꼭 필요할 때만 씁니다.
 
 ---
 
@@ -386,16 +404,47 @@ Status 는 prop 이 아니라 **상호작용과 값으로 결정**됩니다. 구
 
 ---
 
+## 21. Table Empty · Table Toolbar · Pagination
+
+**Figma** 견본 없음 — 표 주변 자리 컴포넌트. 축이 없어 컴포넌트 이름만 씁니다.
+
+```
+구멍   table-empty
+연결   <Table emptyState={<TableEmpty title="결과가 없어요" description="…" action={<Button />} />} … />
+
+구멍   table-toolbar
+연결   <TableToolbar start={검색·필터} end={건수·액션} below={<Chip onRemove={…} />} selection={{ count, onClear }} />
+
+구멍   pagination
+연결   <Pagination page={1} pageSize={10} total={95} onPageChange={…} />
+```
+
+`TableEmpty` 는 표의 `emptyState` 자리에만 둡니다. `TableToolbar` 와 표 사이 12px 은 쓰는 쪽이 줍니다. 적용 필터 칩은 `below` 에 `Chip`(onRemove)을 놓습니다.
+
+---
+
+## 22. 아이콘
+
+```
+구멍   download-icon · user-icon · search-icon · close-icon · filter-icon
+       chevron-left-icon · chevron-right-icon · chevron-down-icon
+       sort-icon · sort-asc-icon · sort-desc-icon
+연결   <SearchIcon />            크기·색은 부모를 따른다(1.25em, currentColor)
+```
+
+문서 예제와 표(검색·필터·정렬·페이지 이동)가 쓰는 최소 세트입니다 — PDS 아이콘 시스템 전체가 아닙니다.
+
+---
+
 ## 확인 방법
 
 ```bash
-npm run verify:figma     # 렌더 결과를 Figma 실측값과 대조 (111건)
-npm run verify:slots     # 이 문서의 짝 figma/slots.json 을 패키지와 대조 (41건)
+npm run verify:figma     # 렌더 결과를 Figma 실측값과 대조 (118건)
+npm run verify:slots     # 이 문서의 짝 figma/slots.json 을 패키지와 대조 (53건)
 npm run dev              # /showcase 에서 전 변형 확인
 ```
 
 ## 아직 정리되지 않은 것
 
-- **아이콘** — 체크·화살표는 임시 글리프이고 `DownloadIcon`·`UserIcon` 둘만 예제용으로 있습니다. PDS 아이콘 라이브러리를 받으면 교체합니다
-- **Select `md`·`sm`** — Figma 에 없는 크기입니다(위 참조)
+- **아이콘** — 체크·화살표는 임시 글리프이고, 예제·표용 최소 세트 11종(22번)만 있습니다. PDS 아이콘 라이브러리를 받으면 교체합니다
 - **Figma 에 없는 컴포넌트** — `avatar` · `status-dot` · `thumbnail-card` 는 md 스펙 맵에만 있고 디자인에 없습니다 (`icon-button` 은 문서가 요구해 md 스펙대로 만들었습니다 — 17번)

@@ -3,7 +3,7 @@ import PageLead from '@/components/docs/PageLead';
 import DocTabs from '@/components/docs/DocTabs';
 import { pageMeta } from '@/lib/docs/pages';
 import { isComponentLive } from '@/lib/docs/package';
-import TableDesign from './table.design';
+import TableDesign, { TableSpecification } from './table.design';
 import TableCode from './table.code';
 
 const meta = pageMeta('/components/table')!;
@@ -19,7 +19,12 @@ export default function TablePage() {
       </PageLead>
       <DocTabs
         design={<TableDesign />}
-        code={<TableCode />}
+        code={
+          <>
+            <TableCode />
+            <TableSpecification />
+          </>
+        }
         codeBadge={isComponentLive('table') ? undefined : '준비 중'}
       />
     </>

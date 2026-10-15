@@ -7,7 +7,7 @@
  *
  * 함께 검사하는 것:
  *  · Design 탭(기본 상태)에 원본 앵커가 전부 있는가
- *  · **Code 탭 헤딩 id 가 전부 `code-` 접두인가** — 2026-08-25 규칙 변경. 과거엔 Code 탭에 id
+ *  · **Code 탭 헤딩 id 가 Design 탭과 겹치지 않는가**(2026-10-12 — Specification 이 Code 탭으로 옮겨 가며 완화) — 2026-08-25 규칙 변경. 과거엔 Code 탭에 id
  *    자체를 금지했으나(목차 오염), Code 탭 목차를 살리면서 CodeExample 이 `code-` 접두 id 를
  *    달게 됐다(src/components/docs/CodeExample.tsx). 접두가 Design 탭 id 와의 충돌을 막고
  *    Toc 는 활성 탭만 스캔한다. 따라서 검사할 것은 '없는가'가 아니라 '접두가 붙었는가'다.
@@ -68,15 +68,18 @@ for (const page of fixture.pages) {
     }
   }
 
-  // Code 패널 헤딩은 `code-` 접두여야 한다 — 접두 없는 id 는 Design 탭과 충돌해 목차가 조용히 깨진다
+  // Code 패널 헤딩 id 는 Design 패널과 겹치면 안 된다 — 겹치면 getElementById 가 Design 쪽만 집어 목차가 조용히 깨진다.
+  // 예제는 `code-` 접두로 피하고, Specification(2026-10-12 Design → Code 탭 이동)은 옛 딥링크를 살리려고
+  // id 를 그대로 둔다. 그래서 검사할 것은 접두가 아니라 '겹치는가'다
   const codePanel = html.match(/data-tabpanel="code"[\s\S]*?(?=data-tabpanel="|<\/main)/);
   if (codePanel) {
-    const bare = [...codePanel[0].matchAll(/<h[234][^>]*\sid="([^"]+)"/g)]
-      .map((m) => m[1])
-      .filter((id) => !id.startsWith('code-'));
-    if (bare.length) {
+    const ids = (part) => [...part.matchAll(/<h[234][^>]*\sid="([^"]+)"/g)].map((m) => m[1]);
+    const codeIds = ids(codePanel[0]);
+    const designIds = new Set(ids(html.slice(0, codePanel.index)));
+    const clash = codeIds.filter((id, i) => designIds.has(id) || codeIds.indexOf(id) !== i);
+    if (clash.length) {
       failed += 1;
-      notes.push(`  ${route} — Code 탭 헤딩에 code- 접두가 없다: ${bare.join(', ')}`);
+      notes.push(`  ${route} — Code 탭 헤딩 id 가 겹친다: ${clash.join(', ')}`);
     }
   }
 }

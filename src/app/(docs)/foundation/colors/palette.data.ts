@@ -40,7 +40,7 @@ export const PALETTE_FAMILIES: PaletteFamily[] = [
       { step: '60', hex: '#9ea4aa', cssVar: '--primitive-gray-60', refs: ['--color-label-assistive'] },
       { step: '70', hex: '#72787f', cssVar: '--primitive-gray-70', refs: ['--color-label-alternative'] },
       { step: '80', hex: '#454c53', cssVar: '--primitive-gray-80', refs: ['--color-action-strong', '--color-label-neutral'] },
-      { step: '90', hex: '#26282b', cssVar: '--primitive-gray-90', refs: ['--color-label-normal'] },
+      { step: '90', hex: '#26282b', cssVar: '--primitive-gray-90', refs: ['--color-label-normal', '--color-layer-inverse'] },
     ],
   },
   {

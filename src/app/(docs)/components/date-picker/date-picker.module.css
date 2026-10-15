@@ -1,0 +1,6 @@
+/* Date Picker 페이지 전용 — Design 탭 그림. 그림은 눌리지 않는다(inert) — 살아있는 예제는 Code 탭에 있다. */
+
+.casePreview {
+  display: flex;
+  justify-content: center;
+}

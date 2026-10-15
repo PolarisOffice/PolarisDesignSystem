@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import {
   Button,
   Checkbox,
+  Chip,
   DownloadIcon,
   InputField,
   Menu,
@@ -18,6 +19,8 @@ import {
   Tooltip,
 } from '@polarisoffice/pds-react';
 import { TABLE_SAMPLE_COLUMNS, TABLE_SAMPLE_ROWS } from './table/table.data';
+import { ChipFigure } from './chip/chip.demo';
+import { DatePickerFigure } from './date-picker/date-picker.demo';
 import s from './component-previews.module.css';
 
 /**
@@ -69,7 +72,13 @@ export const COMPONENT_PREVIEWS: Record<string, ReactNode> = {
   checkbox: (
     <div className={s.row}>
       <Checkbox defaultChecked label="동의" />
-      <Radio checked label="선택" />
+      <Checkbox label="선택" />
+    </div>
+  ),
+  radio: (
+    <div className={s.row}>
+      <Radio checked label="Basic" />
+      <Radio label="Pro" />
     </div>
   ),
   input: (
@@ -119,6 +128,15 @@ export const COMPONENT_PREVIEWS: Record<string, ReactNode> = {
       ]}
     />
   ),
+  chip: (
+    <div className={s.row}>
+      <Chip type="select" selected>
+        디자인
+      </Chip>
+      <ChipFigure remove>팀: 디자인</ChipFigure>
+    </div>
+  ),
+  'date-picker': <DatePickerFigure mode="range" size="sm" open={false} />,
   table: (
     <div className={s.tableTile}>
       <Table columns={TABLE_SAMPLE_COLUMNS} rows={TABLE_SAMPLE_ROWS.slice(0, 2)} />

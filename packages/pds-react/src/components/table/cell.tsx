@@ -10,11 +10,13 @@ import type { CSSProperties, ReactNode } from 'react';
 import type { TableAlign, TableColumn } from './types.js';
 
 /**
- * 셀 padding 은 최소 24/16 을 지키고, 그 이상은 콘텐츠 길이를 보고 정한다.
+ * 셀 padding 은 최소 24/12 를 지키고, 그 이상은 콘텐츠 길이를 보고 정한다.
  * 화면 너비가 충분하지 않으면(모바일) 표 자체를 쓰지 않는다.
+ *
+ * 1.2.1: 세로 padding 16 → 12, 머리글 13px(body3, header.tsx). 실제 목록 화면에서 행이 너무 높았다 — Figma Table Cell 과 같은 값.
  */
 export const CELL_PAD_X = 24;
-export const CELL_PAD_Y = 16;
+export const CELL_PAD_Y = 12;
 /** 선택 열 — 왼쪽 padding 24 + 체크박스(sm) 히트 영역 24 */
 export const SELECT_COL_WIDTH = 48;
 

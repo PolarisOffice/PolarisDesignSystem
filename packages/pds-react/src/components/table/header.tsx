@@ -8,7 +8,7 @@ import { CELL_PAD_X, CELL_PAD_Y, Clamp, alignOf, cellBase, edges, justifyOf, tex
 
 import type { TableColumn, TableSortDirection } from './types.js';
 
-const SORT_ICON = 18;
+const SORT_ICON = 14; // 1.2.1: 18 → 14. 머리글 13px 옆에서 18 은 글자보다 컸다
 const SORT_GAP = 4;
 /** 열 너비 조정 — 경계 좌우 4px 씩의 히트 영역, 키 한 번에 10px(Shift 40px) */
 const HANDLE = 8;
@@ -182,6 +182,8 @@ export function HeaderCell<Row>({
       onMouseLeave={resizable ? () => setThHover(false) : undefined}
       style={{
         ...cellBase,
+        // 머리글은 본문(body2 14)보다 한 단계 작은 body3(13) — 1.2.1
+        fontSize: font.body3Size,
         ...(onSort && { padding: 0 }),
         position: sticky ? 'sticky' : 'relative',
         ...(stickyTop && { top: 0 }),

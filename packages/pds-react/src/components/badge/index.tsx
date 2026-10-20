@@ -4,7 +4,7 @@ import { color, font } from '../../tokens.js';
 import { withSupported } from '../../supported.js';
 
 import type { CSSProperties } from 'react';
-import type { BadgeProps } from './types.js';
+import type { BadgeProps, BadgeSize } from './types.js';
 
 /**
  * PDS Figma `Component/Contents → badge` 실측.
@@ -17,6 +17,10 @@ const PAD_X = 12;
 const PAD_Y = 4;
 const RADIUS = 99;
 
+// 2026-10-19 sm 추가 — 표 셀에서 14px 배지가 본문(14px)보다 도드라져 12px 이 필요했다
+const FONT_SIZE: Record<BadgeSize, string> = { md: font.body2Size, sm: font.caption1Size };
+const LINE_HEIGHT: Record<BadgeSize, string> = { md: font.body2LineHeight, sm: font.caption1LineHeight };
+
 const base: CSSProperties = {
   boxSizing: 'border-box',
   display: 'inline-flex',
@@ -26,16 +30,18 @@ const base: CSSProperties = {
   borderRadius: RADIUS,
   border: 'none',
   fontFamily: font.family,
-  fontSize: font.body2Size,
-  fontWeight: 700,
-  lineHeight: 1.5,
+  fontWeight: 500,
   whiteSpace: 'nowrap',
 };
 
-function BadgeBase({ children, selected = false, onClick, className }: BadgeProps) {
-  const face: CSSProperties = selected
-    ? { background: color.subFill, color: color.accentNormal }
-    : { background: color.fillNormal, color: color.labelAlternative };
+function BadgeBase({ children, selected = false, onClick, size = 'md', className }: BadgeProps) {
+  const face: CSSProperties = {
+    fontSize: FONT_SIZE[size],
+    lineHeight: LINE_HEIGHT[size],
+    ...(selected
+      ? { background: color.subFill, color: color.accentNormal }
+      : { background: color.fillNormal, color: color.labelAlternative }),
+  };
 
   if (onClick) {
     return (
@@ -59,6 +65,6 @@ function BadgeBase({ children, selected = false, onClick, className }: BadgeProp
 
 /**
  * 견본은 라벨을 children 으로 넘긴다 — 그대로 받는다.
- * variant/size 축은 없으므로(선택 여부 하나) 지원 목록도 비운다.
+ * variant 축은 없다(선택 여부 하나). size 는 md·sm.
  */
-export const Badge = withSupported(BadgeBase, {});
+export const Badge = withSupported(BadgeBase, { size: Object.keys(FONT_SIZE) });

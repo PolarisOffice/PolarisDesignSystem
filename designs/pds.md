@@ -1,7 +1,7 @@
 ---
 name: pds
 title: "Polaris Design System"
-version: 1.2.0
+version: 1.2.1
 description: "폴라리스오피스 제품군의 단일 디자인 기준. 컴포넌트 구현은 npm 패키지로 제공됩니다."
 tokens:
   color:
@@ -1024,6 +1024,7 @@ import { Tooltip, IconButton } from '@polarisoffice/pds-react';
 
 - 필터·카테고리 선택처럼 여러 개를 동시에 켤 수 있는 자리에 쓴다. 단일 선택 전환은 SegmentControl.
 - `selected` 로 켜짐을 표시하고 `onClick` 으로 토글한다.
+- `size="sm"` 은 글자 12px — 표 셀처럼 좁은 자리. 기본 md 는 14px.
 
 #### Code
 
@@ -1032,6 +1033,7 @@ import { Badge } from '@polarisoffice/pds-react';
 
 <Badge selected onClick={() => {}}>디자인</Badge>
 <Badge onClick={() => {}}>개발</Badge>
+<Badge size="sm">편집자</Badge>
 ```
 
 ### credit

@@ -28,6 +28,16 @@ export interface ChangelogEntry {
 
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: '1.2.1',
+    date: '2026.10.19',
+    added: ['Badge: size 변형 — md 14px(기본)·sm 12px(표 셀용). 줄높이는 body2·caption1 토큰'],
+    changed: [
+      'Table: 머리글 13px(body3)·셀 패딩 12/24 로 축소(구 14px·16/24). 행 높이 53 → 헤더 44·본문 45. 실제 목록 화면에서 너무 컸다',
+      'Badge: 글자 굵기 700 → 500',
+      'Table: 정렬 화살표 18 → 14px',
+    ],
+  },
+  {
     version: '1.2.0', date: '2026.10.14',
     added: [
       'Table: 열 옵션 lines·numeric·width·sortable·resizable',

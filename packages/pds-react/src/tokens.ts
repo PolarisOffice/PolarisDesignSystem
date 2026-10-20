@@ -100,4 +100,8 @@ export const font = {
   body2Size: typography.body2FontSize,
   body3Size: typography.body3FontSize,
   caption1Size: typography.caption1FontSize,
+
+  /** 역할별 줄높이 — 크기와 짝으로 쓴다(body2 1.5 · caption1 1.3) */
+  body2LineHeight: typography.body2LineHeight,
+  caption1LineHeight: typography.caption1LineHeight,
 } as const;

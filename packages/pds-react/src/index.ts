@@ -34,7 +34,7 @@ export { Pagination } from './components/pagination/index.js';
 export type { PaginationProps } from './components/pagination/types.js';
 
 export { Badge } from './components/badge/index.js';
-export type { BadgeProps } from './components/badge/types.js';
+export type { BadgeProps, BadgeSize } from './components/badge/types.js';
 
 export { Chip } from './components/chip/index.js';
 export type { ChipProps, ChipSize, ChipType } from './components/chip/types.js';

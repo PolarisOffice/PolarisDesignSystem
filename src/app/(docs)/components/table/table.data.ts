@@ -95,17 +95,17 @@ export const TABLE_SPEC_CONTAINER = [
   { prop: 'border', value: '1px solid --color-line-neutral', desc: 'Container 외곽선' },
   { prop: 'cell font-size', value: '14px (font-size-sm)', desc: 'font-weight: 500, line-height: 1.5' },
   { prop: 'cell color', value: '--color-label-normal', desc: '' },
-  { prop: 'cell padding', value: '16px 24px', desc: '최소값 유지' },
-  { prop: 'row height', value: '약 53px', desc: '16 + 21(14px × 1.5) + 16, 한 줄 기준' },
+  { prop: 'cell padding', value: '12px 24px', desc: '최소값 유지' },
+  { prop: 'row height', value: '헤더 44px · 본문 45px', desc: '12 + 글자 줄높이(13px × 1.5 ≈ 20 / 14px × 1.5 = 21) + 12, 한 줄 기준' },
   { prop: 'row divider', value: '1px solid --color-line-neutral', desc: '행 구분선' },
   { prop: 'col divider', value: '1px solid --color-line-neutral', desc: '열 구분선 (옵션)' },
 ] as const;
 
 export const TABLE_SPEC_HEADER = [
   { prop: 'header background', value: '--color-fill-neutral', desc: 'Header row 배경' },
-  { prop: 'header font-size', value: '14px (font-size-sm)', desc: 'font-weight: 500. 본문과 같은 크기' },
+  { prop: 'header font-size', value: '13px (font-size-xs)', desc: 'font-weight: 500. 본문보다 한 단계 작게' },
   { prop: 'header color', value: '--color-label-neutral', desc: '정렬 중인 열은 --color-label-normal' },
-  { prop: 'sort icon', value: '18px', desc: '--color-label-alternative. 정렬 중인 열만 늘 보이고, 나머지는 호버·포커스 때' },
+  { prop: 'sort icon', value: '14px', desc: '--color-label-alternative. 정렬 중인 열만 늘 보이고, 나머지는 호버·포커스 때' },
   { prop: 'sort icon gap', value: '4px', desc: '글자와 아이콘 사이' },
 ] as const;
 

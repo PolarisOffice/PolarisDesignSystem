@@ -192,13 +192,17 @@ export default function Showcase() {
           <Badge selected>Text</Badge>
           <Badge selected={badge} onClick={() => setBadge((v) => !v)}>Text</Badge>
         </Row>
+        <Row label="size sm">
+          <Badge size="sm">Text</Badge>
+          <Badge size="sm" selected>Text</Badge>
+        </Row>
         <Row label="credit">
           <Credit value={10} />
           <Credit value={10} available={false} />
         </Row>
       </Section>
 
-      <Section title="Table" note="padding은 최소 24/16을 유지하며 그 이상 너비 조절은 콘텐츠의 길이를 고려하여 설정한다.">
+      <Section title="Table" note="padding은 최소 24/12를 유지하며 그 이상 너비 조절은 콘텐츠의 길이를 고려하여 설정한다.">
         <Table<Row>
           columns={[
             { key: 'a', header: '제목' },

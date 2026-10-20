@@ -738,11 +738,13 @@ const ORPHAN_COMPONENTS = [
     usage: [
       '- 필터·카테고리 선택처럼 여러 개를 동시에 켤 수 있는 자리에 쓴다. 단일 선택 전환은 SegmentControl.',
       '- `selected` 로 켜짐을 표시하고 `onClick` 으로 토글한다.',
+      '- `size="sm"` 은 글자 12px — 표 셀처럼 좁은 자리. 기본 md 는 14px.',
     ],
     code: `import { Badge } from '${PACKAGE}';
 
 <Badge selected onClick={() => {}}>디자인</Badge>
-<Badge onClick={() => {}}>개발</Badge>`,
+<Badge onClick={() => {}}>개발</Badge>
+<Badge size="sm">편집자</Badge>`,
   },
   {
     slug: 'credit',

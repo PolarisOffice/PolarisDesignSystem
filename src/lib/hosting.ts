@@ -37,3 +37,29 @@ export function publicOrigin(headers: { get(name: string): string | null }): str
   const proto = headers.get('x-forwarded-proto')?.split(',')[0]?.trim() || 'http';
   return `${proto}://${host}`;
 }
+
+/** PDS 일반 문의 — AX추진팀 (2026-09-04 지정). 이용약관 §5·§9, 요청 폼의 메일 대안이 같은 값을 쓴다 */
+export const GENERAL_CONTACT = { team: 'AX추진팀', email: 'vibeops_admin@polarisoffice.com' };
+
+/** 요청 팝업 두 종류 — 페이지 제목 옆 "개선 요청"(그 페이지), 사이드바 맨 아래 "요청·제안하기"(새 컴포넌트·개선·아이디어 무엇이든). 팝업과 /api/request 가 같은 값을 쓴다 */
+export const REQUEST_TYPES = [
+  { value: 'improve', label: '개선 요청' },
+  { value: 'suggest', label: '요청·제안' },
+] as const;
+export type RequestType = (typeof REQUEST_TYPES)[number]['value'];
+/** 요청 내용 최대 글자 수 — 팝업과 서버 검증이 같은 값 */
+export const REQUEST_CONTENT_MAX = 2000;
+/** 보낸 페이지 경로 — 같은 사이트 경로만(`//host` 같은 프로토콜 상대 주소 금지). 카드 "페이지 열기" 버튼 주소가 된다 */
+export const REQUEST_FROM_RE = /^\/(?!\/)\S{0,299}$/;
+/** Teams 채널 메시지 한 건 한도(약 28KB, 1000 단위로 보수적으로) — 웹훅에 보내는 카드 JSON 전체가 이 안에 들어야 한다.
+ *  팝업은 첨부 이미지를 이 안에 들 때까지 줄이고, 서버는 넘으면 413 으로 막는다 */
+export const REQUEST_CARD_MAX_BYTES = 28 * 1000;
+/** 첨부 이미지 1장 — 원본은 이 형식·크기까지만 받고, 브라우저에서 JPEG 로 다시 그려 카드에 data URI 로 넣는다(저장하지 않는다) */
+export const REQUEST_IMAGE_TYPES = ['image/png', 'image/jpeg', 'image/webp'];
+export const REQUEST_IMAGE_FILE_MAX = 10 * 1024 * 1024;
+
+/**
+ * 공개 문서 사이트 — PAX 동봉본(IS_EMBED)에는 /api/request 가 없어서(build-pds-docs 가 src/app/api 를 뺀다)
+ * 요청 버튼이 이 사이트의 같은 페이지를 `?request=<type>` 으로 새 탭에 연다. 그 페이지가 팝업을 바로 띄운다.
+ */
+export const PUBLIC_SITE_URL = 'https://pds.polarisoffice.com';

@@ -4,15 +4,13 @@ import PageLead from '@/components/docs/PageLead';
 import { pageMeta } from '@/lib/docs/pages';
 import s from './terms.module.css';
 import { withBase } from '@/lib/basePath';
-import { IS_HOSTED } from '@/lib/hosting';
+import { IS_HOSTED, GENERAL_CONTACT } from '@/lib/hosting';
 
 const meta = pageMeta('/terms')!;
 export const metadata: Metadata = { title: meta.title, description: meta.description };
 
 /** 브랜드 자산 사용 허가·문의처 — public/brand-assets/LICENSE.md §10 과 동일 값 (법무팀 지정) */
 const BRAND_CONTACT = 'jhchae@polarisoffice.com';
-/** PDS 일반 문의 — AX추진팀 (2026-09-04 지정) */
-const GENERAL_CONTACT = { team: 'AX추진팀', email: 'vibeops_admin@polarisoffice.com' };
 
 /**
  * `/terms` — 이용약관 (2026-09-04 초안, 몬타주 terms-of-use 구성 참고).
@@ -21,7 +19,8 @@ const GENERAL_CONTACT = { team: 'AX추진팀', email: 'vibeops_admin@polarisoffi
  * 저장소 내부 문맥은 쓰지 않는다(2026-09-04 피드백). 근거 문서와의 대응은 여기 주석에만 둔다:
  *  · 2절 = LICENSE(Apache-2.0) 요약 — 특허 조항은 사용자 관점에서 생략, 원문이 규율
  *  · 3절 = public/brand-assets/LICENSE.md(법무팀 확정 문안) 10개 조항 순서 그대로 — 원문이 바뀌면 여기도
- *  · 7절 = 실제 동작(분석 스크립트 없음, /kit 업로드는 로컬 designs/ 저장)에 근거
+ *  · 7절 = 실제 동작(Vercel Web Analytics 집계 — layout.tsx, 요청 팝업은 내용·첨부 이미지를 팀즈로 전달만 — api/request,
+ *    /kit 업로드는 로컬 designs/ 저장)에 근거
  * 이 페이지는 **요약**이라 원문 우선 문장을 1절에 둔다.
  *
  * 문장 규칙: 해요체(UX Writing "문서 사이트 산문") · 한 줄에 한 문장 · 나열은 목록.
@@ -147,8 +146,11 @@ export default function TermsPage() {
           {/* GitHub 저장소 공개 시 이슈·PR 안내 줄을 여기에 추가한다 */}
           <li>문서 오류, 컴포넌트 개선 제안, 접근성 문제 제보를 환영해요.</li>
           <li>
-            {GENERAL_CONTACT.team} <a href={`mailto:${GENERAL_CONTACT.email}`}>{GENERAL_CONTACT.email}</a> 로
-            보내 주세요.
+            각 문서 제목 오른쪽의 <strong>개선 요청</strong>이나 왼쪽 메뉴 맨 아래 <strong>요청·제안하기</strong>로 보내 주세요. PDS 담당 팀에 바로 전달돼요.
+          </li>
+          <li>
+            메일로 보내도 돼요. {GENERAL_CONTACT.team}{' '}
+            <a href={`mailto:${GENERAL_CONTACT.email}`}>{GENERAL_CONTACT.email}</a> 로 보내 주세요.
           </li>
         </ul>
         <H3>기여자 동의</H3>
@@ -168,8 +170,17 @@ export default function TermsPage() {
 
         <H2>7. 개인정보 보호</H2>
         <ul>
-          <li>이 문서 사이트는 방문자의 개인정보를 수집하지 않아요.</li>
-          <li>분석·추적 도구도 쓰지 않아요.</li>
+          <li>이 문서 사이트는 회원 가입이 없고, 방문자를 알아볼 수 있는 정보를 모으지 않아요.</li>
+          <li>
+            방문 통계에는 Vercel Web Analytics를 써요. 쿠키 없이 페이지 방문, 검색어, 파일 내려받기 같은 이용 기록을
+            묶음 통계로만 봐요.
+          </li>
+          <li>개선 요청과 요청·제안에 쓴 내용은 PDS 담당 팀의 사내 Microsoft Teams 채널로 전달돼요. 이 사이트에는 저장하지 않아요.</li>
+          <li>
+            첨부한 이미지는 저장하지 않고 팀즈 채널로만 전달해요. 보내기 전에 브라우저에서 작게 줄이고, 촬영 위치
+            같은 정보는 빼요.
+          </li>
+          <li>이메일은 남기지 않아도 돼요. 남기면 함께 전달되고, 답장할 때만 써요.</li>
           {/* 공개 서버(IS_HOSTED)엔 업로드가 없어 이 조항도 뺀다 — 없는 기능을 약관이 언급하지 않게 */}
           {!IS_HOSTED && (
             <li>

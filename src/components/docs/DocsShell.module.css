@@ -31,6 +31,129 @@
   /* 스크롤바 완전 숨김 (2026-08-24 피드백 — hover 썸도 없앰). 스크롤 기능은 유지하고,
      "아래 더 있음"은 하단 sticky 페이드(::after)가 알린다. */
   scrollbar-width: none;
+  /* 맨 아래 "요청·제안하기"를 바닥으로 미는 세로 flex — 항목은 줄어들지 않게 */
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar > *,
+.sidebar::after {
+  flex-shrink: 0;
+}
+
+/* 사이드바 맨 아래 "요청·제안하기" — 목록이 짧으면 바닥으로 밀리고(margin-top:auto), 길면 바닥에
+   붙어 있다(sticky). 회색 카드에 아이콘·질문·한 줄 설명(2026-10-27 B안) — 색 띠 없이 면 하나로 눈에 띄게 */
+.request {
+  position: sticky;
+  bottom: 0;
+  z-index: 3; /* ::after 페이드(2)보다 위 */
+  margin-top: auto;
+  padding: var(--spacing-lg) 0 var(--spacing-md);
+  background: var(--color-background-base);
+}
+
+.requestLink {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  padding: 12px;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: var(--color-fill-neutral);
+  font: inherit;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+/* 올렸을 때 — 면이 두 단 진해지고(fill-neutral → fill-strong, 한 단은 거의 안 보였다) 아이콘이 강조색.
+   키보드로 옮겨 왔을 때도 같다. 화살표는 빼 둔 자리 때문에 글자가 두 줄로 밀려 넣지 않았다 */
+.requestLink:hover,
+.requestLink:focus-visible {
+  background: var(--color-fill-strong);
+}
+
+.requestIcon {
+  flex-shrink: 0;
+  color: var(--color-label-neutral);
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.requestLink:hover .requestIcon,
+.requestLink:focus-visible .requestIcon {
+  color: var(--color-accent-normal);
+}
+
+.requestText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.requestTitle {
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--color-label-normal);
+}
+
+.requestSub {
+  /* caption1 토큰은 좁은 화면에서 11px 로 내려간다 — 12px 아래로는 두지 않는다 */
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--color-label-alternative);
+}
+
+/* 페이지 제목 오른쪽 "개선 요청" — 테두리 없는 작은 글자 버튼. layout 이 본문 첫 자리에 두고 제목(h1) 줄 높이에 맞춘다 */
+.body {
+  position: relative;
+  /* 본문 안의 층(z-index)을 본문 안에 가둔다 — 견본 툴팁(1200)·토스트(1100)가 실물과 같은 층을 가져
+     요청 팝업 딤(1000)·상단 바 위로 올라오던 문제. 팝업·메뉴처럼 body 로 띄우는 것은 영향 없다 */
+  isolation: isolate;
+  /* 페이지 전환 — 본문이 8px 아래에서 떠오르며 나타난다(PageBody 가 경로마다 새로 그려 다시 돈다).
+     끝 상태는 transform 없음이라 안쪽 sticky·fixed 기준이 바뀌지 않는다 */
+  animation: pageEnter var(--duration-normal) var(--ease-out);
+}
+
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .body {
+    animation: none;
+  }
+}
+
+.improve {
+  position: absolute;
+  top: 8px; /* h1 36px·line-height 1.25 의 글자 가운데 */
+  right: 0;
+  padding: 4px 8px;
+  border: 0;
+  border-radius: var(--radius-xs);
+  background: none;
+  font: inherit;
+  font-size: var(--font-size-xs);
+  color: var(--color-label-assistive);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background var(--duration-normal) var(--ease-in-out), color var(--duration-normal) var(--ease-in-out);
+}
+
+.improve:hover {
+  background: var(--color-fill-normal);
+  color: var(--color-label-normal);
+}
+
+/* 긴 제목이 버튼 밑으로 들어가지 않게 */
+.improve + h1 {
+  padding-right: 88px;
 }
 
 .sidebar::-webkit-scrollbar {
@@ -140,8 +263,9 @@
      높이 단일 소스 = --kit-header-h, 두 줄 vh/dvh 패턴 유지 */
   min-height: calc(100vh - var(--kit-header-h));
   min-height: calc(100dvh - var(--kit-header-h));
-  /* GNB 와 콘텐츠 사이 숨 — 32 → 64 (2026-09-18, 사이드바·목차도 같은 배로) */
-  padding: var(--spacing-4xl) 0 var(--spacing-lg);
+  /* GNB 와 콘텐츠 사이 숨 — 32 → 64 (2026-09-18, 사이드바·목차도 같은 배로).
+     아래는 푸터 밑 여백 — 24 → 48 (2026-10-27, 답답하다는 피드백) */
+  padding: var(--spacing-4xl) 0 var(--spacing-3xl);
 }
 
 /* 문서 본문 기본 타이포 — 원본 VitePress `.vp-doc` 이 주던 것을 대체한다.
@@ -312,7 +436,8 @@
   justify-content: space-between;
   flex-wrap: wrap;
   gap: var(--spacing-3xs) var(--spacing-md);
-  padding-top: var(--spacing-xl);
+  /* 이전/다음 카드와 푸터 사이 — 32 → 48 (2026-10-27) */
+  padding-top: var(--spacing-3xl);
   font-size: var(--font-size-xxs);
   color: var(--color-label-assistive);
 }
@@ -359,6 +484,10 @@
 }
 
 @media (max-width: 960px) {
+  /* 푸터가 두 줄로 바뀌면 버전·업데이트도 왼쪽 정렬 — 오른쪽 정렬이 남으면 두 줄이 서로 어긋나 보였다 */
+  .footerMeta {
+    align-items: flex-start;
+  }
   .layout {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -393,6 +522,9 @@
     display: none;
   }
   :global(html[data-nav-open='true']) .drawer {
+    display: block;
+  }
+  :global(html[data-nav-open='true']) .sidebar > .request {
     display: block;
   }
   .acc {

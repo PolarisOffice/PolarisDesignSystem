@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { sidebarFor, TOP_NAV, type NavNode } from '@/lib/docs/nav';
 import NewBadge from './NewBadge';
+import RequestButton from './RequestButton';
 import s from './DocsShell.module.css';
 
 /**
@@ -38,6 +39,18 @@ export default function Sidebar() {
             ))}
           </details>
         ))}
+      </div>
+      <div className={s.request}>
+        <RequestButton type="suggest" className={s.requestLink}>
+          <svg className={s.requestIcon} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+            <path d="M12 7v6M9 10h6" />
+          </svg>
+          <span className={s.requestText}>
+            <span className={s.requestTitle}>PDS에 바라는 점이 있나요?</span>
+            <span className={s.requestSub}>새 컴포넌트, 고칠 점 무엇이든</span>
+          </span>
+        </RequestButton>
       </div>
     </nav>
   );

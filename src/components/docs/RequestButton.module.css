@@ -1,0 +1,153 @@
+/* 글을 쓰는 팝업이라 PDS Popup 기본 폭(343, 확인용)보다 넓힌다. className 은 딤에 붙고 패널은 그 자식이다.
+   패널 폭이 인라인 style 이라 !important 가 필요하다 — 좁은 화면 상한(100vw - 32px)은 인라인 max-width 가 그대로 지킨다 */
+.popup > div {
+  width: 480px !important;
+}
+
+/* 등장 — Motion 규칙대로 오버레이는 slow(350ms) · ease-out. 딤은 서서히, 패널은 8px 아래·98% 에서 제자리로.
+   닫힐 때는 바로 사라진다(PDS Popup 이 닫히면 곧바로 빠진다) */
+.popup {
+  animation: requestDimIn var(--duration-slow) var(--ease-out);
+}
+
+.popup > div {
+  animation: requestPanelIn var(--duration-slow) var(--ease-out);
+}
+
+@keyframes requestDimIn {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes requestPanelIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .popup,
+  .popup > div {
+    animation: none;
+  }
+}
+
+/* 요청 팝업 본문 — PDS Popup 의 <p> 안에 들어가므로 전부 inline 요소를 block 으로 쌓는다 */
+.sub {
+  display: block;
+  margin-bottom: var(--spacing-xs);
+  color: var(--color-label-assistive);
+}
+
+/* InputField 와 같은 선·반경·포커스색 — PDS 에 여러 줄 입력이 없어 직접 그린다 */
+.textarea,
+.input {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  border: 1px solid var(--color-line-neutral);
+  border-radius: var(--radius-sm);
+  background: var(--color-background-base);
+  color: var(--color-label-normal);
+  font: inherit;
+  font-size: var(--font-size-sm);
+  outline: none;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.textarea {
+  height: 128px;
+  padding: 12px 14px;
+  line-height: 1.6;
+  resize: vertical;
+}
+
+.input {
+  height: 40px;
+  margin-top: var(--spacing-2xs);
+  padding: 0 14px;
+}
+
+.textarea::placeholder,
+.input::placeholder {
+  color: var(--color-label-assistive);
+}
+
+.textarea:focus,
+.input:focus {
+  border-color: var(--color-accent-normal);
+}
+
+.invalid,
+.invalid:focus {
+  border-color: var(--color-state-error);
+}
+
+/* 첨부 이미지 — 버튼(또는 미리보기 + 지우기)과 안내를 한 줄에 */
+.attach {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2xs);
+  margin-top: var(--spacing-xs);
+}
+
+.thumb {
+  display: block;
+  max-width: 120px;
+  max-height: 72px;
+  border: 1px solid var(--color-line-neutral);
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+}
+
+/* xxs(caption) 는 좁은 화면에서 11px 로 내려가 xs 를 쓴다 */
+.attachHint,
+.attachNote,
+.hint,
+.error,
+.note {
+  font-size: var(--font-size-xs);
+  color: var(--color-label-assistive);
+}
+
+.attachNote,
+.hint,
+.error,
+.note {
+  display: block;
+  margin-top: var(--spacing-2xs);
+}
+
+.hint {
+  text-align: right;
+}
+
+.error {
+  color: var(--color-state-error);
+}
+
+.note {
+  color: var(--color-label-alternative);
+}
+
+/* 손가락 입력 기기엔 키보드 단축키가 없다 */
+@media (pointer: coarse) {
+  .hint {
+    display: none;
+  }
+}
+
+.note a {
+  color: var(--color-accent-normal);
+}
+
+/* honeypot — display:none 은 일부 봇이 건너뛰므로 화면 밖으로만 뺀다 */
+.trap {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
